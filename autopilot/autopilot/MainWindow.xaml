@@ -5,8 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:autopilot"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Autopilot" Height="450" Width="800">
     <Grid>
-        
+		<DockPanel>
+			<Menu DockPanel.Dock="Top">
+				<MenuItem Header="_File">
+					<MenuItem Header="_Save"/>
+					<MenuItem Header="_Preferences"/>
+					<MenuItem Header="E_xit"/>
+				</MenuItem>
+				<MenuItem Header="_Actions">
+					<MenuItem Header="Bind">
+						<MenuItem Header="_New bind"/>
+						<MenuItem Header="_Toggle bind"/>
+						<MenuItem Header="_Delete bind"/>
+					</MenuItem>
+					<MenuItem Header="_Action">
+						<MenuItem Header="_Add action"/>
+						<MenuItem Header="_Remove action"/>
+					</MenuItem>
+				</MenuItem>
+				<MenuItem Header="_Help">
+					<MenuItem Header="_Wiki"/>
+					<MenuItem Header="_About"/>
+				</MenuItem>
+			</Menu>
+		</DockPanel>
     </Grid>
 </Window>
