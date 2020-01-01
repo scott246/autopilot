@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:autopilot"
         mc:Ignorable="d"
         Title="Autopilot" Height="450" Width="800">
-    <Grid>
+	<Grid>
 		<DockPanel>
+			<!-- Menu bar -->
 			<Menu DockPanel.Dock="Top">
 				<MenuItem Header="_File">
 					<MenuItem Header="_Save"/>
@@ -30,6 +31,9 @@
 					<MenuItem Header="_About"/>
 				</MenuItem>
 			</Menu>
+
+			<TreeView x:Name="bindFolderTreeView" DockPanel.Dock="Left" Width="200" HorizontalAlignment="Left" Loaded="BindFolderTreeViewLoaded"/>
+
 		</DockPanel>
-    </Grid>
+	</Grid>
 </Window>
