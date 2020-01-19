@@ -80,9 +80,9 @@ namespace autopilot
             item.IsExpanded = true;
         }
 
-        private void AboutMenuItemClicked(object sender, RoutedEventArgs e)
+        public void AboutMenuItemClicked(object sender, RoutedEventArgs e)
         {
-            new Popups.About().Show();
+            new Popups.About().ShowDialog();
         }
     }
 }
