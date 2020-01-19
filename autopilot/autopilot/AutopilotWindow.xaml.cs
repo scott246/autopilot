@@ -19,12 +19,12 @@ namespace autopilot
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window
+	public partial class AutopilotWindow : Window
 	{
         private readonly string bindDirectory = @"E:\Code\autopilot\testbinds";
         private readonly string bindExtension = ".ap1";
 
-        public MainWindow()
+        public AutopilotWindow()
         {
             InitializeComponent();
         }
@@ -79,5 +79,10 @@ namespace autopilot
             PopulateTreeView(item, bindDirectory);
             item.IsExpanded = true;
         }
-	}
+
+        private void AboutMenuItemClicked(object sender, RoutedEventArgs e)
+        {
+            new Popups.About().Show();
+        }
+    }
 }

@@ -1,4 +1,4 @@
-﻿<Window x:Class="autopilot.MainWindow"
+﻿<Window x:Class="autopilot.AutopilotWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -30,7 +30,7 @@
 				</MenuItem>
 				<MenuItem Header="_Help">
 					<MenuItem Header="_Wiki"/>
-					<MenuItem Header="_About"/>
+					<MenuItem Header="_About" Click="AboutMenuItemClicked"/>
 				</MenuItem>
 			</Menu>
 
