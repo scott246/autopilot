@@ -22,13 +22,19 @@ namespace autopilot
 	public partial class MainWindow : Window
 	{
         private readonly string bindDirectory = @"E:\Code\autopilot\testbinds";
+        private readonly string bindExtension = ".ap1";
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void AddDirectoryItemsToTreeView(TreeViewItem parentItem, string path)
+        private string GetExtension(string fileName)
+        {
+            return "." + fileName.Split('.')[fileName.Split('.').Length - 1];
+        }
+
+        private void PopulateTreeView(TreeViewItem parentItem, string path)
         {
             foreach (string dir in Directory.EnumerateDirectories(path))
             {
@@ -41,51 +47,37 @@ namespace autopilot
 
                 parentItem.Items.Add(item);
 
-                AddDirectoryItemsToTreeView(item, dir);
+                PopulateTreeView(item, dir);
             }
 
             foreach (string file in Directory.EnumerateFiles(path))
             {
-                TreeViewItem item = new TreeViewItem
+                if (bindExtension.Equals(GetExtension(file)))
                 {
-                    Header = file.Substring(file.LastIndexOf('\\') + 1),
-                    Tag = file,
-                    FontWeight = FontWeights.Normal
-                };
+                    TreeViewItem item = new TreeViewItem
+                    {
+                        Header = file.Substring(file.LastIndexOf('\\') + 1),
+                        Tag = file,
+                        FontWeight = FontWeights.Normal
+                    };
 
-                parentItem.Items.Add(item);
+                    parentItem.Items.Add(item);
+                }
             }
         }
 
         private void BindFolderTreeViewLoaded(object sender, RoutedEventArgs e)
         {
             Directory.CreateDirectory(bindDirectory);
-
-            foreach (string dir in Directory.EnumerateDirectories(bindDirectory))
+            TreeViewItem item = new TreeViewItem
             {
-                TreeViewItem item = new TreeViewItem
-                {
-                    Header = dir.Substring(dir.LastIndexOf('\\') + 1),
-                    Tag = dir,
-                    FontWeight = FontWeights.Bold
-                };
-
-                bindFolderTreeView.Items.Add(item);
-                
-                AddDirectoryItemsToTreeView(item, dir);
-            }
-
-            foreach (string file in Directory.EnumerateFiles(bindDirectory))
-            {
-                TreeViewItem item = new TreeViewItem
-                {
-                    Header = file.Substring(file.LastIndexOf('\\') + 1),
-                    Tag = file,
-                    FontWeight = FontWeights.Normal
-                };
-
-                bindFolderTreeView.Items.Add(item);
-            }
+                Header = bindDirectory.Substring(bindDirectory.LastIndexOf('\\') + 1),
+                Tag = bindDirectory,
+                FontWeight = FontWeights.Bold
+            };
+            bindFolderTreeView.Items.Add(item);
+            PopulateTreeView(item, bindDirectory);
+            item.IsExpanded = true;
         }
 	}
 }

@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:autopilot"
         mc:Ignorable="d"
         Title="Autopilot" Height="450" Width="800">
+
 	<Grid>
 		<DockPanel>
+			
 			<!-- Menu bar -->
 			<Menu DockPanel.Dock="Top">
 				<MenuItem Header="_File">
@@ -32,7 +34,24 @@
 				</MenuItem>
 			</Menu>
 
-			<TreeView x:Name="bindFolderTreeView" DockPanel.Dock="Left" Width="200" HorizontalAlignment="Left" Loaded="BindFolderTreeViewLoaded"/>
+			<!-- Tree and Control Buttons -->
+			<Grid Margin="10" Width="200" HorizontalAlignment="Left" DockPanel.Dock="Left">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="20"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid Grid.Row="0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Button Content="Toggle" DockPanel.Dock="Left" Grid.Column="0"/>
+					<Button Content="Delete" DockPanel.Dock="Left" Grid.Column="1"/>
+					<Button Content="Add" DockPanel.Dock="Left" Grid.Column="2"/>
+				</Grid>
+				<TreeView x:Name="bindFolderTreeView" Grid.Row="1" Loaded="BindFolderTreeViewLoaded"/>
+			</Grid>
 
 		</DockPanel>
 	</Grid>
