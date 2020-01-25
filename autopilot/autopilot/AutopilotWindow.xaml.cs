@@ -21,7 +21,8 @@ namespace autopilot
 	/// </summary>
 	public partial class AutopilotWindow : Window
 	{
-        private readonly string bindDirectory = @"E:\Code\autopilot\testbinds";
+        //TODO: change to something more permanent
+        private readonly string bindDirectory = @"D:\Code\autopilot\testbinds";
         private readonly string bindExtension = ".ap1";
 
         public AutopilotWindow()
@@ -68,7 +69,14 @@ namespace autopilot
 
         private void BindFolderTreeViewLoaded(object sender, RoutedEventArgs e)
         {
-            Directory.CreateDirectory(bindDirectory);
+            try
+            {
+                Directory.CreateDirectory(bindDirectory);
+            } catch (Exception)
+            {
+                MessageBox.Show("Error creating bind directory.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown();
+            }
             TreeViewItem item = new TreeViewItem
             {
                 Header = bindDirectory.Substring(bindDirectory.LastIndexOf('\\') + 1),
@@ -83,6 +91,26 @@ namespace autopilot
         public void AboutMenuItemClicked(object sender, RoutedEventArgs e)
         {
             new Popups.About().ShowDialog();
+        }
+
+        public void ExpandAllBindTreeElements(Boolean expand, TreeViewItem root)
+        {
+            foreach (TreeViewItem dir in root.Items)
+            {
+                dir.IsExpanded = expand;
+
+                ExpandAllBindTreeElements(expand, dir);
+            }
+        }
+
+        public void CollapseClicked(object sender, RoutedEventArgs e)
+        {
+            ExpandAllBindTreeElements(false, (TreeViewItem)bindFolderTreeView.Items.GetItemAt(0));
+        }
+
+        public void ExpandClicked(object sender, RoutedEventArgs e)
+        {
+            ExpandAllBindTreeElements(true, (TreeViewItem)bindFolderTreeView.Items.GetItemAt(0));
         }
     }
 }

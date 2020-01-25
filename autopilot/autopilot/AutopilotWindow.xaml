@@ -39,18 +39,27 @@
 				<Grid.RowDefinitions>
 					<RowDefinition Height="20"/>
 					<RowDefinition Height="*"/>
+					<RowDefinition Height="20"/>
 				</Grid.RowDefinitions>
 				<Grid Grid.Row="0">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="0.5*"/>
+						<ColumnDefinition Width="0.5*"/>
+					</Grid.ColumnDefinitions>
+					<Button Content="Toggle" DockPanel.Dock="Left" Grid.Column="0"/>
+					<Button x:Name="Collapse" Content="⌃" DockPanel.Dock="Left" Grid.Column="1" Click="CollapseClicked"/>
+					<Button x:Name="Expand" Content="⌄" DockPanel.Dock="Left" Grid.Column="2" Click="ExpandClicked"/>
+				</Grid>
+				<TreeView x:Name="bindFolderTreeView" Grid.Row="1" Loaded="BindFolderTreeViewLoaded"/>
+				<Grid Grid.Row="2">
+					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<Button Content="Toggle" DockPanel.Dock="Left" Grid.Column="0"/>
-					<Button Content="Delete" DockPanel.Dock="Left" Grid.Column="1"/>
-					<Button Content="Add" DockPanel.Dock="Left" Grid.Column="2"/>
+					<Button Content="Delete" DockPanel.Dock="Left" Grid.Column="0"/>
+					<Button Content="Add" DockPanel.Dock="Left" Grid.Column="1"/>
 				</Grid>
-				<TreeView x:Name="bindFolderTreeView" Grid.Row="1" Loaded="BindFolderTreeViewLoaded"/>
 			</Grid>
 
 		</DockPanel>
