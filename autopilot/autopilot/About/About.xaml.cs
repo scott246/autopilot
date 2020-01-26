@@ -15,7 +15,7 @@ using System.Diagnostics;
 using System.Windows.Navigation;
 
 
-namespace autopilot.Popups
+namespace autopilot
 {
 	/// <summary>
 	/// Interaction logic for Window1.xaml
