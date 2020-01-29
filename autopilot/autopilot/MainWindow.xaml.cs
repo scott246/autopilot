@@ -69,5 +69,12 @@ namespace autopilot
             TreeViewItem selectedItem = (TreeViewItem)bindFolderTreeView.SelectedItem;
             selectedItem.SetActive(!selectedItem.IsActive());
         }
+
+        private void AddBindButtonClicked(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem selectedItem = (TreeViewItem)bindFolderTreeView.SelectedItem;
+            if (null == selectedItem) selectedItem = (TreeViewItem)bindFolderTreeView.Items.GetItemAt(0);
+            MainWindowUtils.CreateBind(selectedItem);
+        }
     }
 }

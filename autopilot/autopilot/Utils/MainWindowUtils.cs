@@ -13,7 +13,7 @@ namespace autopilot
 	{
 		//TODO: change to something more permanent
 		public static readonly string bindDirectory = @"D:\Code\autopilot\testbinds";
-		public static readonly string bindExtension = ".ap1";
+        public static readonly string bindExtension = ".ap1";
 
 		public static string GetExtension(string fileName)
 		{
@@ -57,9 +57,23 @@ namespace autopilot
             foreach (TreeViewItem dir in root.Items)
             {
                 dir.IsExpanded = expand;
-
                 ExpandAllBindTreeElements(expand, dir);
             }
+        }
+
+        public static void CreateBind(TreeViewItem parent)
+        {
+            string newBindName = "untitled" + bindExtension;
+
+            TreeViewItem newBind = new TreeViewItem
+            {
+                Header = newBindName,
+                Tag = parent.Tag + newBindName,
+                FontWeight = FontWeights.Normal
+            };
+            parent.Items.Add(newBind);
+            Console.WriteLine(parent.Tag + @"\" + newBindName);
+            File.Create(parent.Tag + @"\" + newBindName);
         }
     }
 }
