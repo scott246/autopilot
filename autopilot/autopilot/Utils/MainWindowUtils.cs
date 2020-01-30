@@ -12,7 +12,7 @@ namespace autopilot
 	static class MainWindowUtils
 	{
 		//TODO: change to something more permanent
-		public static readonly string bindDirectory = @"D:\Code\autopilot\testbinds";
+		public static readonly string bindDirectory = @"D:\Code\autopilot\testbinds\";
         public static readonly string bindExtension = ".ap1";
 
 		public static string GetExtension(string fileName)
@@ -27,7 +27,7 @@ namespace autopilot
                 TreeViewItem item = new TreeViewItem
                 {
                     Header = dir.Substring(dir.LastIndexOf('\\') + 1),
-                    Tag = dir,
+                    Tag = dir + @"\",
                     FontWeight = FontWeights.Bold
                 };
 
@@ -72,8 +72,31 @@ namespace autopilot
                 FontWeight = FontWeights.Normal
             };
             parent.Items.Add(newBind);
-            Console.WriteLine(parent.Tag + @"\" + newBindName);
-            File.Create(parent.Tag + @"\" + newBindName);
+            Console.WriteLine(parent.Tag + newBindName);
+            File.Create(parent.Tag + newBindName);
+        }
+
+        public static bool ConfirmDeleteBind(TreeViewItem itemToDelete)
+        {
+            if ((string)itemToDelete.Tag == bindDirectory)
+            {
+                return false;
+            }
+
+            MessageBoxResult confirmResult;
+            if (itemToDelete.HasItems)
+            {
+                confirmResult = MessageBox.Show("Are you sure you want to delete the entire '" + itemToDelete.Header + "' folder? This cannot be undone.", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            }
+            else
+            {
+                confirmResult = MessageBox.Show("Are you sure you want to delete '" + itemToDelete.Header + "'? This cannot be undone.", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            }
+            if (confirmResult == MessageBoxResult.Yes)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

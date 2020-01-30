@@ -73,8 +73,36 @@ namespace autopilot
         private void AddBindButtonClicked(object sender, RoutedEventArgs e)
         {
             TreeViewItem selectedItem = (TreeViewItem)bindFolderTreeView.SelectedItem;
-            if (null == selectedItem) selectedItem = (TreeViewItem)bindFolderTreeView.Items.GetItemAt(0);
-            MainWindowUtils.CreateBind(selectedItem);
+            if (null == selectedItem)
+            {
+                selectedItem = (TreeViewItem)bindFolderTreeView.Items.GetItemAt(0);
+            }
+            if (File.GetAttributes((string)selectedItem.Tag).HasFlag(FileAttributes.Directory))
+            {
+                MainWindowUtils.CreateBind(selectedItem);
+            }
+        }
+
+        private void DeleteBindButtonClicked(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem selectedItem = (TreeViewItem)bindFolderTreeView.SelectedItem;
+            if (null != selectedItem && MainWindowUtils.ConfirmDeleteBind(selectedItem))
+            {
+                try
+                {
+                    File.Delete((string)selectedItem.Tag);
+                    TreeViewItem parent = (TreeViewItem)selectedItem.Parent;
+                    parent.Items.Remove(selectedItem);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    MessageBox.Show("Could not remove bind. Try running Autopilot as administrator.", "Insufficient Access", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Could not remove bind.", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+            }
         }
     }
 }

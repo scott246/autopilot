@@ -57,7 +57,7 @@
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<Button x:Name="DeleteBindButton" Content="Delete" DockPanel.Dock="Left" Grid.Column="0"/>
+					<Button x:Name="DeleteBindButton" Content="Delete" DockPanel.Dock="Left" Grid.Column="0" Click="DeleteBindButtonClicked"/>
 					<Button x:Name="AddBindButton" Content="Add" DockPanel.Dock="Left" Grid.Column="1" Click="AddBindButtonClicked"/>
 				</Grid>
 			</Grid>
