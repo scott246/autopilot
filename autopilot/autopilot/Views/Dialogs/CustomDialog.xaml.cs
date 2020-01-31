@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,32 +17,33 @@ namespace autopilot.Views.Dialogs
 {
 	public partial class CustomDialog : Window
 	{
-		private CustomDialogButtonResponse buttonResponse = CustomDialogButtonResponse.None;
-		private bool checkboxChecked = false;
-		private readonly CustomDialogType type;
+		private static CustomDialogButtonResponse buttonResponse = CustomDialogButtonResponse.None;
+		private static bool checkboxChecked = false;
+		private static CustomDialogType type;
 
-		public CustomDialog(CustomDialogType cdt, string title, string dialogContent, string checkboxContent)
+		public CustomDialog()
 		{
 			InitializeComponent();
+		}
+
+		public static CustomDialogResponse Display(CustomDialogType cdt, string title, string dialogContent, string checkboxContent)
+		{
+			CustomDialog dialog = new CustomDialog();
 			type = cdt;
-			Title = title;
-			Message.Text = dialogContent;
-			if (cdt == CustomDialogType.OK) InitControls("OK", null, null, checkboxContent);
-			else if (cdt == CustomDialogType.OKCancel) InitControls("OK", "Cancel", null, checkboxContent);
-			else if (cdt == CustomDialogType.YesNo) InitControls("Yes", "No", null, checkboxContent);
-			else if (cdt == CustomDialogType.YesNoCancel) InitControls("Yes", "No", "Cancel", checkboxContent);
+			dialog.Title = title;
+			dialog.Message.Text = dialogContent;
+			if (cdt == CustomDialogType.OK) InitControls(dialog, "OK", null, null, checkboxContent);
+			else if (cdt == CustomDialogType.OKCancel) InitControls(dialog, "OK", "Cancel", null, checkboxContent);
+			else if (cdt == CustomDialogType.YesNo) InitControls(dialog, "Yes", "No", null, checkboxContent);
+			else if (cdt == CustomDialogType.YesNoCancel) InitControls(dialog, "Yes", "No", "Cancel", checkboxContent);
 			else
 			{
 				type = CustomDialogType.OK;
-				InitControls("OK", null, null, null);
-				Title = "Error";
-				Message.Text = "An error occurred while initializing this dialog box.";
+				InitControls(dialog, "OK", null, null, null);
+				dialog.Title = "Error";
+				dialog.Message.Text = "An error occurred while initializing this dialog box.";
 			}
-		}
-
-		public CustomDialogResponse DisplayCustomDialog()
-		{
-			ShowDialog();
+			dialog.ShowDialog();
 			return new CustomDialogResponse
 			{
 				ButtonResponse = buttonResponse,
@@ -49,25 +51,15 @@ namespace autopilot.Views.Dialogs
 			};
 		}
 
-		private void InitControls(string button1Content, string button2Content, string button3Content, string checkboxContent)
+		private static void InitControls(CustomDialog dialog, string button1Content, string button2Content, string button3Content, string checkboxContent)
 		{
-			Button1.Content = button1Content;
-			if (button2Content == null) Button2.Visibility = Visibility.Hidden;
-			else Button2.Content = button2Content;
-			if (button3Content == null) Button3.Visibility = Visibility.Hidden;
-			else Button3.Content = button3Content;
-			if (checkboxContent == null) Checkbox.Visibility = Visibility.Hidden;
-			else Checkbox.Content = checkboxContent;
-		}
-
-		public CustomDialogButtonResponse GetDialogResponse()
-		{
-			return buttonResponse;
-		}
-
-		public bool GetCheckboxState()
-		{
-			return checkboxChecked;
+			dialog.Button1.Content = button1Content;
+			if (button2Content == null) dialog.Button2.Visibility = Visibility.Hidden;
+			else dialog.Button2.Content = button2Content;
+			if (button3Content == null) dialog.Button3.Visibility = Visibility.Hidden;
+			else dialog.Button3.Content = button3Content;
+			if (checkboxContent == null) dialog.Checkbox.Visibility = Visibility.Hidden;
+			else dialog.Checkbox.Content = checkboxContent;
 		}
 
 		private void Button1Clicked(object sender, RoutedEventArgs e)
@@ -99,7 +91,6 @@ namespace autopilot.Views.Dialogs
 		{
 			checkboxChecked = (bool)Checkbox.IsChecked;
 		}
-
 	}
 
 	public class CustomDialogResponse

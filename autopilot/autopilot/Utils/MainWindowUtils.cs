@@ -88,7 +88,7 @@ namespace autopilot
             if (itemToDelete.HasItems)
             {
                 if (Properties.Settings.Default.WarnOnFolderDelete == false) return true;
-                confirmResult = new CustomDialog(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete the entire '" + itemToDelete.Header + "' folder? This cannot be undone.", "Do not show again").DisplayCustomDialog();
+                confirmResult = CustomDialog.Display(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete the entire '" + itemToDelete.Header + "' folder? This cannot be undone.", "Do not show again");
                 if (confirmResult.CheckboxResponse == true)
                 {
                     Properties.Settings.Default.WarnOnFolderDelete = false;
@@ -98,7 +98,7 @@ namespace autopilot
             else
             {
                 if (Properties.Settings.Default.WarnOnFileDelete == false) return true;
-                confirmResult = new CustomDialog(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete '" + itemToDelete.Header + "'? This cannot be undone.", "Do not show again").DisplayCustomDialog();
+                confirmResult = CustomDialog.Display(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete '" + itemToDelete.Header + "'? This cannot be undone.", "Do not show again");
                 if (confirmResult.CheckboxResponse == true)
                 {
                     Properties.Settings.Default.WarnOnFileDelete = false;

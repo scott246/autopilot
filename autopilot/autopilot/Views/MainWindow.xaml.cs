@@ -1,4 +1,5 @@
-﻿using System;
+﻿using autopilot.Views.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace autopilot
                 Directory.CreateDirectory(bindDirectory);
             } catch (Exception)
             {
-                MessageBox.Show("Error creating bind directory.", "Fatal Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                CustomDialog.Display(CustomDialogType.OK, "Fatal Error", "Error creating bind directory.", null);
                 Application.Current.Shutdown();
             }
             TreeViewItem item = new TreeViewItem
@@ -96,11 +97,11 @@ namespace autopilot
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    MessageBox.Show("Could not remove bind. Try running Autopilot as administrator.", "Insufficient Access", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    CustomDialog.Display(CustomDialogType.OK, "Insufficient Access", "Could not remove bind. Try running Autopilot as administrator.", null);
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Could not remove bind.", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    CustomDialog.Display(CustomDialogType.OK, "Bind Delete Error", "Could not remove bind.", null);
                 }
             }
         }
