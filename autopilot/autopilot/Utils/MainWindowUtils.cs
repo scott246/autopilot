@@ -86,7 +86,7 @@ namespace autopilot
             MessageBoxResult confirmResult;
             if (itemToDelete.HasItems)
             {
-                confirmResult = MessageBox.Show("Are you sure you want to delete the entire '" + itemToDelete.Header + "' folder? This cannot be undone.", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                confirmResult = MessageBox.Show("Are you sure you want to delete the entire '" + itemToDelete.Header + "' folder? This cannot be undone.", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
             }
             else
             {

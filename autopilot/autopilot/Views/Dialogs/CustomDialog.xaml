@@ -1,0 +1,16 @@
+﻿<Window x:Class="autopilot.Views.Dialogs.CustomDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:autopilot.Views.Dialogs"
+        mc:Ignorable="d"
+        Title="Title" Height="200" Width="400">
+	<Grid>
+		<Label x:Name="Message" Content="Message text." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="124" Width="372"/>
+		<Button x:Name="Button1" Content="1" HorizontalAlignment="Left" Margin="307,139,0,0" VerticalAlignment="Top" Width="75" Click="Button1Clicked"/>
+		<Button x:Name="Button2" Content="2" HorizontalAlignment="Left" Margin="227,139,0,0" VerticalAlignment="Top" Width="75" Click="Button2Clicked"/>
+		<Button x:Name="Button3" Content="3" HorizontalAlignment="Left" Margin="147,139,0,0" VerticalAlignment="Top" Width="75" Click="Button3Clicked"/>
+		<CheckBox x:Name="Checkbox" Content="CheckBox" HorizontalAlignment="Left" Margin="10,139,0,10" VerticalAlignment="Center" Height="20" Width="132" IsEnabledChanged="CheckboxClicked"/>
+	</Grid>
+</Window>
