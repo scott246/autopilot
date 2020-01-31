@@ -7,10 +7,22 @@
         mc:Ignorable="d"
         Title="Title" Height="200" Width="400">
 	<Grid>
-		<Label x:Name="Message" Content="Message text." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="124" Width="372"/>
-		<Button x:Name="Button1" Content="1" HorizontalAlignment="Left" Margin="307,139,0,0" VerticalAlignment="Top" Width="75" Click="Button1Clicked"/>
-		<Button x:Name="Button2" Content="2" HorizontalAlignment="Left" Margin="227,139,0,0" VerticalAlignment="Top" Width="75" Click="Button2Clicked"/>
-		<Button x:Name="Button3" Content="3" HorizontalAlignment="Left" Margin="147,139,0,0" VerticalAlignment="Top" Width="75" Click="Button3Clicked"/>
-		<CheckBox x:Name="Checkbox" Content="CheckBox" HorizontalAlignment="Left" Margin="10,139,0,10" VerticalAlignment="Center" Height="20" Width="132" IsEnabledChanged="CheckboxClicked"/>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="40"/>
+		</Grid.RowDefinitions>
+		<TextBlock x:Name="Message" Text="Message text." HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" TextWrapping="WrapWithOverflow" IsEnabled="False" Grid.Row="0" />
+		<Grid Grid.Row="1" Margin="10,0,10,0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="80"/>
+				<ColumnDefinition Width="80"/>
+				<ColumnDefinition Width="80"/>
+			</Grid.ColumnDefinitions>
+			<CheckBox Grid.Column="0" x:Name="Checkbox" Content="CheckBox" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="CheckboxClicked"/>
+			<Button Grid.Column="1" x:Name="Button3" Content="3" VerticalAlignment="Center" Margin="5" Click="Button3Clicked"/>
+			<Button Grid.Column="2" x:Name="Button2" Content="2" VerticalAlignment="Center" Margin="5" Click="Button2Clicked"/>
+			<Button Grid.Column="3" x:Name="Button1" Content="1" VerticalAlignment="Center" Margin="5" Click="Button1Clicked"/>
+		</Grid>
 	</Grid>
 </Window>

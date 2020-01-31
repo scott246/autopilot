@@ -25,7 +25,7 @@ namespace autopilot.Views.Dialogs
 			InitializeComponent();
 			type = cdt;
 			Title = title;
-			Message.Content = dialogContent;
+			Message.Text = dialogContent;
 			if (cdt == CustomDialogType.OK) InitControls("OK", null, null, checkboxContent);
 			else if (cdt == CustomDialogType.OKCancel) InitControls("OK", "Cancel", null, checkboxContent);
 			else if (cdt == CustomDialogType.YesNo) InitControls("Yes", "No", null, checkboxContent);
@@ -35,7 +35,7 @@ namespace autopilot.Views.Dialogs
 				type = CustomDialogType.OK;
 				InitControls("OK", null, null, null);
 				Title = "Error";
-				Message.Content = "An error occurred while initializing this dialog box.";
+				Message.Text = "An error occurred while initializing this dialog box.";
 			}
 		}
 
@@ -98,7 +98,6 @@ namespace autopilot.Views.Dialogs
 		private void CheckboxClicked(object sender, RoutedEventArgs e)
 		{
 			checkboxChecked = (bool)Checkbox.IsChecked;
-			Close();
 		}
 
 	}

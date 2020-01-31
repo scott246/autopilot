@@ -1,4 +1,5 @@
-﻿using System;
+﻿using autopilot.Views.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -83,16 +84,26 @@ namespace autopilot
                 return false;
             }
 
-            MessageBoxResult confirmResult;
+            CustomDialogResponse confirmResult;
             if (itemToDelete.HasItems)
             {
-                confirmResult = MessageBox.Show("Are you sure you want to delete the entire '" + itemToDelete.Header + "' folder? This cannot be undone.", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+                confirmResult = new CustomDialog(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete the entire '" + itemToDelete.Header + "' folder? This cannot be undone.", "Do not show again").DisplayCustomDialog();
+                if (confirmResult.CheckboxResponse == true)
+                {
+                    Properties.Settings.Default.WarnOnFolderDelete = false;
+                    Properties.Settings.Default.Save();
+                }
             }
             else
             {
-                confirmResult = MessageBox.Show("Are you sure you want to delete '" + itemToDelete.Header + "'? This cannot be undone.", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                confirmResult = new CustomDialog(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete '" + itemToDelete.Header + "'? This cannot be undone.", "Do not show again").DisplayCustomDialog();
+                if (confirmResult.CheckboxResponse == true)
+                {
+                    Properties.Settings.Default.WarnOnFileDelete = false;
+                    Properties.Settings.Default.Save();
+                }
             }
-            if (confirmResult == MessageBoxResult.Yes)
+            if (confirmResult.ButtonResponse == CustomDialogButtonResponse.Yes)
             {
                 return true;
             }
