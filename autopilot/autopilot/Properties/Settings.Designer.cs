@@ -23,24 +23,28 @@ namespace autopilot.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool WarnOnFolderDelete {
             get {
                 return ((bool)(this["WarnOnFolderDelete"]));
             }
-            internal set { }
+            set {
+                this["WarnOnFolderDelete"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool WarnOnFileDelete {
             get {
                 return ((bool)(this["WarnOnFileDelete"]));
             }
-            internal set { }
+            set {
+                this["WarnOnFileDelete"] = value;
+            }
         }
     }
 }
