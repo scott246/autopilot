@@ -4,10 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:autopilot"
-        mc:Ignorable="d"
+		mc:Ignorable="d"
         Title="Autopilot" Height="450" Width="800">
 
-	<Grid>
+	<Grid Background="{StaticResource BackgroundColor}">
 		<DockPanel>
 
 			<!-- Menu bar -->
@@ -47,18 +47,18 @@
 						<ColumnDefinition Width="0.5*"/>
 						<ColumnDefinition Width="0.5*"/>
 					</Grid.ColumnDefinitions>
-					<Button x:Name="ToggleButton" Content="Toggle" DockPanel.Dock="Left" Grid.Column="0" Click="ToggleClicked"/>
-					<Button x:Name="CollapseButton" Content="Collapse" DockPanel.Dock="Left" Grid.Column="1" Click="CollapseClicked"/>
-					<Button x:Name="ExpandButton" Content="Expand" DockPanel.Dock="Left" Grid.Column="2" Click="ExpandClicked"/>
+					<Button x:Name="ToggleButton" Content="Toggle" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="0" Click="ToggleClicked"/>
+					<Button x:Name="CollapseButton" Content="Collapse" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="1" Click="CollapseClicked"/>
+					<Button x:Name="ExpandButton" Content="Expand" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="2" Click="ExpandClicked"/>
 				</Grid>
-				<TreeView x:Name="bindFolderTreeView" Grid.Row="1" Loaded="BindFolderTreeViewLoaded"/>
+				<TreeView x:Name="bindFolderTreeView" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Grid.Row="1" Loaded="BindFolderTreeViewLoaded"/>
 				<Grid Grid.Row="2">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<Button x:Name="DeleteBindButton" Content="Delete" DockPanel.Dock="Left" Grid.Column="0" Click="DeleteBindButtonClicked"/>
-					<Button x:Name="AddBindButton" Content="Add" DockPanel.Dock="Left" Grid.Column="1" Click="AddBindButtonClicked"/>
+					<Button x:Name="DeleteBindButton" Content="Delete" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="0" Click="DeleteBindButtonClicked"/>
+					<Button x:Name="AddBindButton" Content="Add" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="1" Click="AddBindButtonClicked"/>
 				</Grid>
 			</Grid>
 
@@ -84,33 +84,37 @@
 							<ColumnDefinition Width="4*"/>
 							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
-						<Label Grid.Row="0" Grid.Column="0" Content="Name" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-						<Label Grid.Row="1" Grid.Column="0" Content="Desc" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-						<Label Grid.Row="2" Grid.Column="0" Content="Bind" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+						<Label Grid.Row="0" Grid.Column="0" Content="Name" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+						<Label Grid.Row="1" Grid.Column="0" Content="Desc" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+						<Label Grid.Row="2" Grid.Column="0" Content="Bind" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 						<Grid Grid.Row="0" Grid.Column="1">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="3*"/>
 								<ColumnDefinition Width="*"/>
 							</Grid.ColumnDefinitions>
-							<TextBox Grid.Column="0" Text="TITLE" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-							<Label Grid.Column="1" Content=".apscr" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+							<TextBox Grid.Column="0" Text="TITLE" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+							<Label Grid.Column="1" Content=".apscr" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 						</Grid>
-						<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="DESC" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-						<Label Grid.Row="2" Grid.Column="1" Content="[unbound]" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
-						<CheckBox Grid.Row="0" Grid.Column="2" Content="Enabled" IsChecked="True" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-						<Button Grid.Row="2" Grid.Column="2" Content="Edit Bind" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="DESC" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Margin="0,0,5,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+						<Label Grid.Row="2" Grid.Column="1" Content="[unbound]" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
+						<CheckBox Grid.Row="0" Grid.Column="2" Content="Enabled" Foreground="{StaticResource TextColorDark}" IsChecked="True" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+						<Button Grid.Row="2" Grid.Column="2" Content="Edit Bind" Background="{StaticResource ButtonBackgroundColor}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 					</Grid>
 					<Grid Grid.Column="1">
 						
 					</Grid>
 				</Grid>
-				<Grid Grid.Row="1" Margin="10" Background="LightGray">
+				<Grid Grid.Row="1" Margin="10" Background="{StaticResource BackgroundColor}">
 					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="40"/>
 						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="10*"/>
 					</Grid.ColumnDefinitions>
-					<TextBlock Background="Gray" Foreground="White" IsEnabled="False" Grid.Column="0" Text="1" FontFamily="Courier New" HorizontalAlignment="Stretch"/>
-					<TextBlock Grid.Column="1" Text="Code" HorizontalAlignment="Left" FontFamily="Courier New"/>
+					<WrapPanel Grid.Column="0" HorizontalAlignment="Right">
+						<TextBlock Grid.Column="0" Text="1" Foreground="{StaticResource AccentColor}" FontFamily="Courier New" TextWrapping="NoWrap" TextAlignment="Right" IsEnabled="False" Margin="5"/>	
+					</WrapPanel>
+					<WrapPanel Grid.Column="1" Background="{StaticResource BackgroundColorLight}">
+						<TextBlock Grid.Column="1" Text="Code" HorizontalAlignment="Left" Foreground="{StaticResource TextColorDark}" FontFamily="Courier New" Margin="5"/>
+					</WrapPanel>
 				</Grid>
 			</Grid>
 

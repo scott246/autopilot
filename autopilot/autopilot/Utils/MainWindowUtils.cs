@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace autopilot
 {
@@ -29,7 +30,8 @@ namespace autopilot
                 {
                     Header = dir.Substring(dir.LastIndexOf('\\') + 1),
                     Tag = dir + @"\",
-                    FontWeight = FontWeights.Bold
+                    FontWeight = FontWeights.Bold,
+                    Foreground = new SolidColorBrush(Colors.White)
                 };
 
                 parentItem.Items.Add(item);
@@ -45,7 +47,8 @@ namespace autopilot
                     {
                         Header = file.Substring(file.LastIndexOf('\\') + 1),
                         Tag = file,
-                        FontWeight = FontWeights.Normal
+                        FontWeight = FontWeights.Normal,
+                        Foreground = new SolidColorBrush(Colors.LightGray)
                     };
 
                     parentItem.Items.Add(item);
@@ -70,7 +73,8 @@ namespace autopilot
             {
                 Header = newBindName,
                 Tag = parent.Tag + newBindName,
-                FontWeight = FontWeights.Normal
+                FontWeight = FontWeights.Normal,
+                Foreground = new SolidColorBrush(Colors.LightGray)
             };
             parent.Items.Add(newBind);
             Console.WriteLine(parent.Tag + newBindName);

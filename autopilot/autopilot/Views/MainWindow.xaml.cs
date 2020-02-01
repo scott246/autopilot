@@ -25,6 +25,7 @@ namespace autopilot
 
         public MainWindow()
         {
+            new AppVariables();
             InitializeComponent();
         }
 
@@ -43,7 +44,8 @@ namespace autopilot
             {
                 Header = bindDirectory,
                 Tag = bindDirectory,
-                FontWeight = FontWeights.Bold
+                FontWeight = FontWeights.Bold,
+                Foreground = new SolidColorBrush(Colors.White)
             };
             bindFolderTreeView.Items.Add(item);
             MainWindowUtils.PopulateTreeView(item, bindDirectory);
