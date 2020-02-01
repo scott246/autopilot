@@ -10,9 +10,11 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="40"/>
+			<RowDefinition Height="40"/>
 		</Grid.RowDefinitions>
-		<TextBlock x:Name="Message" Text="Message text." HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" TextWrapping="WrapWithOverflow" IsEnabled="False" Grid.Row="0" />
-		<Grid Grid.Row="1" Margin="10,0,10,0">
+		<TextBlock x:Name="Message" Text="Message text." HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" TextWrapping="WrapWithOverflow" IsEnabled="False" Grid.Row="0"/>
+		<TextBox x:Name="Textbox" Text="Default textbox text." HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Center" TextWrapping="NoWrap" Grid.Row="1" TextChanged="TextboxTextChanged"/>
+		<Grid Grid.Row="2" Margin="10,0,10,0">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="80"/>

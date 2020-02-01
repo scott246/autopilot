@@ -51,14 +51,16 @@
 					<Button x:Name="CollapseButton" Content="Collapse" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="1" Click="CollapseClicked"/>
 					<Button x:Name="ExpandButton" Content="Expand" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="2" Click="ExpandClicked"/>
 				</Grid>
-				<TreeView x:Name="bindFolderTreeView" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Grid.Row="1" Loaded="BindFolderTreeViewLoaded"/>
+				<TreeView x:Name="BindFolderTreeView" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Grid.Row="1" Loaded="BindFolderTreeViewLoaded"/>
 				<Grid Grid.Row="2">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
 					<Button x:Name="DeleteBindButton" Content="Delete" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="0" Click="DeleteBindButtonClicked"/>
-					<Button x:Name="AddBindButton" Content="Add" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="1" Click="AddBindButtonClicked"/>
+					<Button x:Name="AddFolderButton" Content="Add Folder" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="1" Click="AddFolderButtonClicked"/>
+					<Button x:Name="AddBindButton" Content="Add" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="2" Click="AddBindButtonClicked"/>
 				</Grid>
 			</Grid>
 

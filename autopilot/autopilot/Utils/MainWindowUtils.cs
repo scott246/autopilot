@@ -14,7 +14,7 @@ namespace autopilot
 	static class MainWindowUtils
 	{
 		//TODO: change to something more permanent
-		public static readonly string bindDirectory = @"D:\Code\autopilot\testbinds\";
+		public static readonly string bindDirectory = @"C:\Users\ndsco\AppData\Local\autopilot\testbinds";
         public static readonly string bindExtension = ".apscr";
 
 		public static string GetExtension(string fileName)
@@ -65,20 +65,36 @@ namespace autopilot
             }
         }
 
-        public static void CreateBind(TreeViewItem parent)
+        public static void CreateBind(TreeViewItem parent, string name)
         {
-            string newBindName = "untitled" + bindExtension;
+            string fullBindName = name + bindExtension;
 
             TreeViewItem newBind = new TreeViewItem
             {
-                Header = newBindName,
-                Tag = parent.Tag + newBindName,
+                Header = fullBindName,
+                Tag = parent.Tag + fullBindName,
                 FontWeight = FontWeights.Normal,
                 Foreground = new SolidColorBrush(Colors.LightGray)
             };
             parent.Items.Add(newBind);
-            Console.WriteLine(parent.Tag + newBindName);
-            File.Create(parent.Tag + newBindName);
+            Console.WriteLine(parent.Tag + fullBindName);
+            File.Create(parent.Tag + fullBindName);
+            MainWindow.LoadBindFolderTree();
+        }
+
+        public static void CreateFolder(TreeViewItem parent, string name)
+        {
+            TreeViewItem newFolder = new TreeViewItem
+            {
+                Header = name,
+                Tag = parent.Tag + @"\" + name,
+                FontWeight = FontWeights.Bold,
+                Foreground = new SolidColorBrush(Colors.LightGray)
+            };
+            parent.Items.Add(newFolder);
+            Console.WriteLine(parent.Tag + name);
+            Directory.CreateDirectory(parent.Tag + name);
+            MainWindow.LoadBindFolderTree();
         }
 
         public static bool ConfirmDeleteBind(TreeViewItem itemToDelete)
@@ -91,7 +107,8 @@ namespace autopilot
             CustomDialogResponse confirmResult;
             if (itemToDelete.HasItems)
             {
-                if (Properties.Settings.Default.WarnOnFolderDelete == false) return true;
+                if (Properties.Settings.Default.WarnOnFolderDelete == false) 
+                    return true;
                 confirmResult = CustomDialog.Display(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete the entire '" + itemToDelete.Header + "' folder? This cannot be undone.", "Do not show again");
                 if (confirmResult.CheckboxResponse == true)
                 {
@@ -101,7 +118,8 @@ namespace autopilot
             }
             else
             {
-                if (Properties.Settings.Default.WarnOnFileDelete == false) return true;
+                if (Properties.Settings.Default.WarnOnFileDelete == false) 
+                    return true;
                 confirmResult = CustomDialog.Display(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete '" + itemToDelete.Header + "'? This cannot be undone.", "Do not show again");
                 if (confirmResult.CheckboxResponse == true)
                 {

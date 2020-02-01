@@ -22,34 +22,42 @@ namespace autopilot
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+        public static TreeView BindFolderTreeViewRef;
 
         public MainWindow()
         {
-            new AppVariables();
             InitializeComponent();
         }
 
-        private void BindFolderTreeViewLoaded(object sender, RoutedEventArgs e)
+        public static void LoadBindFolderTree()
         {
+            BindFolderTreeViewRef.Items.Clear();
             string bindDirectory = MainWindowUtils.bindDirectory;
             try
             {
                 Directory.CreateDirectory(bindDirectory);
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 CustomDialog.Display(CustomDialogType.OK, "Fatal Error", "Error creating bind directory.", null);
                 Application.Current.Shutdown();
             }
             TreeViewItem item = new TreeViewItem
             {
-                Header = bindDirectory,
-                Tag = bindDirectory,
+                Header = bindDirectory.Substring(bindDirectory.LastIndexOf('\\') + 1),
+                Tag = bindDirectory + '\\',
                 FontWeight = FontWeights.Bold,
                 Foreground = new SolidColorBrush(Colors.White)
             };
-            bindFolderTreeView.Items.Add(item);
+            BindFolderTreeViewRef.Items.Add(item);
             MainWindowUtils.PopulateTreeView(item, bindDirectory);
             item.IsExpanded = true;
+        }
+
+        private void BindFolderTreeViewLoaded(object sender, RoutedEventArgs e)
+        {
+            BindFolderTreeViewRef = BindFolderTreeView;
+            LoadBindFolderTree();
         }
 
         private void AboutMenuItemClicked(object sender, RoutedEventArgs e)
@@ -59,36 +67,48 @@ namespace autopilot
 
         private void CollapseClicked(object sender, RoutedEventArgs e)
         {
-            MainWindowUtils.ExpandAllBindTreeElements(false, (TreeViewItem)bindFolderTreeView.Items.GetItemAt(0));
+            MainWindowUtils.ExpandAllBindTreeElements(false, (TreeViewItem)BindFolderTreeView.Items.GetItemAt(0));
         }
 
         private void ExpandClicked(object sender, RoutedEventArgs e)
         {
-            MainWindowUtils.ExpandAllBindTreeElements(true, (TreeViewItem)bindFolderTreeView.Items.GetItemAt(0));
+            MainWindowUtils.ExpandAllBindTreeElements(true, (TreeViewItem)BindFolderTreeView.Items.GetItemAt(0));
         }
 
         private void ToggleClicked(object sender, RoutedEventArgs e)
         {
-            TreeViewItem selectedItem = (TreeViewItem)bindFolderTreeView.SelectedItem;
+            TreeViewItem selectedItem = (TreeViewItem)BindFolderTreeView.SelectedItem;
             selectedItem.SetActive(!selectedItem.IsActive());
         }
 
         private void AddBindButtonClicked(object sender, RoutedEventArgs e)
         {
-            TreeViewItem selectedItem = (TreeViewItem)bindFolderTreeView.SelectedItem;
+            TreeViewItem selectedItem = (TreeViewItem)BindFolderTreeView.SelectedItem;
             if (null == selectedItem)
-            {
-                selectedItem = (TreeViewItem)bindFolderTreeView.Items.GetItemAt(0);
-            }
+                selectedItem = (TreeViewItem)BindFolderTreeView.Items.GetItemAt(0);
             if (File.GetAttributes((string)selectedItem.Tag).HasFlag(FileAttributes.Directory))
             {
-                MainWindowUtils.CreateBind(selectedItem);
+                CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Bind", "New bind name (no extension):", textboxContent: "untitled");
+                if (response.ButtonResponse != CustomDialogButtonResponse.Cancel) 
+                    MainWindowUtils.CreateBind(selectedItem, response.TextboxResponse);
+            }
+        }
+
+        private void AddFolderButtonClicked(object sender, RoutedEventArgs e)
+        {
+            CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Folder", "New folder name:", textboxContent: "untitled");
+            if (response.ButtonResponse != CustomDialogButtonResponse.Cancel)
+            {
+                TreeViewItem selectedItem = (TreeViewItem)BindFolderTreeView.SelectedItem;
+                if (null == selectedItem)
+                    selectedItem = (TreeViewItem)BindFolderTreeView.Items.GetItemAt(0);
+                MainWindowUtils.CreateFolder(selectedItem, response.TextboxResponse);
             }
         }
 
         private void DeleteBindButtonClicked(object sender, RoutedEventArgs e)
         {
-            TreeViewItem selectedItem = (TreeViewItem)bindFolderTreeView.SelectedItem;
+            TreeViewItem selectedItem = (TreeViewItem)BindFolderTreeView.SelectedItem;
             if (null != selectedItem && MainWindowUtils.ConfirmDeleteBind(selectedItem))
             {
                 try
