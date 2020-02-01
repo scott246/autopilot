@@ -146,5 +146,17 @@ namespace autopilot
             if (item == null) return;
             item.SetActive(false);
         }
+
+        private void EditorCodePreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            EditorLineNumbers.Text = "";
+            int lines = EditorCode.Text.Split('\n').Length;
+            for (int i = 0; i < lines; i++)
+            {
+                EditorLineNumbers.Text += ((i + 1).ToString() + '\n');
+            }
+            int currentLine = EditorCode.GetLineIndexFromCharacterIndex(EditorCode.CaretIndex);
+            EditorLineNumbers.ScrollToLine(currentLine);
+        }
     }
 }

@@ -111,12 +111,8 @@
 						<ColumnDefinition Width="40"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<WrapPanel Grid.Column="0" HorizontalAlignment="Right">
-						<TextBlock Grid.Column="0" Text="1" Foreground="{StaticResource AccentColor}" FontFamily="Courier New" TextWrapping="NoWrap" TextAlignment="Right" IsEnabled="False" Margin="5"/>	
-					</WrapPanel>
-					<WrapPanel Grid.Column="1" Background="{StaticResource BackgroundColorLight}">
-						<TextBlock Grid.Column="1" Text="Code" HorizontalAlignment="Left" Foreground="{StaticResource TextColorDark}" FontFamily="Courier New" Margin="5"/>
-					</WrapPanel>
+					<TextBox x:Name="EditorLineNumbers" Grid.Column="0" Text="1" IsReadOnly="True" BorderThickness="0" Background="{StaticResource BackgroundColor}" Foreground="{StaticResource AccentColor}" FontFamily="Courier New" TextWrapping="NoWrap" TextAlignment="Right" Margin="5"/>
+					<TextBox x:Name="EditorCode" TextWrapping="NoWrap" AcceptsReturn="True" Grid.Column="1" Text="Code" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="{StaticResource TextColorDark}" Background="{StaticResource BackgroundColorLight}" FontFamily="Courier New" Padding="5" PreviewKeyUp="EditorCodePreviewKeyUp" />
 				</Grid>
 			</Grid>
 
