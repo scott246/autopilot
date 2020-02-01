@@ -14,7 +14,7 @@ namespace autopilot
 	{
 		//TODO: change to something more permanent
 		public static readonly string bindDirectory = @"D:\Code\autopilot\testbinds\";
-        public static readonly string bindExtension = ".ap1";
+        public static readonly string bindExtension = ".apscr";
 
 		public static string GetExtension(string fileName)
 		{
