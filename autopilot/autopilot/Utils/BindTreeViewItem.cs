@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -22,12 +17,12 @@ namespace autopilot
 		{
 			if (active)
 			{
-				t.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+				t.Foreground = new SolidColorBrush(Colors.LightGray);
 				t.FontStyle = FontStyles.Normal;
 			}
 			else
 			{
-				t.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+				t.Foreground = new SolidColorBrush(Colors.Red);
 				t.FontStyle = FontStyles.Italic;
 			}
 

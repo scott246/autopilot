@@ -51,7 +51,7 @@
 					<Button x:Name="CollapseButton" Content="Collapse" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="1" Click="CollapseClicked"/>
 					<Button x:Name="ExpandButton" Content="Expand" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="2" Click="ExpandClicked"/>
 				</Grid>
-				<TreeView x:Name="BindFolderTreeView" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Grid.Row="1" Loaded="BindFolderTreeViewLoaded"/>
+				<TreeView x:Name="BindFolderTreeView" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Grid.Row="1" Loaded="BindFolderTreeViewLoaded" SelectedItemChanged="SelectedBindTreeItemChanged"/>
 				<Grid Grid.Row="2">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
@@ -87,19 +87,19 @@
 							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
 						<Label Grid.Row="0" Grid.Column="0" Content="Name" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-						<Label Grid.Row="1" Grid.Column="0" Content="Desc" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+						<Label Grid.Row="1" Grid.Column="0" Content="About" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 						<Label Grid.Row="2" Grid.Column="0" Content="Bind" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 						<Grid Grid.Row="0" Grid.Column="1">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="3*"/>
 								<ColumnDefinition Width="*"/>
 							</Grid.ColumnDefinitions>
-							<TextBox Grid.Column="0" Text="TITLE" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+							<TextBox x:Name="EditorTitleTextBox" Grid.Column="0" Text="TITLE" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
 							<Label Grid.Column="1" Content=".apscr" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 						</Grid>
-						<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="DESC" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Margin="0,0,5,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-						<Label Grid.Row="2" Grid.Column="1" Content="[unbound]" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
-						<CheckBox Grid.Row="0" Grid.Column="2" Content="Enabled" Foreground="{StaticResource TextColorDark}" IsChecked="True" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+						<TextBox x:Name="EditorDescriptionTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Margin="0,0,5,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+						<Label x:Name="EditorBindingLabel" Grid.Row="2" Grid.Column="1" Content="[unbound]" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
+						<CheckBox x:Name="EditorEnabledCheckbox" Grid.Row="0" Grid.Column="2" Content="Enabled" Foreground="{StaticResource TextColorDark}" IsChecked="True" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="EnabledCheckboxChecked" Unchecked="EnabledCheckboxUnchecked"/>
 						<Button Grid.Row="2" Grid.Column="2" Content="Edit Bind" Background="{StaticResource ButtonBackgroundColor}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 					</Grid>
 					<Grid Grid.Column="1">

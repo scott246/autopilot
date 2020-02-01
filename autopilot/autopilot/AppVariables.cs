@@ -10,6 +10,8 @@ namespace autopilot
 {
 	class AppVariables
 	{
-		
+		//TODO: change to something more permanent
+		public static readonly string bindDirectory = @"C:\Users\ndsco\AppData\Local\autopilot\testbinds";
+		public static readonly string bindExtension = ".apscr";
 	}
 }

@@ -1,22 +1,14 @@
 ﻿using autopilot.Views.Dialogs;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace autopilot
 {
-	static class MainWindowUtils
+    static class MainWindowUtils
 	{
-		//TODO: change to something more permanent
-		public static readonly string bindDirectory = @"C:\Users\ndsco\AppData\Local\autopilot\testbinds";
-        public static readonly string bindExtension = ".apscr";
-
 		public static string GetExtension(string fileName)
 		{
 			return "." + fileName.Split('.')[fileName.Split('.').Length - 1];
@@ -41,7 +33,7 @@ namespace autopilot
 
             foreach (string file in Directory.EnumerateFiles(path))
             {
-                if (bindExtension.Equals(GetExtension(file)))
+                if (AppVariables.bindExtension.Equals(GetExtension(file)))
                 {
                     TreeViewItem item = new TreeViewItem
                     {
@@ -67,7 +59,7 @@ namespace autopilot
 
         public static void CreateBind(TreeViewItem parent, string name)
         {
-            string fullBindName = name + bindExtension;
+            string fullBindName = name + AppVariables.bindExtension;
 
             TreeViewItem newBind = new TreeViewItem
             {
@@ -99,7 +91,7 @@ namespace autopilot
 
         public static bool ConfirmDeleteBind(TreeViewItem itemToDelete)
         {
-            if ((string)itemToDelete.Tag == bindDirectory)
+            if ((string)itemToDelete.Tag == AppVariables.bindDirectory)
             {
                 return false;
             }

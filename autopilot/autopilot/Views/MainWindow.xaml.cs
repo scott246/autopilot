@@ -1,26 +1,16 @@
 ﻿using autopilot.Views.Dialogs;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace autopilot
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
 	{
         public static TreeView BindFolderTreeViewRef;
 
@@ -32,7 +22,7 @@ namespace autopilot
         public static void LoadBindFolderTree()
         {
             BindFolderTreeViewRef.Items.Clear();
-            string bindDirectory = MainWindowUtils.bindDirectory;
+            string bindDirectory = AppVariables.bindDirectory;
             try
             {
                 Directory.CreateDirectory(bindDirectory);
@@ -57,6 +47,7 @@ namespace autopilot
         private void BindFolderTreeViewLoaded(object sender, RoutedEventArgs e)
         {
             BindFolderTreeViewRef = BindFolderTreeView;
+            EditorPanel.Visibility = Visibility.Hidden;
             LoadBindFolderTree();
         }
 
@@ -79,6 +70,7 @@ namespace autopilot
         {
             TreeViewItem selectedItem = (TreeViewItem)BindFolderTreeView.SelectedItem;
             selectedItem.SetActive(!selectedItem.IsActive());
+            EditorEnabledCheckbox.IsChecked = selectedItem.IsActive();
         }
 
         private void AddBindButtonClicked(object sender, RoutedEventArgs e)
@@ -126,6 +118,33 @@ namespace autopilot
                     CustomDialog.Display(CustomDialogType.OK, "Bind Delete Error", "Could not remove bind.", null);
                 }
             }
+        }
+
+        private void SelectedBindTreeItemChanged(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem item = (TreeViewItem)BindFolderTreeView.SelectedItem;
+            if (item.Equals(null) || item.HasItems)
+                EditorPanel.Visibility = Visibility.Hidden;
+            else
+            {
+                EditorPanel.Visibility = Visibility.Visible;
+                EditorTitleTextBox.Text = (string)item.Header;
+                EditorEnabledCheckbox.IsChecked = item.IsActive();
+            }
+        }
+
+        private void EnabledCheckboxChecked(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem item = (TreeViewItem)BindFolderTreeView.SelectedItem;
+            if (item == null) return;
+            item.SetActive(true);
+        }
+
+        private void EnabledCheckboxUnchecked(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem item = (TreeViewItem)BindFolderTreeView.SelectedItem;
+            if (item == null) return;
+            item.SetActive(false);
         }
     }
 }
