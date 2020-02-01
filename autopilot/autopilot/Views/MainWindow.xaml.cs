@@ -1,4 +1,5 @@
 ﻿using autopilot.Views.Dialogs;
+using autopilot.Views.Preferences;
 using System;
 using System.IO;
 using System.Windows;
@@ -54,6 +55,11 @@ namespace autopilot
         private void AboutMenuItemClicked(object sender, RoutedEventArgs e)
         {
             new About().ShowDialog();
+        }
+
+        private void PreferencesMenuItemClicked(object sender, RoutedEventArgs e)
+        {
+            new Preferences().ShowDialog();
         }
 
         private void CollapseClicked(object sender, RoutedEventArgs e)

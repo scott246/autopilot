@@ -1,0 +1,26 @@
+﻿<Window x:Class="autopilot.Views.Preferences.Preferences"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:autopilot.Views.Preferences"
+        mc:Ignorable="d"
+        Title="Settings" Height="200" Width="200">
+	<Grid Background="{StaticResource BackgroundColor}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="40"/>
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="0" Margin="10" Background="{StaticResource BackgroundColor}">
+			<CheckBox x:Name="WarnFileDeleteCheckbox" Foreground="{StaticResource TextColorDark}" Content="Warn on file delete" Checked="WarnFileDeleteCheckbox_Checked" Unchecked="WarnFileDeleteCheckbox_Unchecked"/>
+			<CheckBox x:Name="WarnFolderDeleteCheckbox" Foreground="{StaticResource TextColorDark}" Content="Warn on folder delete" Checked="WarnFolderDeleteCheckbox_Checked" Unchecked="WarnFolderDeleteCheckbox_Unchecked" />
+		</StackPanel>
+		<Grid Grid.Row="1" Margin="10">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="60"/>
+			</Grid.ColumnDefinitions>
+			<Button Content="Apply" Grid.Column="3" Click="ApplyButtonClicked"/>
+		</Grid>
+	</Grid>
+</Window>
