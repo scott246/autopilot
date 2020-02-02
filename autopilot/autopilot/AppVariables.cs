@@ -11,7 +11,7 @@ namespace autopilot
 	class AppVariables
 	{
 		//TODO: change to something more permanent
-		public static readonly string bindDirectory = @"C:\Users\ndsco\AppData\Local\autopilot\testbinds";
-		public static readonly string bindExtension = ".apscr";
+		public static readonly string macroDirectory = @"C:\Users\ndsco\AppData\Local\autopilot\testmacros";
+		public static readonly string macroExtension = ".apscr";
 	}
 }

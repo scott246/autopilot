@@ -14,6 +14,13 @@ namespace autopilot
 			return "." + fileName.Split('.')[fileName.Split('.').Length - 1];
 		}
 
+        public static string TrimAutopilotMacroExtension(string fileName)
+        {
+            if (fileName.EndsWith(AppVariables.macroExtension))
+                fileName = fileName.Substring(0, (fileName.Length - AppVariables.macroExtension.Length));
+            return fileName;
+        }
+
         public static void PopulateTreeView(TreeViewItem parentItem, string path)
         {
             foreach (string dir in Directory.EnumerateDirectories(path))
@@ -33,7 +40,7 @@ namespace autopilot
 
             foreach (string file in Directory.EnumerateFiles(path))
             {
-                if (AppVariables.bindExtension.Equals(GetExtension(file)))
+                if (AppVariables.macroExtension.Equals(GetExtension(file)))
                 {
                     TreeViewItem item = new TreeViewItem
                     {
@@ -48,30 +55,30 @@ namespace autopilot
             }
         }
 
-        public static void ExpandAllBindTreeElements(Boolean expand, TreeViewItem root)
+        public static void ExpandAllMacroTreeElements(Boolean expand, TreeViewItem root)
         {
             foreach (TreeViewItem dir in root.Items)
             {
                 dir.IsExpanded = expand;
-                ExpandAllBindTreeElements(expand, dir);
+                ExpandAllMacroTreeElements(expand, dir);
             }
         }
 
-        public static void CreateBind(TreeViewItem parent, string name)
+        public static void CreateMacro(TreeViewItem parent, string name)
         {
-            string fullBindName = name + AppVariables.bindExtension;
+            string fullMacroName = name + AppVariables.macroExtension;
 
-            TreeViewItem newBind = new TreeViewItem
+            TreeViewItem newMacro = new TreeViewItem
             {
-                Header = fullBindName,
-                Tag = parent.Tag + fullBindName,
+                Header = fullMacroName,
+                Tag = parent.Tag + fullMacroName,
                 FontWeight = FontWeights.Normal,
                 Foreground = new SolidColorBrush(Colors.LightGray)
             };
-            parent.Items.Add(newBind);
-            Console.WriteLine(parent.Tag + fullBindName);
-            File.Create(parent.Tag + fullBindName);
-            MainWindow.LoadBindFolderTree();
+            parent.Items.Add(newMacro);
+            Console.WriteLine(parent.Tag + fullMacroName);
+            File.Create(parent.Tag + fullMacroName);
+            MainWindow.RefreshMacroFolderTree();
         }
 
         public static void CreateFolder(TreeViewItem parent, string name)
@@ -86,12 +93,12 @@ namespace autopilot
             parent.Items.Add(newFolder);
             Console.WriteLine(parent.Tag + name);
             Directory.CreateDirectory(parent.Tag + name);
-            MainWindow.LoadBindFolderTree();
+            MainWindow.RefreshMacroFolderTree();
         }
 
-        public static bool ConfirmDeleteBind(TreeViewItem itemToDelete)
+        public static bool ConfirmDeleteMacro(TreeViewItem itemToDelete)
         {
-            if ((string)itemToDelete.Tag == AppVariables.bindDirectory)
+            if ((string)itemToDelete.Tag == AppVariables.macroDirectory)
             {
                 return false;
             }

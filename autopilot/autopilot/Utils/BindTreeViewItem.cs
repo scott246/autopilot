@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace autopilot
 {
-	static class BindTreeViewItem
+	static class MacroTreeViewItem
 	{
 		private static bool Active = true;
 

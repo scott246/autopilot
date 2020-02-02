@@ -18,10 +18,10 @@
 					<MenuItem Header="E_xit"/>
 				</MenuItem>
 				<MenuItem Header="_Actions">
-					<MenuItem Header="Bind">
-						<MenuItem Header="_New bind"/>
-						<MenuItem Header="_Toggle bind"/>
-						<MenuItem Header="_Delete bind"/>
+					<MenuItem Header="Macro">
+						<MenuItem Header="_New macro"/>
+						<MenuItem Header="_Toggle macro"/>
+						<MenuItem Header="_Delete macro"/>
 					</MenuItem>
 					<MenuItem Header="_Action">
 						<MenuItem Header="_Add action"/>
@@ -51,16 +51,16 @@
 					<Button x:Name="CollapseButton" Content="Collapse" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="1" Click="CollapseClicked"/>
 					<Button x:Name="ExpandButton" Content="Expand" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="2" Click="ExpandClicked"/>
 				</Grid>
-				<TreeView x:Name="BindFolderTreeView" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Grid.Row="1" Loaded="BindFolderTreeViewLoaded" SelectedItemChanged="SelectedBindTreeItemChanged"/>
+				<TreeView x:Name="MacroFolderTreeView" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Grid.Row="1" Loaded="MacroFolderTreeViewLoaded" SelectedItemChanged="SelectedMacroTreeItemChanged"/>
 				<Grid Grid.Row="2">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<Button x:Name="DeleteBindButton" Content="Delete" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="0" Click="DeleteBindButtonClicked"/>
+					<Button x:Name="DeleteMacroButton" Content="Delete" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="0" Click="DeleteMacroButtonClicked"/>
 					<Button x:Name="AddFolderButton" Content="Add Folder" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="1" Click="AddFolderButtonClicked"/>
-					<Button x:Name="AddBindButton" Content="Add" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="2" Click="AddBindButtonClicked"/>
+					<Button x:Name="AddMacroButton" Content="Add" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="2" Click="AddMacroButtonClicked"/>
 				</Grid>
 			</Grid>
 
@@ -88,19 +88,19 @@
 						</Grid.ColumnDefinitions>
 						<Label Grid.Row="0" Grid.Column="0" Content="Name" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 						<Label Grid.Row="1" Grid.Column="0" Content="About" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-						<Label Grid.Row="2" Grid.Column="0" Content="Bind" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+						<Label Grid.Row="2" Grid.Column="0" Content="Macro" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 						<Grid Grid.Row="0" Grid.Column="1">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="3*"/>
 								<ColumnDefinition Width="*"/>
 							</Grid.ColumnDefinitions>
-							<TextBox x:Name="EditorTitleTextBox" Grid.Column="0" Text="TITLE" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+							<TextBox x:Name="EditorTitleTextBox" Grid.Column="0" Text="TITLE" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" TextChanged="EditorTitleTextChanged"/>
 							<Label Grid.Column="1" Content=".apscr" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 						</Grid>
-						<TextBox x:Name="EditorDescriptionTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Margin="0,0,5,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-						<Label x:Name="EditorBindingLabel" Grid.Row="2" Grid.Column="1" Content="[unbound]" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
+						<TextBox x:Name="EditorDescriptionTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Margin="0,0,5,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" TextChanged="EditorDescriptionTextChanged"/>
+						<Label x:Name="EditorMacroingLabel" Grid.Row="2" Grid.Column="1" Content="[unbound]" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
 						<CheckBox x:Name="EditorEnabledCheckbox" Grid.Row="0" Grid.Column="2" Content="Enabled" Foreground="{StaticResource TextColorDark}" IsChecked="True" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="EnabledCheckboxChecked" Unchecked="EnabledCheckboxUnchecked"/>
-						<Button Grid.Row="2" Grid.Column="2" Content="Edit Bind" Background="{StaticResource ButtonBackgroundColor}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						<Button Grid.Row="2" Grid.Column="2" Content="Edit Macro" Background="{StaticResource ButtonBackgroundColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="EditMacroButtonClicked"/>
 					</Grid>
 					<Grid Grid.Column="1">
 						

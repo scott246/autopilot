@@ -13,43 +13,48 @@ namespace autopilot
     /// </summary>
     public partial class MainWindow : Window
 	{
-        public static TreeView BindFolderTreeViewRef;
+        public static TreeView MacroFolderTreeViewRef;
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        public static void LoadBindFolderTree()
+        public static void LoadMacroFolderTree()
         {
-            BindFolderTreeViewRef.Items.Clear();
-            string bindDirectory = AppVariables.bindDirectory;
+            MacroFolderTreeViewRef.Items.Clear();
+            string macroDirectory = AppVariables.macroDirectory;
             try
             {
-                Directory.CreateDirectory(bindDirectory);
+                Directory.CreateDirectory(macroDirectory);
             }
             catch (Exception)
             {
-                CustomDialog.Display(CustomDialogType.OK, "Fatal Error", "Error creating bind directory.", null);
+                CustomDialog.Display(CustomDialogType.OK, "Fatal Error", "Error creating macro directory.");
                 Application.Current.Shutdown();
             }
             TreeViewItem item = new TreeViewItem
             {
-                Header = bindDirectory.Substring(bindDirectory.LastIndexOf('\\') + 1),
-                Tag = bindDirectory + '\\',
+                Header = macroDirectory.Substring(macroDirectory.LastIndexOf('\\') + 1),
+                Tag = macroDirectory + '\\',
                 FontWeight = FontWeights.Bold,
                 Foreground = new SolidColorBrush(Colors.White)
             };
-            BindFolderTreeViewRef.Items.Add(item);
-            MainWindowUtils.PopulateTreeView(item, bindDirectory);
+            MacroFolderTreeViewRef.Items.Add(item);
+            MainWindowUtils.PopulateTreeView(item, macroDirectory);
             item.IsExpanded = true;
         }
 
-        private void BindFolderTreeViewLoaded(object sender, RoutedEventArgs e)
+        public static void RefreshMacroFolderTree()
         {
-            BindFolderTreeViewRef = BindFolderTreeView;
+            MacroFolderTreeViewRef.Items.Refresh();
+        }
+
+        private void MacroFolderTreeViewLoaded(object sender, RoutedEventArgs e)
+        {
+            MacroFolderTreeViewRef = MacroFolderTreeView;
             EditorPanel.Visibility = Visibility.Hidden;
-            LoadBindFolderTree();
+            LoadMacroFolderTree();
         }
 
         private void AboutMenuItemClicked(object sender, RoutedEventArgs e)
@@ -64,31 +69,31 @@ namespace autopilot
 
         private void CollapseClicked(object sender, RoutedEventArgs e)
         {
-            MainWindowUtils.ExpandAllBindTreeElements(false, (TreeViewItem)BindFolderTreeView.Items.GetItemAt(0));
+            MainWindowUtils.ExpandAllMacroTreeElements(false, (TreeViewItem)MacroFolderTreeView.Items.GetItemAt(0));
         }
 
         private void ExpandClicked(object sender, RoutedEventArgs e)
         {
-            MainWindowUtils.ExpandAllBindTreeElements(true, (TreeViewItem)BindFolderTreeView.Items.GetItemAt(0));
+            MainWindowUtils.ExpandAllMacroTreeElements(true, (TreeViewItem)MacroFolderTreeView.Items.GetItemAt(0));
         }
 
         private void ToggleClicked(object sender, RoutedEventArgs e)
         {
-            TreeViewItem selectedItem = (TreeViewItem)BindFolderTreeView.SelectedItem;
+            TreeViewItem selectedItem = (TreeViewItem)MacroFolderTreeView.SelectedItem;
             selectedItem.SetActive(!selectedItem.IsActive());
             EditorEnabledCheckbox.IsChecked = selectedItem.IsActive();
         }
 
-        private void AddBindButtonClicked(object sender, RoutedEventArgs e)
+        private void AddMacroButtonClicked(object sender, RoutedEventArgs e)
         {
-            TreeViewItem selectedItem = (TreeViewItem)BindFolderTreeView.SelectedItem;
+            TreeViewItem selectedItem = (TreeViewItem)MacroFolderTreeView.SelectedItem;
             if (null == selectedItem)
-                selectedItem = (TreeViewItem)BindFolderTreeView.Items.GetItemAt(0);
+                selectedItem = (TreeViewItem)MacroFolderTreeView.Items.GetItemAt(0);
             if (File.GetAttributes((string)selectedItem.Tag).HasFlag(FileAttributes.Directory))
             {
-                CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Bind", "New bind name (no extension):", textboxContent: "untitled");
+                CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Macro", "New macro name (no extension):", textboxContent: "untitled");
                 if (response.ButtonResponse != CustomDialogButtonResponse.Cancel) 
-                    MainWindowUtils.CreateBind(selectedItem, response.TextboxResponse);
+                    MainWindowUtils.CreateMacro(selectedItem, response.TextboxResponse);
             }
         }
 
@@ -97,17 +102,17 @@ namespace autopilot
             CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Folder", "New folder name:", textboxContent: "untitled");
             if (response.ButtonResponse != CustomDialogButtonResponse.Cancel)
             {
-                TreeViewItem selectedItem = (TreeViewItem)BindFolderTreeView.SelectedItem;
+                TreeViewItem selectedItem = (TreeViewItem)MacroFolderTreeView.SelectedItem;
                 if (null == selectedItem)
-                    selectedItem = (TreeViewItem)BindFolderTreeView.Items.GetItemAt(0);
+                    selectedItem = (TreeViewItem)MacroFolderTreeView.Items.GetItemAt(0);
                 MainWindowUtils.CreateFolder(selectedItem, response.TextboxResponse);
             }
         }
 
-        private void DeleteBindButtonClicked(object sender, RoutedEventArgs e)
+        private void DeleteMacroButtonClicked(object sender, RoutedEventArgs e)
         {
-            TreeViewItem selectedItem = (TreeViewItem)BindFolderTreeView.SelectedItem;
-            if (null != selectedItem && MainWindowUtils.ConfirmDeleteBind(selectedItem))
+            TreeViewItem selectedItem = (TreeViewItem)MacroFolderTreeView.SelectedItem;
+            if (null != selectedItem && MainWindowUtils.ConfirmDeleteMacro(selectedItem))
             {
                 try
                 {
@@ -117,38 +122,39 @@ namespace autopilot
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    CustomDialog.Display(CustomDialogType.OK, "Insufficient Access", "Could not remove bind. Try running Autopilot as administrator.", null);
+                    CustomDialog.Display(CustomDialogType.OK, "Insufficient Access", "Could not remove macro. Try running Autopilot as administrator.");
                 }
                 catch (Exception)
                 {
-                    CustomDialog.Display(CustomDialogType.OK, "Bind Delete Error", "Could not remove bind.", null);
+                    CustomDialog.Display(CustomDialogType.OK, "Macro Delete Error", "Could not remove macro.");
                 }
             }
         }
 
-        private void SelectedBindTreeItemChanged(object sender, RoutedEventArgs e)
+        private void SelectedMacroTreeItemChanged(object sender, RoutedEventArgs e)
         {
-            TreeViewItem item = (TreeViewItem)BindFolderTreeView.SelectedItem;
-            if (item.Equals(null) || item.HasItems)
+            TreeViewItem item = (TreeViewItem)MacroFolderTreeView.SelectedItem;
+            if (null == item || item.HasItems)
                 EditorPanel.Visibility = Visibility.Hidden;
             else
             {
+                string itemHeader = MainWindowUtils.TrimAutopilotMacroExtension(item.Header.ToString());
                 EditorPanel.Visibility = Visibility.Visible;
-                EditorTitleTextBox.Text = (string)item.Header;
+                EditorTitleTextBox.Text = itemHeader;
                 EditorEnabledCheckbox.IsChecked = item.IsActive();
             }
         }
 
         private void EnabledCheckboxChecked(object sender, RoutedEventArgs e)
         {
-            TreeViewItem item = (TreeViewItem)BindFolderTreeView.SelectedItem;
+            TreeViewItem item = (TreeViewItem)MacroFolderTreeView.SelectedItem;
             if (item == null) return;
             item.SetActive(true);
         }
 
         private void EnabledCheckboxUnchecked(object sender, RoutedEventArgs e)
         {
-            TreeViewItem item = (TreeViewItem)BindFolderTreeView.SelectedItem;
+            TreeViewItem item = (TreeViewItem)MacroFolderTreeView.SelectedItem;
             if (item == null) return;
             item.SetActive(false);
         }
@@ -163,6 +169,31 @@ namespace autopilot
             }
             int currentLine = EditorCode.GetLineIndexFromCharacterIndex(EditorCode.CaretIndex);
             EditorLineNumbers.ScrollToLine(currentLine);
+        }
+
+        private void EditorTitleTextChanged(object sender, TextChangedEventArgs e)
+        {
+            TreeViewItem treeItem = (TreeViewItem)MacroFolderTreeView.SelectedItem;
+            string editorTitleText = EditorTitleTextBox.Text;
+            string editorTitleTextNoExtension = MainWindowUtils.TrimAutopilotMacroExtension(editorTitleText);
+            if (treeItem == null) return;
+            string treeItemHeader = treeItem.Header.ToString();
+            string treeItemHeaderNoExtension = MainWindowUtils.TrimAutopilotMacroExtension(treeItemHeader);
+            if (editorTitleTextNoExtension != treeItemHeaderNoExtension)
+            {
+                treeItem.Header = editorTitleTextNoExtension + AppVariables.macroExtension;
+                RefreshMacroFolderTree();
+            }
+        }
+
+        private void EditorDescriptionTextChanged(object sender, TextChangedEventArgs e)
+        {
+            //save the description
+        }
+
+        private void EditMacroButtonClicked(object sender, RoutedEventArgs e)
+        {
+            //open macro editor window
         }
     }
 }
