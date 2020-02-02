@@ -1,8 +1,13 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace autopilot
+namespace autopilot.Utils
 {
 	static class MacroTreeViewItem
 	{
@@ -26,7 +31,7 @@ namespace autopilot
 				t.FontStyle = FontStyles.Italic;
 			}
 
-			foreach (TreeViewItem item in t.Items) 
+			foreach (TreeViewItem item in t.Items)
 			{
 				item.SetActive(active);
 			}

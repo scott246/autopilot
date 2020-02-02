@@ -12,6 +12,7 @@ namespace autopilot.Views.Dialogs
 		public CustomDialog()
 		{
 			InitializeComponent();
+			Button1.Focus();
 		}
 
 		public static CustomDialogResponse Display(CustomDialogType cdt, string title, string dialogContent, string checkboxContent = null, string textboxContent = null)

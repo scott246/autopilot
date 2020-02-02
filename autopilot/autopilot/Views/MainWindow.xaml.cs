@@ -1,4 +1,5 @@
-﻿using autopilot.Views.Dialogs;
+﻿using autopilot.Utils;
+using autopilot.Views.Dialogs;
 using autopilot.Views.Preferences;
 using System;
 using System.IO;
@@ -91,21 +92,24 @@ namespace autopilot
                 selectedItem = (TreeViewItem)MacroFolderTreeView.Items.GetItemAt(0);
             if (File.GetAttributes((string)selectedItem.Tag).HasFlag(FileAttributes.Directory))
             {
-                CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Macro", "New macro name (no extension):", textboxContent: "untitled");
-                if (response.ButtonResponse != CustomDialogButtonResponse.Cancel) 
+                CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Macro", "New macro name (no extension):", textboxContent: "");
+                if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")  
                     MainWindowUtils.CreateMacro(selectedItem, response.TextboxResponse);
             }
         }
 
         private void AddFolderButtonClicked(object sender, RoutedEventArgs e)
         {
-            CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Folder", "New folder name:", textboxContent: "untitled");
-            if (response.ButtonResponse != CustomDialogButtonResponse.Cancel)
+            TreeViewItem selectedItem = (TreeViewItem)MacroFolderTreeView.SelectedItem;
+            if (File.GetAttributes((string)selectedItem.Tag).HasFlag(FileAttributes.Directory))
             {
-                TreeViewItem selectedItem = (TreeViewItem)MacroFolderTreeView.SelectedItem;
-                if (null == selectedItem)
-                    selectedItem = (TreeViewItem)MacroFolderTreeView.Items.GetItemAt(0);
-                MainWindowUtils.CreateFolder(selectedItem, response.TextboxResponse);
+                CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Folder", "New folder name:", textboxContent: "");
+                if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")
+                {
+                    if (null == selectedItem)
+                        selectedItem = (TreeViewItem)MacroFolderTreeView.Items.GetItemAt(0);
+                    MainWindowUtils.CreateFolder(selectedItem, response.TextboxResponse);
+                }
             }
         }
 
@@ -134,7 +138,8 @@ namespace autopilot
         private void SelectedMacroTreeItemChanged(object sender, RoutedEventArgs e)
         {
             TreeViewItem item = (TreeViewItem)MacroFolderTreeView.SelectedItem;
-            if (null == item || item.HasItems)
+            string itemLocation = item.Tag.ToString();
+            if (null == item || item.HasItems || Directory.Exists(itemLocation))
                 EditorPanel.Visibility = Visibility.Hidden;
             else
             {

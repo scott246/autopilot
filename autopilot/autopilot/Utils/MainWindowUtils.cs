@@ -1,6 +1,9 @@
-﻿using autopilot.Views.Dialogs;
+﻿using autopilot.Utils;
+using autopilot.Views.Dialogs;
 using System;
 using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -76,8 +79,9 @@ namespace autopilot
                 Foreground = new SolidColorBrush(Colors.LightGray)
             };
             parent.Items.Add(newMacro);
-            Console.WriteLine(parent.Tag + fullMacroName);
-            File.Create(parent.Tag + fullMacroName);
+            string fileName = parent.Tag + fullMacroName;
+            MacroFile macroFile = MacroFileUtils.CreateMacroFileItem(title: name, enabled: true);
+            MacroFileUtils.WriteMacroFile(fileName, macroFile, true);
             MainWindow.RefreshMacroFolderTree();
         }
 
@@ -86,7 +90,7 @@ namespace autopilot
             TreeViewItem newFolder = new TreeViewItem
             {
                 Header = name,
-                Tag = parent.Tag + @"\" + name,
+                Tag = parent.Tag + @"\" + name + @"\",
                 FontWeight = FontWeights.Bold,
                 Foreground = new SolidColorBrush(Colors.LightGray)
             };

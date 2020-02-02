@@ -71,6 +71,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Utils\MacroFile.cs" />
+    <Compile Include="Utils\MacroFileUtils.cs" />
+    <Compile Include="Utils\MacroTreeViewItem.cs" />
     <Compile Include="Views\Preferences\Preferences.xaml.cs">
       <DependentUpon>Preferences.xaml</DependentUpon>
     </Compile>
@@ -96,7 +98,6 @@
     </Compile>
     <Compile Include="AppVariables.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Utils\BindTreeViewItem.cs" />
     <Compile Include="Views\Dialogs\CustomDialog.xaml.cs">
       <DependentUpon>CustomDialog.xaml</DependentUpon>
     </Compile>
