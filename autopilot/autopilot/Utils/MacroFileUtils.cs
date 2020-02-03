@@ -11,14 +11,16 @@ namespace autopilot.Utils
 {
 	public class MacroFileUtils
 	{
-		public static bool WriteMacroFile(string path, MacroFile macroFile, bool canOverwrite)
+		public static bool WriteMacroFile(MacroFile macroFile, bool canOverwrite)
 		{
-			if (File.Exists(path) && !canOverwrite)
+			string macroFilePath = macroFile.Path;
+			if (macroFile.Directory == true) Directory.CreateDirectory(macroFilePath);
+			if (File.Exists(macroFilePath) && !canOverwrite)
 				return false;
 			try
 			{
 				IFormatter formatter = new BinaryFormatter();
-				Stream stream = new FileStream(path, FileMode.Create, FileAccess.Write);
+				Stream stream = new FileStream(macroFilePath, FileMode.Create, FileAccess.Write);
 				formatter.Serialize(stream, macroFile);
 				stream.Close();
 			}
@@ -29,22 +31,22 @@ namespace autopilot.Utils
 			return true;
 		}
 
-		public static MacroFile CreateMacroFileItem(string title = "", string desc = "", bool enabled = false, string bind = "", string code = "")
-		{
-			MacroFile macroFile = new MacroFile
-			{
-				Title = title,
-				Description = desc,
-				Enabled = enabled,
-				Bind = bind,
-				Code = code
-			};
-			return macroFile;
-		}
-
 		public static MacroFile ReadMacroFile(string path)
 		{
 			MacroFile macroFile;
+			if (Directory.Exists(path))
+			{
+				macroFile = new MacroFile
+				{
+					Directory = true,
+					Path = path,
+					Title = MainWindowUtils.GetFileNameWithNoMacroExtension(path),
+					FontStyle = AppVariables.EnabledFontStyle,
+					FontWeight = AppVariables.FolderFontWeight,
+					Children = new MacroFileCollection()
+				};
+				return macroFile;
+			}
 			try
 			{
 				IFormatter formatter = new BinaryFormatter();

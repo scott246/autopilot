@@ -17,102 +17,157 @@ namespace autopilot
 			return "." + fileName.Split('.')[fileName.Split('.').Length - 1];
 		}
 
-        public static string TrimAutopilotMacroExtension(string fileName)
+        public static string GetFileNameWithNoMacroExtension(string fileName)
         {
-            if (fileName.EndsWith(AppVariables.macroExtension))
-                fileName = fileName.Substring(0, (fileName.Length - AppVariables.macroExtension.Length));
+            if (fileName.EndsWith(AppVariables.MACRO_EXTENSION))
+                fileName = fileName.Substring(0, (fileName.Length - AppVariables.MACRO_EXTENSION.Length));
             return fileName;
         }
 
-        public static void PopulateTreeView(TreeViewItem parentItem, string path)
+        public static string GetFileNameWithMacroExtension(string fileName)
+        {
+            if (!fileName.EndsWith(AppVariables.MACRO_EXTENSION))
+                fileName += AppVariables.MACRO_EXTENSION;
+            return fileName;
+        }
+
+        public static string GetFileNameWithMacroExtensionFromPath(string path)
+        {
+            if (!path.EndsWith(AppVariables.MACRO_EXTENSION))
+                path += AppVariables.MACRO_EXTENSION;
+            return path.Substring(path.LastIndexOf('\\') + 1);
+        }
+
+        public static string GetFileNameWithNoMacroExtensionFromPath(string path)
+        {
+            if (path.EndsWith(AppVariables.MACRO_EXTENSION))
+                path = path.Substring(0, (path.Length - AppVariables.MACRO_EXTENSION.Length));
+            return path.Substring(path.LastIndexOf('\\') + 1);
+        }
+
+        public static string GetParentFolderNameFromPath(string path)
+        {
+            return path.Substring(path.LastIndexOf('\\') + 1);
+        }
+
+        public static MacroFile GetMacroFileFromParentByTitle(MacroFile parent, string title)
+        {
+            foreach (MacroFile file in parent.Children)
+            {
+                if (file.Title == title) return file;
+            }
+            return null;
+        }
+
+        public static MacroFile GetMacroFileFromPath(string path)
+        {
+            // trim trailing '\\' character(s)
+            while (path.ToCharArray()[path.Length - 1] == '\\')
+            {
+                path = path.Substring(0, path.Length - 2);
+            }
+
+            string[] pathElements = path.Split('\\');
+            MacroFile latestFile = null;
+            MacroFile parentOfLatestFile = AppVariables.MACRO_FILE_TREE_ROOT;
+            foreach (string pathElement in pathElements)
+            {
+                MacroFile fileElement = GetMacroFileFromParentByTitle(parentOfLatestFile, pathElement);
+                if (fileElement != null)
+                {
+                    latestFile = fileElement;
+                }
+            }
+            return latestFile;
+        }
+
+        public static void DeleteMacroFile(string path)
+        {
+            AppVariables.MACRO_FILE_TREE.Remove(GetMacroFileFromPath(path));
+        }
+
+        public static void PopulateTreeView(MacroFile parentFile, string path)
         {
             foreach (string dir in Directory.EnumerateDirectories(path))
             {
-                TreeViewItem item = new TreeViewItem
-                {
-                    Header = dir.Substring(dir.LastIndexOf('\\') + 1),
-                    Tag = dir + @"\",
-                    FontWeight = FontWeights.Bold,
-                    Foreground = new SolidColorBrush(Colors.White)
-                };
+                MacroFile file = MacroFileUtils.ReadMacroFile(dir);
+                parentFile.Children.Add(file);
 
-                parentItem.Items.Add(item);
-
-                PopulateTreeView(item, dir);
+                PopulateTreeView(file, dir);
             }
 
-            foreach (string file in Directory.EnumerateFiles(path))
+            foreach (string item in Directory.EnumerateFiles(path))
             {
-                if (AppVariables.macroExtension.Equals(GetExtension(file)))
+                if (AppVariables.MACRO_EXTENSION.Equals(GetExtension(item)))
                 {
-                    TreeViewItem item = new TreeViewItem
-                    {
-                        Header = file.Substring(file.LastIndexOf('\\') + 1),
-                        Tag = file,
-                        FontWeight = FontWeights.Normal,
-                        Foreground = new SolidColorBrush(Colors.LightGray)
-                    };
-
-                    parentItem.Items.Add(item);
+                    MacroFile file = MacroFileUtils.ReadMacroFile(item);
+                    parentFile.Children.Add(file);
                 }
             }
         }
 
-        public static void ExpandAllMacroTreeElements(Boolean expand, TreeViewItem root)
+        public static void ExpandAllMacroTreeElements(bool expand, MacroFile root)
         {
-            foreach (TreeViewItem dir in root.Items)
+            /*foreach (MacroFile dir in root.Children)
             {
-                dir.IsExpanded = expand;
+                //dir.IsExpanded()
+                (MacroFile)MacroFolderTreeView.Items.GetItemAt(0);
                 ExpandAllMacroTreeElements(expand, dir);
-            }
+            }*/
         }
 
-        public static void CreateMacro(TreeViewItem parent, string name)
+        public static void CreateMacro(MacroFile parent, string fullMacroPath)
         {
-            string fullMacroName = name + AppVariables.macroExtension;
-
-            TreeViewItem newMacro = new TreeViewItem
+            string fullMacroName = GetFileNameWithMacroExtensionFromPath(fullMacroPath);
+            MacroFile file = new MacroFile
             {
-                Header = fullMacroName,
-                Tag = parent.Tag + fullMacroName,
-                FontWeight = FontWeights.Normal,
-                Foreground = new SolidColorBrush(Colors.LightGray)
+                Directory = false,
+                Title = fullMacroName,
+                Path = fullMacroPath,
+                Enabled = true,
+                Foreground = AppVariables.EnabledTreeColor,
+                FontStyle = AppVariables.EnabledFontStyle,
+                FontWeight = AppVariables.FileFontWeight
             };
-            parent.Items.Add(newMacro);
-            string fileName = parent.Tag + fullMacroName;
-            MacroFile macroFile = MacroFileUtils.CreateMacroFileItem(title: name, enabled: true);
-            MacroFileUtils.WriteMacroFile(fileName, macroFile, true);
-            MainWindow.RefreshMacroFolderTree();
+
+            parent.Children.Add(file);
+
+            MacroFileUtils.WriteMacroFile(file, true);
+            MainWindow.LoadMacroFolderTree();
         }
 
-        public static void CreateFolder(TreeViewItem parent, string name)
+        public static void CreateFolder(MacroFile parent, string fullFolderPath)
         {
-            TreeViewItem newFolder = new TreeViewItem
+            Directory.CreateDirectory(fullFolderPath);
+            MacroFile folder = new MacroFile
             {
-                Header = name,
-                Tag = parent.Tag + @"\" + name + @"\",
-                FontWeight = FontWeights.Bold,
-                Foreground = new SolidColorBrush(Colors.LightGray)
+                Directory = true,
+                Title = GetFileNameWithNoMacroExtensionFromPath(fullFolderPath),
+                Path = fullFolderPath,
+                FontWeight = AppVariables.FolderFontWeight,
+                Foreground = AppVariables.EnabledTreeColor,
+                FontStyle = AppVariables.EnabledFontStyle,
+                Children = new MacroFileCollection()
             };
-            parent.Items.Add(newFolder);
-            Console.WriteLine(parent.Tag + name);
-            Directory.CreateDirectory(parent.Tag + name);
-            MainWindow.RefreshMacroFolderTree();
+
+            parent.Children.Add(folder);
+
+            MainWindow.LoadMacroFolderTree();
         }
 
-        public static bool ConfirmDeleteMacro(TreeViewItem itemToDelete)
+        public static bool ConfirmDeleteMacro(MacroFile itemToDelete)
         {
-            if ((string)itemToDelete.Tag == AppVariables.macroDirectory)
+            if (itemToDelete.Path == AppVariables.MACRO_DIRECTORY)
             {
                 return false;
             }
 
             CustomDialogResponse confirmResult;
-            if (itemToDelete.HasItems)
+            if (!itemToDelete.Children.Equals(null))
             {
                 if (Properties.Settings.Default.WarnOnFolderDelete == false) 
                     return true;
-                confirmResult = CustomDialog.Display(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete the entire '" + itemToDelete.Header + "' folder? This cannot be undone.", "Do not show again");
+                confirmResult = CustomDialog.Display(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete the entire '" + itemToDelete.Title + "' folder? This cannot be undone.", "Do not show again");
                 if (confirmResult.CheckboxResponse == true)
                 {
                     Properties.Settings.Default.WarnOnFolderDelete = false;
@@ -123,7 +178,7 @@ namespace autopilot
             {
                 if (Properties.Settings.Default.WarnOnFileDelete == false) 
                     return true;
-                confirmResult = CustomDialog.Display(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete '" + itemToDelete.Header + "'? This cannot be undone.", "Do not show again");
+                confirmResult = CustomDialog.Display(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete '" + itemToDelete.Title + "'? This cannot be undone.", "Do not show again");
                 if (confirmResult.CheckboxResponse == true)
                 {
                     Properties.Settings.Default.WarnOnFileDelete = false;
