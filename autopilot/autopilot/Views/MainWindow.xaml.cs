@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using static autopilot.AppVariables;
 
 namespace autopilot
 {
@@ -17,13 +18,15 @@ namespace autopilot
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = AppVariables.MACRO_FILE_TREE;
+            DataContext = MACRO_FILE_TREE;
+            EditorPanel.Visibility = Visibility.Hidden;
+            LoadMacroFolderTree();
         }
 
         public static void LoadMacroFolderTree()
         {
-            AppVariables.MACRO_FILE_TREE.Clear();
-            string macroDirectory = AppVariables.MACRO_DIRECTORY;
+            MACRO_FILE_TREE.Clear();
+            string macroDirectory = MACRO_DIRECTORY;
             try
             {
                 Directory.CreateDirectory(macroDirectory);
@@ -33,19 +36,15 @@ namespace autopilot
                 CustomDialog.Display(CustomDialogType.OK, "Fatal Error", "Error creating macro directory.");
                 Application.Current.Shutdown();
             }
-            MacroFile file = MacroFileUtils.ReadMacroFile(AppVariables.MACRO_DIRECTORY);
-            AppVariables.MACRO_FILE_TREE_ROOT = file;
-            AppVariables.MACRO_FILE_TREE.Add(file);
-            Console.WriteLine(AppVariables.MACRO_DIRECTORY);
-            Console.WriteLine(AppVariables.MACRO_FILE_TREE);
-            Console.WriteLine(AppVariables.MACRO_FILE_TREE_ROOT);
+            MacroFile file = MacroFileUtils.ReadMacroFile(MACRO_DIRECTORY);
+            MACRO_FILE_TREE_ROOT = file;
+            MACRO_FILE_TREE.Add(file);
             MainWindowUtils.PopulateTreeView(file, macroDirectory);
         }
 
         private void MacroFolderTreeViewLoaded(object sender, RoutedEventArgs e)
         {
-            EditorPanel.Visibility = Visibility.Hidden;
-            LoadMacroFolderTree();
+            
         }
 
         private void AboutMenuItemClicked(object sender, RoutedEventArgs e)
@@ -72,16 +71,6 @@ namespace autopilot
         {
             MacroFile selectedItem = (MacroFile)MacroFolderTreeView.SelectedItem;
             selectedItem.Enabled = !selectedItem.Enabled;
-            if (selectedItem.Enabled)
-            {
-                selectedItem.Foreground = AppVariables.EnabledTreeColor;
-                selectedItem.FontStyle = AppVariables.EnabledFontStyle;
-            }
-            else
-            {
-                selectedItem.Foreground = AppVariables.DisabledTreeColor;
-                selectedItem.FontStyle = AppVariables.DisabledFontStyle;
-            }
             EditorEnabledCheckbox.IsChecked = selectedItem.Enabled;
         }
 
@@ -90,11 +79,11 @@ namespace autopilot
             MacroFile selectedItem = (MacroFile)MacroFolderTreeView.SelectedItem;
             if (null == selectedItem)
                 selectedItem = (MacroFile)MacroFolderTreeView.Items.GetItemAt(0);
-            if (File.GetAttributes(selectedItem.Path).HasFlag(FileAttributes.Directory))
+            if (selectedItem.Directory)
             {
                 CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Macro", "New macro name (no extension):", textboxContent: "");
-                if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")  
-                    MainWindowUtils.CreateMacro(selectedItem, response.TextboxResponse);
+                if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")
+                    MacroFileUtils.CreateMacro(selectedItem, selectedItem.Path + '\\' + MacroFileUtils.GetFileNameWithMacroExtension(response.TextboxResponse));
             }
         }
 
@@ -108,7 +97,7 @@ namespace autopilot
                 {
                     if (null == selectedItem)
                         selectedItem = (MacroFile)MacroFolderTreeView.Items.GetItemAt(0);
-                    MainWindowUtils.CreateFolder(selectedItem, response.TextboxResponse);
+                    MacroFileUtils.CreateFolder(selectedItem, selectedItem.Path + '\\' + response.TextboxResponse);
                 }
             }
         }
@@ -121,7 +110,7 @@ namespace autopilot
                 try
                 {
                     File.Delete(selectedItem.Path);
-                    MainWindowUtils.DeleteMacroFile(selectedItem.Path);
+                    MacroFileUtils.DeleteMacroFile(selectedItem.Path);
                 }
                 catch (UnauthorizedAccessException)
                 {
@@ -137,12 +126,12 @@ namespace autopilot
         private void SelectedMacroTreeItemChanged(object sender, RoutedEventArgs e)
         {
             MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
-            string fileLocation = file.Path;
-            if (null == file || file.Children.Count == 0 || Directory.Exists(fileLocation))
+            
+            if (null == file || file.Children.Count == 0 || file.Directory)
                 EditorPanel.Visibility = Visibility.Hidden;
             else
             {
-                string itemHeader = MainWindowUtils.GetFileNameWithNoMacroExtension(file.Title);
+                string itemHeader = MacroFileUtils.GetFileNameWithNoMacroExtension(file.Title);
                 EditorPanel.Visibility = Visibility.Visible;
                 EditorTitleTextBox.Text = itemHeader;
                 EditorEnabledCheckbox.IsChecked = file.Enabled;
@@ -177,15 +166,14 @@ namespace autopilot
 
         private void EditorTitleTextChanged(object sender, TextChangedEventArgs e)
         {
-            TreeViewItem treeItem = (TreeViewItem)MacroFolderTreeView.SelectedItem;
+            MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
             string editorTitleText = EditorTitleTextBox.Text;
-            string editorTitleTextNoExtension = MainWindowUtils.GetFileNameWithNoMacroExtension(editorTitleText);
-            if (treeItem == null) return;
-            string treeItemHeader = treeItem.Header.ToString();
-            string treeItemHeaderNoExtension = MainWindowUtils.GetFileNameWithNoMacroExtension(treeItemHeader);
+            string editorTitleTextNoExtension = MacroFileUtils.GetFileNameWithNoMacroExtension(editorTitleText);
+            if (file == null) return;
+            string treeItemHeaderNoExtension = MacroFileUtils.GetFileNameWithNoMacroExtension(file.Title);
             if (editorTitleTextNoExtension != treeItemHeaderNoExtension)
             {
-                treeItem.Header = MainWindowUtils.GetFileNameWithMacroExtension(editorTitleText);
+                file.Title = MacroFileUtils.GetFileNameWithMacroExtension(editorTitleText);
                 LoadMacroFolderTree();
             }
         }

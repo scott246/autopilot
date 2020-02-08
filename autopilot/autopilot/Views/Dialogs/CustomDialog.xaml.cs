@@ -12,7 +12,6 @@ namespace autopilot.Views.Dialogs
 		public CustomDialog()
 		{
 			InitializeComponent();
-			Button1.Focus();
 		}
 
 		public static CustomDialogResponse Display(CustomDialogType cdt, string title, string dialogContent, string checkboxContent = null, string textboxContent = null)
@@ -32,6 +31,7 @@ namespace autopilot.Views.Dialogs
 				dialog.Title = "Error";
 				dialog.Message.Text = "An error occurred while initializing this dialog box.";
 			}
+			
 			dialog.ShowDialog();
 			return new CustomDialogResponse
 			{

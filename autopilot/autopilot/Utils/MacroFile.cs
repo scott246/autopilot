@@ -22,12 +22,10 @@ namespace autopilot.Utils
 		public string Bind { get; set; }			// the combination of keys/actions to trigger the event
 		public string Code { get; set; }			// the code for the events that follow the bind
 		public string Path { get; set; }			// location on disk
-		public Color Foreground { get; set; }		// color in macro tree
-		public FontWeight FontWeight { get; set; }	// font weight in macro tree, for folder/file
-		public FontStyle FontStyle { get; set; }	// font style in macro tree, for enabled/disabled
 		public MacroFileCollection Children { get; set; }
 	}
 
+	[Serializable]
 	public class MacroFileCollection : ObservableCollection<MacroFile>
 	{
 

@@ -54,7 +54,7 @@
 				<TreeView x:Name="MacroFolderTreeView" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Grid.Row="1" ItemsSource="{Binding}" Loaded="MacroFolderTreeViewLoaded" SelectedItemChanged="SelectedMacroTreeItemChanged">
 					<TreeView.ItemTemplate>
 						<HierarchicalDataTemplate DataType="local:MacroFile" ItemsSource="{Binding Children}">
-							<TextBlock Text="{Binding Title}" Foreground="{StaticResource TextColorDark}"/>
+							<TextBlock Text="{Binding Title}" FontStyle="{Binding FontStyle}" FontWeight="{Binding FontWeight}" Foreground="{StaticResource TextColorDark}"/>
 						</HierarchicalDataTemplate>
 					</TreeView.ItemTemplate>
 				</TreeView>

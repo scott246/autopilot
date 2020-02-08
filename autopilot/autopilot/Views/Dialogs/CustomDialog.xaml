@@ -24,7 +24,7 @@
 			<CheckBox Grid.Column="0" x:Name="Checkbox" Content="CheckBox" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="CheckboxClicked"/>
 			<Button Grid.Column="1" x:Name="Button3" Content="3" VerticalAlignment="Center" Margin="5" Click="Button3Clicked"/>
 			<Button Grid.Column="2" x:Name="Button2" Content="2" VerticalAlignment="Center" Margin="5" Click="Button2Clicked"/>
-			<Button Grid.Column="3" x:Name="Button1" Content="1" VerticalAlignment="Center" Margin="5" Click="Button1Clicked"/>
+			<Button Grid.Column="3" x:Name="Button1" Content="1" VerticalAlignment="Center" Margin="5" Click="Button1Clicked" IsDefault="True"/>
 		</Grid>
 	</Grid>
 </Window>
