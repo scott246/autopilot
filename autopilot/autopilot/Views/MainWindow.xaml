@@ -54,9 +54,49 @@
 				<TreeView x:Name="MacroFolderTreeView" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Grid.Row="1" ItemsSource="{Binding}" Loaded="MacroFolderTreeViewLoaded" SelectedItemChanged="SelectedMacroTreeItemChanged">
 					<TreeView.ItemTemplate>
 						<HierarchicalDataTemplate DataType="local:MacroFile" ItemsSource="{Binding Children}">
-							<TextBlock Text="{Binding Title}" FontStyle="{Binding FontStyle}" FontWeight="{Binding FontWeight}" Foreground="{StaticResource TextColorDark}"/>
+							<TextBlock Text="{Binding Title}">
+								<TextBlock.Style>
+									<Style TargetType="TextBlock">
+										<Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+										<Setter Property="FontWeight" Value="Normal"/>
+										<Style.Triggers>
+											<DataTrigger Binding="{Binding Enabled}" Value="False">
+												<Setter Property="Foreground" Value="Red"/>
+											</DataTrigger>
+											<DataTrigger Binding="{Binding Enabled}" Value="True">
+												<Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+											</DataTrigger>
+											<DataTrigger Binding="{Binding Directory}" Value="False">
+												<Setter Property="FontWeight" Value="Normal"/>
+											</DataTrigger>
+											<DataTrigger Binding="{Binding Directory}" Value="True">
+												<Setter Property="FontWeight" Value="Bold"/>
+												<Setter Property="Foreground" Value="{StaticResource AccentColor}"/>
+											</DataTrigger>
+										</Style.Triggers>
+									</Style>
+								</TextBlock.Style>
+							</TextBlock>
 						</HierarchicalDataTemplate>
 					</TreeView.ItemTemplate>
+					<TreeView.ItemContainerStyle>
+						<Style TargetType="TreeViewItem">
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding IsSelected}" Value="False">
+									<Setter Property="IsSelected" Value="{Binding IsSelected}" />
+								</DataTrigger>
+								<DataTrigger Binding="{Binding IsSelected}" Value="True">
+									<Setter Property="IsSelected" Value="{Binding IsSelected}" />
+								</DataTrigger>
+								<DataTrigger Binding="{Binding IsExpanded}" Value="False">
+									<Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+								</DataTrigger>
+								<DataTrigger Binding="{Binding IsExpanded}" Value="True">
+									<Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TreeView.ItemContainerStyle>
 				</TreeView>
 				<Grid Grid.Row="2">
 					<Grid.ColumnDefinitions>

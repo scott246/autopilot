@@ -92,7 +92,7 @@ namespace autopilot.Utils
             parent.Children.Add(file);
 
             WriteMacroFile(file, true);
-            MainWindow.LoadMacroFolderTree();
+            //MainWindow.LoadMacroFolderTree();
         }
 
         public static void CreateFolder(MacroFile parent, string fullFolderPath)
@@ -108,7 +108,7 @@ namespace autopilot.Utils
 
             parent.Children.Add(folder);
 
-            MainWindow.LoadMacroFolderTree();
+            //MainWindow.LoadMacroFolderTree();
         }
 
         public static string GetExtension(string fileName)

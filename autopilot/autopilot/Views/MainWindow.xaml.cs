@@ -59,12 +59,24 @@ namespace autopilot
 
         private void CollapseClicked(object sender, RoutedEventArgs e)
         {
-            //MainWindowUtils.ExpandAllMacroTreeElements(false, (MacroFile)MacroFolderTreeView.Items.GetItemAt(0));
+            ExpandAll(false, MACRO_FILE_TREE_ROOT);
         }
 
         private void ExpandClicked(object sender, RoutedEventArgs e)
         {
-            //MainWindowUtils.ExpandAllMacroTreeElements(true, (MacroFile)MacroFolderTreeView.Items.GetItemAt(0));
+            ExpandAll(true, MACRO_FILE_TREE_ROOT);
+        }
+
+        private void ExpandAll(bool expand, MacroFile root)
+        {
+            root.IsExpanded = expand;
+            foreach (MacroFile item in root.Children)
+            {
+                if (null != item)
+                {
+                    ExpandAll(expand, item);
+                }
+            }
         }
 
         private void ToggleClicked(object sender, RoutedEventArgs e)
@@ -126,8 +138,9 @@ namespace autopilot
         private void SelectedMacroTreeItemChanged(object sender, RoutedEventArgs e)
         {
             MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
+            Console.WriteLine(file);
             
-            if (null == file || file.Children.Count == 0 || file.Directory)
+            if (null == file || file.Directory)
                 EditorPanel.Visibility = Visibility.Hidden;
             else
             {
@@ -143,6 +156,9 @@ namespace autopilot
             MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
             if (file == null) return;
             file.Enabled = true;
+            MacroFileUtils.WriteMacroFile(file, true);
+            LoadMacroFolderTree();
+            ExpandAll(true, MACRO_FILE_TREE_ROOT);
         }
 
         private void EnabledCheckboxUnchecked(object sender, RoutedEventArgs e)
@@ -150,6 +166,9 @@ namespace autopilot
             MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
             if (file == null) return;
             file.Enabled = false;
+            MacroFileUtils.WriteMacroFile(file, true);
+            LoadMacroFolderTree();
+            ExpandAll(true, MACRO_FILE_TREE_ROOT);
         }
 
         private void EditorCodePreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)

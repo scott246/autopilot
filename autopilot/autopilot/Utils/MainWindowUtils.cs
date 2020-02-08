@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using static autopilot.AppVariables;
 
 namespace autopilot
 {
@@ -24,7 +25,7 @@ namespace autopilot
 
             foreach (string item in Directory.EnumerateFiles(path))
             {
-                if (AppVariables.MACRO_EXTENSION.Equals(MacroFileUtils.GetExtension(item)))
+                if (MACRO_EXTENSION.Equals(MacroFileUtils.GetExtension(item)))
                 {
                     MacroFile file = MacroFileUtils.ReadMacroFile(item);
                     parentFile.Children.Add(file);
@@ -32,19 +33,18 @@ namespace autopilot
             }
         }
 
-        public static void ExpandAllMacroTreeElements(bool expand, MacroFile root)
+        public static void ExpandAllMacroTreeElements(bool expand, TreeViewItem root)
         {
-            /*foreach (MacroFile dir in root.Children)
+            foreach (TreeViewItem dir in root.Items)
             {
-                //dir.IsExpanded()
-                (MacroFile)MacroFolderTreeView.Items.GetItemAt(0);
+                dir.IsExpanded = expand;
                 ExpandAllMacroTreeElements(expand, dir);
-            }*/
+            }
         }
 
         public static bool ConfirmDeleteMacro(MacroFile itemToDelete)
         {
-            if (itemToDelete.Path == AppVariables.MACRO_DIRECTORY)
+            if (itemToDelete.Path == MACRO_DIRECTORY)
             {
                 return false;
             }
