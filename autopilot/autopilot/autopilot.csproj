@@ -87,7 +87,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MainWindow.xaml">
+    <Page Include="Views\Editor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -100,8 +100,8 @@
     <Compile Include="Views\Dialogs\CustomDialog.xaml.cs">
       <DependentUpon>CustomDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\Editor.xaml.cs">
+      <DependentUpon>Editor.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\About\About.xaml">
@@ -110,7 +110,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Utils\MainWindowUtils.cs" />
+    <Compile Include="Utils\EditorUtils.cs" />
     <Compile Include="Views\About\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
