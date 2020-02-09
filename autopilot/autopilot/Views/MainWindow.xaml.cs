@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using static autopilot.AppVariables;
 
 namespace autopilot
@@ -14,7 +13,7 @@ namespace autopilot
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-	{
+    {
         public static TreeView macroFolderTreeViewRef;
 
         public MainWindow()
@@ -45,24 +44,22 @@ namespace autopilot
             MainWindowUtils.PopulateTreeView(file, macroDirectory);
         }
 
-        private void AboutMenuItemClicked(object sender, RoutedEventArgs e)
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             new About().ShowDialog();
         }
 
-        private void PreferencesMenuItemClicked(object sender, RoutedEventArgs e)
+        private void Preferences_MenuItem_Click(object sender, RoutedEventArgs e)
         {
             new Preferences().ShowDialog();
         }
 
-        private void ToggleClicked(object sender, RoutedEventArgs e)
+        private void EditMacroButton_Click(object sender, RoutedEventArgs e)
         {
-            MacroFile selectedItem = (MacroFile)MacroFolderTreeView.SelectedItem;
-            selectedItem.Enabled = !selectedItem.Enabled;
-            EditorEnabledCheckbox.IsChecked = selectedItem.Enabled;
+            //open macro combination editor window
         }
 
-        private void AddMacroButtonClicked(object sender, RoutedEventArgs e)
+        private void AddMacroButton_Click(object sender, RoutedEventArgs e)
         {
             MacroFile selectedItem = (MacroFile)MacroFolderTreeView.SelectedItem;
             if (null == selectedItem)
@@ -76,23 +73,30 @@ namespace autopilot
             }
         }
 
-        private void AddFolderButtonClicked(object sender, RoutedEventArgs e)
+        private void AddFolderButton_Click(object sender, RoutedEventArgs e)
         {
             MacroFile selectedItem = (MacroFile)MacroFolderTreeView.SelectedItem;
+            if (null == selectedItem)
+                selectedItem = (MacroFile)MacroFolderTreeView.Items.GetItemAt(0);
             if (File.GetAttributes(selectedItem.Path).HasFlag(FileAttributes.Directory))
             {
                 CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Folder", "Name this folder.", textboxContent: "");
                 if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")
                 {
-                    if (null == selectedItem)
-                        selectedItem = (MacroFile)MacroFolderTreeView.Items.GetItemAt(0);
                     if (!MacroFileUtils.CreateFolder(selectedItem, selectedItem.Path + '\\' + response.TextboxResponse))
                         CustomDialog.Display(CustomDialogType.OK, "Folder create error", "This directory already exists.");
                 }
             }
         }
 
-        private void DeleteMacroButtonClicked(object sender, RoutedEventArgs e)
+        private void ToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            MacroFile selectedItem = (MacroFile)MacroFolderTreeView.SelectedItem;
+            selectedItem.Enabled = !selectedItem.Enabled;
+            EditorEnabledCheckbox.IsChecked = selectedItem.Enabled;
+        }
+
+        private void DeleteMacroButton_Click(object sender, RoutedEventArgs e)
         {
             MacroFile selectedItem = (MacroFile)MacroFolderTreeView.SelectedItem;
             if (null != selectedItem && MainWindowUtils.ConfirmDeleteMacro(selectedItem))
@@ -112,10 +116,26 @@ namespace autopilot
             }
         }
 
-        private void SelectedMacroTreeItemChanged(object sender, RoutedEventArgs e)
+        private void HideDisabledMacros_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void HideDisabledMacros_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RefreshTreeButton_Click(object sender, RoutedEventArgs e)
+        {
+            macroFolderTreeViewRef.DataContext = null;
+            macroFolderTreeViewRef.DataContext = MACRO_FILE_TREE;
+        }
+
+        private void MacroFolderTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
-            
+
             if (null == file || file.Directory)
                 EditorPanel.Visibility = Visibility.Hidden;
             else
@@ -127,7 +147,7 @@ namespace autopilot
             }
         }
 
-        private void EnabledCheckboxChecked(object sender, RoutedEventArgs e)
+        private void EditorEnabledCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
             if (file == null) return;
@@ -135,7 +155,7 @@ namespace autopilot
             MacroFileUtils.WriteMacroFile(file, true);
         }
 
-        private void EnabledCheckboxUnchecked(object sender, RoutedEventArgs e)
+        private void EditorEnabledCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
             if (file == null) return;
@@ -143,19 +163,7 @@ namespace autopilot
             MacroFileUtils.WriteMacroFile(file, true);
         }
 
-        private void EditorCodePreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            EditorLineNumbers.Text = "";
-            int lines = EditorCode.Text.Split('\n').Length;
-            for (int i = 0; i < lines; i++)
-            {
-                EditorLineNumbers.Text += ((i + 1).ToString() + '\n');
-            }
-            int currentLine = EditorCode.GetLineIndexFromCharacterIndex(EditorCode.CaretIndex);
-            EditorLineNumbers.ScrollToLine(currentLine);
-        }
-
-        private void EditorTitleTextChanged(object sender, TextChangedEventArgs e)
+        private void EditorTitleTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
             string editorTitleText = EditorTitleTextBox.Text;
@@ -169,30 +177,21 @@ namespace autopilot
             }
         }
 
-        private void EditorDescriptionTextChanged(object sender, TextChangedEventArgs e)
+        private void EditorDescriptionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //save the description
+            //save description
         }
 
-        private void EditMacroButtonClicked(object sender, RoutedEventArgs e)
+        private void EditorCode_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            //open macro editor window
-        }
-
-        private void HideDisabledMacros_Checked(object sender, RoutedEventArgs e)
-        {
-            //hide all macros in the tree that have enabled = false
-        }
-
-        private void HideDisabledMacros_Unchecked(object sender, RoutedEventArgs e)
-        {
-            //show all macros
-        }
-
-        private void RefreshTreeButton_Click(object sender, RoutedEventArgs e)
-        {
-            macroFolderTreeViewRef.DataContext = null;
-            macroFolderTreeViewRef.DataContext = MACRO_FILE_TREE;
+            EditorLineNumbers.Text = "";
+            int lines = EditorCode.Text.Split('\n').Length;
+            for (int i = 0; i < lines; i++)
+            {
+                EditorLineNumbers.Text += ((i + 1).ToString() + '\n');
+            }
+            int currentLine = EditorCode.GetLineIndexFromCharacterIndex(EditorCode.CaretIndex);
+            EditorLineNumbers.ScrollToLine(currentLine);
         }
     }
 }

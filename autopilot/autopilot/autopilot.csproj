@@ -79,7 +79,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="XAMLVariables.xaml">
+    <Page Include="Globals\XAMLVariables.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -95,7 +95,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AppVariables.cs" />
+    <Compile Include="Globals\AppVariables.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Views\Dialogs\CustomDialog.xaml.cs">
       <DependentUpon>CustomDialog.xaml</DependentUpon>

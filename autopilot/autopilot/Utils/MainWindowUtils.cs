@@ -1,18 +1,12 @@
 ﻿using autopilot.Utils;
 using autopilot.Views.Dialogs;
-using System;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 using static autopilot.AppVariables;
 
 namespace autopilot
 {
     static class MainWindowUtils
-	{
+    {
         public static void PopulateTreeView(MacroFile parentFile, string path)
         {
             foreach (string dir in Directory.EnumerateDirectories(path))
@@ -43,7 +37,7 @@ namespace autopilot
             CustomDialogResponse confirmResult;
             if (!itemToDelete.Children.Equals(null))
             {
-                if (Properties.Settings.Default.WarnOnFolderDelete == false) 
+                if (Properties.Settings.Default.WarnOnFolderDelete == false)
                     return true;
                 confirmResult = CustomDialog.Display(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete the entire '" + itemToDelete.Title + "' folder? This cannot be undone.", "Do not show again");
                 if (confirmResult.CheckboxResponse == true)
@@ -54,7 +48,7 @@ namespace autopilot
             }
             else
             {
-                if (Properties.Settings.Default.WarnOnFileDelete == false) 
+                if (Properties.Settings.Default.WarnOnFileDelete == false)
                     return true;
                 confirmResult = CustomDialog.Display(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete '" + itemToDelete.Title + "'? This cannot be undone.", "Do not show again");
                 if (confirmResult.CheckboxResponse == true)

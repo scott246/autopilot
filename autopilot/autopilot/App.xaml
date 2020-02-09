@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:autopilot"
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
-		<ResourceDictionary Source="XAMLVariables.xaml"/>
+		<ResourceDictionary Source="Globals/XAMLVariables.xaml"/>
 	</Application.Resources>
 </Application>

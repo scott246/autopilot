@@ -20,10 +20,14 @@ namespace autopilot.Views.Dialogs
 			type = cdt;
 			dialog.Title = title;
 			dialog.Message.Text = dialogContent;
-			if (cdt == CustomDialogType.OK) InitControls(dialog, "OK", null, null, checkboxContent, textboxContent);
-			else if (cdt == CustomDialogType.OKCancel) InitControls(dialog, "OK", "Cancel", null, checkboxContent, textboxContent);
-			else if (cdt == CustomDialogType.YesNo) InitControls(dialog, "Yes", "No", null, checkboxContent, textboxContent);
-			else if (cdt == CustomDialogType.YesNoCancel) InitControls(dialog, "Yes", "No", "Cancel", checkboxContent, textboxContent);
+			if (cdt == CustomDialogType.OK)
+				InitControls(dialog, "OK", null, null, checkboxContent, textboxContent);
+			else if (cdt == CustomDialogType.OKCancel)
+				InitControls(dialog, "OK", "Cancel", null, checkboxContent, textboxContent);
+			else if (cdt == CustomDialogType.YesNo)
+				InitControls(dialog, "Yes", "No", null, checkboxContent, textboxContent);
+			else if (cdt == CustomDialogType.YesNoCancel)
+				InitControls(dialog, "Yes", "No", "Cancel", checkboxContent, textboxContent);
 			else
 			{
 				type = CustomDialogType.OK;
@@ -31,7 +35,7 @@ namespace autopilot.Views.Dialogs
 				dialog.Title = "Error";
 				dialog.Message.Text = "An error occurred while initializing this dialog box.";
 			}
-			
+
 			dialog.ShowDialog();
 			return new CustomDialogResponse
 			{
@@ -44,26 +48,47 @@ namespace autopilot.Views.Dialogs
 		private static void InitControls(CustomDialog dialog, string button1Content, string button2Content, string button3Content, string checkboxContent, string textboxContent)
 		{
 			dialog.Button1.Content = button1Content;
-			if (button2Content == null) dialog.Button2.Visibility = Visibility.Hidden;
-			else dialog.Button2.Content = button2Content;
-			if (button3Content == null) dialog.Button3.Visibility = Visibility.Hidden;
-			else dialog.Button3.Content = button3Content;
-			if (checkboxContent == null) dialog.Checkbox.Visibility = Visibility.Hidden;
-			else dialog.Checkbox.Content = checkboxContent;
-			if (textboxContent == null) dialog.Textbox.Visibility = Visibility.Hidden;
-			else dialog.Textbox.Text = textboxContent;
+			if (button2Content == null)
+				dialog.Button2.Visibility = Visibility.Hidden;
+			else
+				dialog.Button2.Content = button2Content;
+			if (button3Content == null)
+				dialog.Button3.Visibility = Visibility.Hidden;
+			else
+				dialog.Button3.Content = button3Content;
+			if (checkboxContent == null)
+				dialog.Checkbox.Visibility = Visibility.Hidden;
+			else
+				dialog.Checkbox.Content = checkboxContent;
+			if (textboxContent == null)
+				dialog.Textbox.Visibility = Visibility.Hidden;
+			else
+				dialog.Textbox.Text = textboxContent;
 		}
 
-		private void Button1Clicked(object sender, RoutedEventArgs e)
+		private void Textbox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
 		{
-			if (type == CustomDialogType.OK || type == CustomDialogType.OKCancel)
-				buttonResponse = CustomDialogButtonResponse.OK;
-			else if (type == CustomDialogType.YesNo || type == CustomDialogType.YesNoCancel)
-				buttonResponse = CustomDialogButtonResponse.Yes;
+			textboxResponse = Textbox.Text;
+		}
+
+		private void Checkbox_Checked(object sender, RoutedEventArgs e)
+		{
+			checkboxChecked = (bool)Checkbox.IsChecked;
+		}
+
+		private void Checkbox_Unchecked(object sender, RoutedEventArgs e)
+		{
+			checkboxChecked = (bool)Checkbox.IsChecked;
+		}
+
+		private void Button3_Click(object sender, RoutedEventArgs e)
+		{
+			if (type == CustomDialogType.YesNoCancel)
+				buttonResponse = CustomDialogButtonResponse.Cancel;
 			Close();
 		}
 
-		private void Button2Clicked(object sender, RoutedEventArgs e)
+		private void Button2_Click(object sender, RoutedEventArgs e)
 		{
 			if (type == CustomDialogType.OKCancel)
 				buttonResponse = CustomDialogButtonResponse.Cancel;
@@ -72,21 +97,13 @@ namespace autopilot.Views.Dialogs
 			Close();
 		}
 
-		private void Button3Clicked(object sender, RoutedEventArgs e)
+		private void Button1_Click(object sender, RoutedEventArgs e)
 		{
-			if (type == CustomDialogType.YesNoCancel)
-				buttonResponse = CustomDialogButtonResponse.Cancel;
+			if (type == CustomDialogType.OK || type == CustomDialogType.OKCancel)
+				buttonResponse = CustomDialogButtonResponse.OK;
+			else if (type == CustomDialogType.YesNo || type == CustomDialogType.YesNoCancel)
+				buttonResponse = CustomDialogButtonResponse.Yes;
 			Close();
-		}
-
-		private void CheckboxClicked(object sender, RoutedEventArgs e)
-		{
-			checkboxChecked = (bool)Checkbox.IsChecked;
-		}
-
-		private void TextboxTextChanged(object sender, RoutedEventArgs e)
-		{
-			textboxResponse = Textbox.Text;
 		}
 	}
 

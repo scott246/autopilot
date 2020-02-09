@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 using static autopilot.AppVariables;
 
 namespace autopilot.Utils
 {
-	public class MacroFileUtils
-	{
+    public class MacroFileUtils
+    {
         public static bool WriteMacroFile(MacroFile macroFile, bool canOverwrite)
         {
             bool success = false;
@@ -31,32 +26,32 @@ namespace autopilot.Utils
                 Console.WriteLine("Macro file {0} already exists", macroFilePath);
                 return false;
             }
-			try
-			{
+            try
+            {
                 FILE_ACCESS_MUTEX.WaitOne();
-				BinaryFormatter formatter = new BinaryFormatter();
-				Stream stream = new FileStream(macroFilePath, FileMode.Create, FileAccess.Write);
-				formatter.Serialize(stream, macroFile);
-				stream.Flush();
+                BinaryFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream(macroFilePath, FileMode.Create, FileAccess.Write);
+                formatter.Serialize(stream, macroFile);
+                stream.Flush();
                 success = true;
                 Console.WriteLine("Successfully wrote macro file {0}", macroFile);
             }
-			catch (Exception e)
-			{
+            catch (Exception e)
+            {
                 Console.WriteLine("Failed to write macro file {0}", macroFile);
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
-			}
+            }
             finally
             {
                 FILE_ACCESS_MUTEX.ReleaseMutex();
             }
-			return success;
-		}
+            return success;
+        }
 
-		public static MacroFile ReadMacroFile(string path)
-		{
-			MacroFile macroFile;
+        public static MacroFile ReadMacroFile(string path)
+        {
+            MacroFile macroFile;
             if (Directory.Exists(path))
             {
                 Console.WriteLine("Macro file at path {0} is a directory, writing new macrofile", path);
@@ -89,12 +84,12 @@ namespace autopilot.Utils
             {
                 FILE_ACCESS_MUTEX.ReleaseMutex();
             }
-			return macroFile;
-		}
+            return macroFile;
+        }
 
-		public static void DeleteMacroFile(string path)
-		{
-			MACRO_FILE_TREE.Remove(GetMacroFileFromPath(path));
+        public static void DeleteMacroFile(string path)
+        {
+            MACRO_FILE_TREE.Remove(GetMacroFileFromPath(path));
             File.Delete(path);
         }
 
@@ -225,5 +220,5 @@ namespace autopilot.Utils
         }
 
 
-	}
+    }
 }
