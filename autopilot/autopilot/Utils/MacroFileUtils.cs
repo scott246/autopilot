@@ -59,7 +59,7 @@ namespace autopilot.Utils
                 {
                     Directory = true,
                     Path = path,
-                    Title = GetFolderNameFromPath(path),
+                    Title = GetParentFolderNameFromPath(path),
                     Children = new MacroFileCollection()
                 };
                 return macroFile;
@@ -162,7 +162,7 @@ namespace autopilot.Utils
             return path.Substring(path.LastIndexOf('\\') + 1);
         }
 
-        public static string GetFolderNameFromPath(string path)
+        public static string GetParentFolderNameFromPath(string path)
         {
             string[] folders = path.Split('\\');
             int folderDepth = folders.Length - 1;
@@ -180,11 +180,6 @@ namespace autopilot.Utils
                 path = path.Substring(0, path.LastIndexOf('\\'));
                 return path.Substring(path.LastIndexOf('\\') + 1);
             }
-            return path.Substring(path.LastIndexOf('\\') + 1);
-        }
-
-        public static string GetParentFolderNameFromPath(string path)
-        {
             return path.Substring(path.LastIndexOf('\\') + 1);
         }
 
