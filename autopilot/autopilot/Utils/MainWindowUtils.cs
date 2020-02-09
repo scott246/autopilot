@@ -33,15 +33,6 @@ namespace autopilot
             }
         }
 
-        public static void ExpandAllMacroTreeElements(bool expand, TreeViewItem root)
-        {
-            foreach (TreeViewItem dir in root.Items)
-            {
-                dir.IsExpanded = expand;
-                ExpandAllMacroTreeElements(expand, dir);
-            }
-        }
-
         public static bool ConfirmDeleteMacro(MacroFile itemToDelete)
         {
             if (itemToDelete.Path == MACRO_DIRECTORY)

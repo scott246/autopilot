@@ -15,12 +15,15 @@ namespace autopilot
     /// </summary>
     public partial class MainWindow : Window
 	{
+        public static TreeView macroFolderTreeViewRef;
+
         public MainWindow()
         {
             InitializeComponent();
             DataContext = MACRO_FILE_TREE;
             EditorPanel.Visibility = Visibility.Hidden;
             LoadMacroFolderTree();
+            macroFolderTreeViewRef = MacroFolderTreeView;
         }
 
         public static void LoadMacroFolderTree()
@@ -42,11 +45,6 @@ namespace autopilot
             MainWindowUtils.PopulateTreeView(file, macroDirectory);
         }
 
-        private void MacroFolderTreeViewLoaded(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private void AboutMenuItemClicked(object sender, RoutedEventArgs e)
         {
             new About().ShowDialog();
@@ -55,28 +53,6 @@ namespace autopilot
         private void PreferencesMenuItemClicked(object sender, RoutedEventArgs e)
         {
             new Preferences().ShowDialog();
-        }
-
-        private void CollapseClicked(object sender, RoutedEventArgs e)
-        {
-            ExpandAll(false, MACRO_FILE_TREE_ROOT);
-        }
-
-        private void ExpandClicked(object sender, RoutedEventArgs e)
-        {
-            ExpandAll(true, MACRO_FILE_TREE_ROOT);
-        }
-
-        private void ExpandAll(bool expand, MacroFile root)
-        {
-            root.IsExpanded = expand;
-            foreach (MacroFile item in root.Children)
-            {
-                if (null != item)
-                {
-                    ExpandAll(expand, item);
-                }
-            }
         }
 
         private void ToggleClicked(object sender, RoutedEventArgs e)
@@ -93,7 +69,7 @@ namespace autopilot
                 selectedItem = (MacroFile)MacroFolderTreeView.Items.GetItemAt(0);
             if (selectedItem.Directory)
             {
-                CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Macro", "New macro name (no extension):", textboxContent: "");
+                CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Macro", "Name this macro.", textboxContent: "");
                 if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")
                     MacroFileUtils.CreateMacro(selectedItem, selectedItem.Path + '\\' + MacroFileUtils.GetFileNameWithMacroExtension(response.TextboxResponse));
             }
@@ -104,7 +80,7 @@ namespace autopilot
             MacroFile selectedItem = (MacroFile)MacroFolderTreeView.SelectedItem;
             if (File.GetAttributes(selectedItem.Path).HasFlag(FileAttributes.Directory))
             {
-                CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Folder", "New folder name:", textboxContent: "");
+                CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Folder", "Name this folder.", textboxContent: "");
                 if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")
                 {
                     if (null == selectedItem)
@@ -121,7 +97,6 @@ namespace autopilot
             {
                 try
                 {
-                    File.Delete(selectedItem.Path);
                     MacroFileUtils.DeleteMacroFile(selectedItem.Path);
                 }
                 catch (UnauthorizedAccessException)
@@ -138,7 +113,6 @@ namespace autopilot
         private void SelectedMacroTreeItemChanged(object sender, RoutedEventArgs e)
         {
             MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
-            Console.WriteLine(file);
             
             if (null == file || file.Directory)
                 EditorPanel.Visibility = Visibility.Hidden;
@@ -157,8 +131,6 @@ namespace autopilot
             if (file == null) return;
             file.Enabled = true;
             MacroFileUtils.WriteMacroFile(file, true);
-            LoadMacroFolderTree();
-            ExpandAll(true, MACRO_FILE_TREE_ROOT);
         }
 
         private void EnabledCheckboxUnchecked(object sender, RoutedEventArgs e)
@@ -167,8 +139,6 @@ namespace autopilot
             if (file == null) return;
             file.Enabled = false;
             MacroFileUtils.WriteMacroFile(file, true);
-            LoadMacroFolderTree();
-            ExpandAll(true, MACRO_FILE_TREE_ROOT);
         }
 
         private void EditorCodePreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
@@ -205,6 +175,22 @@ namespace autopilot
         private void EditMacroButtonClicked(object sender, RoutedEventArgs e)
         {
             //open macro editor window
+        }
+
+        private void HideDisabledMacros_Checked(object sender, RoutedEventArgs e)
+        {
+            //hide all macros in the tree that have enabled = false
+        }
+
+        private void HideDisabledMacros_Unchecked(object sender, RoutedEventArgs e)
+        {
+            //show all macros
+        }
+
+        private void RefreshTreeButton_Click(object sender, RoutedEventArgs e)
+        {
+            macroFolderTreeViewRef.DataContext = null;
+            macroFolderTreeViewRef.DataContext = MACRO_FILE_TREE;
         }
     }
 }

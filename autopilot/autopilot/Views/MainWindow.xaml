@@ -40,18 +40,17 @@
 					<RowDefinition Height="20"/>
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="20"/>
+					<RowDefinition Height="20"/>
 				</Grid.RowDefinitions>
 				<Grid Grid.Row="0">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="0.5*"/>
-						<ColumnDefinition Width="0.5*"/>
+						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<Button x:Name="ToggleButton" Content="Toggle" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="0" Click="ToggleClicked"/>
-					<Button x:Name="CollapseButton" Content="Collapse" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="1" Click="CollapseClicked"/>
-					<Button x:Name="ExpandButton" Content="Expand" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="2" Click="ExpandClicked"/>
+					<Button x:Name="ToggleButton" Content="Toggle" Grid.Column="0" Click="ToggleClicked"/>
+					<Button x:Name="DeleteMacroButton" Content="Delete" Grid.Column="1" Click="DeleteMacroButtonClicked"/>
 				</Grid>
-				<TreeView x:Name="MacroFolderTreeView" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Grid.Row="1" ItemsSource="{Binding}" Loaded="MacroFolderTreeViewLoaded" SelectedItemChanged="SelectedMacroTreeItemChanged">
+				<TreeView x:Name="MacroFolderTreeView" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Grid.Row="1" ItemsSource="{Binding}" SelectedItemChanged="SelectedMacroTreeItemChanged">
 					<TreeView.ItemTemplate>
 						<HierarchicalDataTemplate DataType="local:MacroFile" ItemsSource="{Binding Children}">
 							<TextBlock Text="{Binding Title}">
@@ -61,7 +60,7 @@
 										<Setter Property="FontWeight" Value="Normal"/>
 										<Style.Triggers>
 											<DataTrigger Binding="{Binding Enabled}" Value="False">
-												<Setter Property="Foreground" Value="Red"/>
+												<Setter Property="Foreground" Value="{StaticResource TextColorWarning}"/>
 											</DataTrigger>
 											<DataTrigger Binding="{Binding Enabled}" Value="True">
 												<Setter Property="Foreground" Value="{StaticResource TextColor}"/>
@@ -81,20 +80,7 @@
 					</TreeView.ItemTemplate>
 					<TreeView.ItemContainerStyle>
 						<Style TargetType="TreeViewItem">
-							<Style.Triggers>
-								<DataTrigger Binding="{Binding IsSelected}" Value="False">
-									<Setter Property="IsSelected" Value="{Binding IsSelected}" />
-								</DataTrigger>
-								<DataTrigger Binding="{Binding IsSelected}" Value="True">
-									<Setter Property="IsSelected" Value="{Binding IsSelected}" />
-								</DataTrigger>
-								<DataTrigger Binding="{Binding IsExpanded}" Value="False">
-									<Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
-								</DataTrigger>
-								<DataTrigger Binding="{Binding IsExpanded}" Value="True">
-									<Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
-								</DataTrigger>
-							</Style.Triggers>
+							<Setter Property="IsExpanded" Value="True"/>
 						</Style>
 					</TreeView.ItemContainerStyle>
 				</TreeView>
@@ -102,11 +88,17 @@
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Button x:Name="AddFolderButton" Content="Add Folder" Grid.Column="0" Click="AddFolderButtonClicked"/>
+					<Button x:Name="AddMacroButton" Content="Add" Grid.Column="1" Click="AddMacroButtonClicked"/>
+				</Grid>
+				<Grid Grid.Row="3">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="3*"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<Button x:Name="DeleteMacroButton" Content="Delete" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="0" Click="DeleteMacroButtonClicked"/>
-					<Button x:Name="AddFolderButton" Content="Add Folder" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="1" Click="AddFolderButtonClicked"/>
-					<Button x:Name="AddMacroButton" Content="Add" Background="{StaticResource ButtonBackgroundColor}" Grid.Column="2" Click="AddMacroButtonClicked"/>
+					<CheckBox x:Name="HideDisabledMacros" Content="Hide Disabled" Grid.Column="0" Foreground="{StaticResource TextColorDark}" VerticalAlignment="Center" Checked="HideDisabledMacros_Checked" Unchecked="HideDisabledMacros_Unchecked"/>
+					<Button x:Name="RefreshTreeButton" Content="Refresh" Grid.Column="1" Click="RefreshTreeButton_Click"/>
 				</Grid>
 			</Grid>
 
@@ -146,7 +138,7 @@
 						<TextBox x:Name="EditorDescriptionTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Margin="0,0,5,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" TextChanged="EditorDescriptionTextChanged"/>
 						<Label x:Name="EditorMacroingLabel" Grid.Row="2" Grid.Column="1" Content="[unbound]" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
 						<CheckBox x:Name="EditorEnabledCheckbox" Grid.Row="0" Grid.Column="2" Content="Enabled" Foreground="{StaticResource TextColorDark}" IsChecked="True" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="EnabledCheckboxChecked" Unchecked="EnabledCheckboxUnchecked"/>
-						<Button Grid.Row="2" Grid.Column="2" Content="Edit Macro" Background="{StaticResource ButtonBackgroundColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="EditMacroButtonClicked"/>
+						<Button Grid.Row="2" Grid.Column="2" Content="Edit Macro" HorizontalAlignment="Center" VerticalAlignment="Center" Click="EditMacroButtonClicked"/>
 					</Grid>
 					<Grid Grid.Column="1">
 						

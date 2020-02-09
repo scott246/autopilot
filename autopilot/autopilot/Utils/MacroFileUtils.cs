@@ -14,6 +14,7 @@ namespace autopilot.Utils
 	{
         public static bool WriteMacroFile(MacroFile macroFile, bool canOverwrite)
         {
+            bool success = false;
             Console.WriteLine("Writing macro file {0}", macroFile);
             string macroFilePath = macroFile.Path;
             if (macroFile.Directory == true) Directory.CreateDirectory(macroFilePath);
@@ -24,20 +25,25 @@ namespace autopilot.Utils
             }
 			try
 			{
-				IFormatter formatter = new BinaryFormatter();
+                FILE_ACCESS_MUTEX.WaitOne();
+				BinaryFormatter formatter = new BinaryFormatter();
 				Stream stream = new FileStream(macroFilePath, FileMode.Create, FileAccess.Write);
 				formatter.Serialize(stream, macroFile);
-				stream.Close();
-			}
+				stream.Flush();
+                success = true;
+                Console.WriteLine("Successfully wrote macro file {0}", macroFile);
+            }
 			catch (Exception e)
 			{
-                Console.WriteLine("Failed to create macro file");
+                Console.WriteLine("Failed to write macro file {0}", macroFile);
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
-				return false;
 			}
-            Console.WriteLine("Successfully wrote macro file {0}", macroFile);
-			return true;
+            finally
+            {
+                FILE_ACCESS_MUTEX.ReleaseMutex();
+            }
+			return success;
 		}
 
 		public static MacroFile ReadMacroFile(string path)
@@ -57,25 +63,32 @@ namespace autopilot.Utils
             }
             try
             {
-                IFormatter formatter = new BinaryFormatter();
+                FILE_ACCESS_MUTEX.WaitOne();
+                BinaryFormatter formatter = new BinaryFormatter();
                 Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read);
                 macroFile = (MacroFile)formatter.Deserialize(stream);
-                stream.Close();
+                stream.Flush();
+                Console.WriteLine("Successfully read macro file at {0}", path);
             }
             catch (Exception e)
             {
                 Console.WriteLine("Failed to read macro file at {0}", path);
+                Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
                 return null;
             }
-            Console.WriteLine("Successfully read macro file at {0}", path);
+            finally
+            {
+                FILE_ACCESS_MUTEX.ReleaseMutex();
+            }
 			return macroFile;
 		}
 
 		public static void DeleteMacroFile(string path)
 		{
 			MACRO_FILE_TREE.Remove(GetMacroFileFromPath(path));
-		}
+            File.Delete(path);
+        }
 
         public static void CreateMacro(MacroFile parent, string fullMacroPath)
         {
