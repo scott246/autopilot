@@ -65,20 +65,20 @@
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<Button x:Name="ToggleButton" 
-							Content="Toggle" 
+					<Button x:Name="AddFolderButton" 
+							Content="Add Folder" 
 							Grid.Column="0" 
-							Click="ToggleButton_Click"/>
-					<Button x:Name="DeleteMacroButton" 
-							Content="Delete" 
+							Click="AddFolderButton_Click"/>
+					<Button x:Name="AddMacroButton" 
+							Content="Add" 
 							Grid.Column="1" 
-							Click="DeleteMacroButton_Click"/>
+							Click="AddMacroButton_Click"/>
 				</Grid>
 				<TreeView x:Name="MacroFolderTreeView" 
 						  Background="{StaticResource BackgroundColorLight}" 
 						  Foreground="{StaticResource TextColor}" 
 						  Grid.Row="2" 
-						  ItemsSource="{Binding}" 
+						  ItemsSource="{Binding}"
 						  SelectedItemChanged="MacroFolderTreeView_SelectedItemChanged">
 					<TreeView.ItemTemplate>
 						<HierarchicalDataTemplate DataType="local:MacroFile" 
@@ -131,14 +131,14 @@
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<Button x:Name="AddFolderButton" 
-							Content="Add Folder" 
+					<Button x:Name="DeleteMacroButton" 
+							Content="Delete" 
 							Grid.Column="0" 
-							Click="AddFolderButton_Click"/>
-					<Button x:Name="AddMacroButton" 
-							Content="Add" 
+							Click="DeleteMacroButton_Click"/>
+					<Button x:Name="ToggleButton" 
+							Content="Toggle" 
 							Grid.Column="1" 
-							Click="AddMacroButton_Click"/>
+							Click="ToggleButton_Click"/>
 				</Grid>
 			</Grid>
 
@@ -150,7 +150,7 @@
 					<RowDefinition Height="4*"/>
 				</Grid.RowDefinitions>
 				<Grid Grid.Row="0">
-					<Grid>
+					<Grid Margin="0,0,5,0">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="*"/>
 							<RowDefinition Height="*"/>
@@ -159,7 +159,8 @@
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="*"/>
 							<ColumnDefinition Width="6*"/>
-							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="2*"/>
+							<ColumnDefinition Width="2*"/>
 						</Grid.ColumnDefinitions>
 						<Label Grid.Row="0" 
 							   Grid.Column="0" 
@@ -175,7 +176,7 @@
 							   VerticalAlignment="Center"/>
 						<Label Grid.Row="2" 
 							   Grid.Column="0" 
-							   Content="Macro" 
+							   Content="Bind" 
 							   Foreground="{StaticResource TextColorDark}" 
 							   HorizontalAlignment="Right" 
 							   VerticalAlignment="Center"/>
@@ -193,8 +194,7 @@
 									 HorizontalAlignment="Stretch" 
 									 HorizontalContentAlignment="Left" 
 									 VerticalAlignment="Center" 
-									 VerticalContentAlignment="Center" 
-									 TextChanged="EditorTitleTextBox_TextChanged"/>
+									 VerticalContentAlignment="Center" />
 							<Label Grid.Column="1" 
 								   Content=".apscr" 
 								   Foreground="{StaticResource TextColorDark}" 
@@ -204,7 +204,7 @@
 						<TextBox x:Name="EditorDescriptionTextBox" 
 								 Grid.Row="1"
 								 Grid.Column="1" 
-								 Grid.ColumnSpan="2"
+								 Grid.ColumnSpan="3"
 								 Text="" 
 								 Background="{StaticResource BackgroundColorLight}"
 								 Foreground="{StaticResource TextColor}"
@@ -212,9 +212,8 @@
 								 HorizontalAlignment="Stretch"
 								 HorizontalContentAlignment="Left"
 								 VerticalAlignment="Center" 
-								 VerticalContentAlignment="Center"
-								 TextChanged="EditorDescriptionTextBox_TextChanged"/>
-						<Label x:Name="EditorMacroingLabel" 
+								 VerticalContentAlignment="Center"/>
+						<Label x:Name="EditorBindLabel" 
 							   Grid.Row="2" 
 							   Grid.Column="1" 
 							   Content="[unbound]" 
@@ -224,7 +223,7 @@
 							   VerticalAlignment="Center"/>
 						<CheckBox x:Name="EditorEnabledCheckbox" 
 								  Grid.Row="0"
-								  Grid.Column="2"
+								  Grid.Column="3"
 								  Content="Enabled" 
 								  Foreground="{StaticResource TextColorDark}" 
 								  IsChecked="True" 
@@ -232,12 +231,22 @@
 								  VerticalAlignment="Center" 
 								  Checked="EditorEnabledCheckbox_Checked" 
 								  Unchecked="EditorEnabledCheckbox_Unchecked"/>
-						<Button Grid.Row="2"
+						<Button x:Name="EditBindButton"
+								Grid.Row="2"
 								Grid.Column="2"
-								Content="Edit Macro" 
-								HorizontalAlignment="Left" 
+								Content="Edit Bind" 
+								HorizontalAlignment="Stretch" 
 								VerticalAlignment="Center"
-								Click="EditMacroButton_Click"/>
+								Margin="0,0,5,0"
+								Click="EditBindButton_Click"/>
+						<Button x:Name="TestMacroButton"
+								Grid.Row="2"
+								Grid.Column="3"
+								Margin="0,0,5,0"
+								Content="Test"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Center"
+								Click="TestMacroButton_Click"/>
 					</Grid>
 				</Grid>
 				<Grid Grid.Row="1"

@@ -33,6 +33,7 @@ namespace autopilot.Utils
                 Stream stream = new FileStream(macroFilePath, FileMode.Create, FileAccess.Write);
                 formatter.Serialize(stream, macroFile);
                 stream.Flush();
+                stream.Dispose();
                 success = true;
                 Console.WriteLine("Successfully wrote macro file {0}", macroFile);
             }
@@ -71,6 +72,7 @@ namespace autopilot.Utils
                 Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read);
                 macroFile = (MacroFile)formatter.Deserialize(stream);
                 stream.Flush();
+                stream.Dispose();
                 Console.WriteLine("Successfully read macro file at {0}", path);
             }
             catch (Exception e)

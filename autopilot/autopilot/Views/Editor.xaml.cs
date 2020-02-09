@@ -24,7 +24,6 @@ namespace autopilot
             EditorPanel.Visibility = Visibility.Hidden;
             LoadMacroFolderTree();
             macroFolderTreeViewRef = MacroFolderTreeView;
-            
         }
 
         public static void LoadMacroFolderTree()
@@ -126,16 +125,35 @@ namespace autopilot
 
         private void MacroFolderTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
+            
+            if (null != e.OldValue && !((MacroFile)e.OldValue).Directory)
+            {
+                MacroFile prevFile = (MacroFile)e.OldValue;
+                MacroFile writingFile = new MacroFile
+                {
+                    Enabled = (bool)EditorEnabledCheckbox.IsChecked,
+                    Path = prevFile.Path,
+                    Title = EditorTitleTextBox.Text,
+                    Description = EditorDescriptionTextBox.Text,
+                    Bind = EditorBindLabel.Content.ToString(),
+                    Code = EditorCode.Text,
+                    Children = prevFile.Children,
+                };
+                MacroFileUtils.WriteMacroFile(writingFile, true);
+            }
 
-            if (null == file || file.Directory)
+            string filePath = ((MacroFile)MacroFolderTreeView.SelectedItem).Path;
+            MacroFile readingFile = MacroFileUtils.ReadMacroFile(filePath);
+
+            if (null == readingFile || readingFile.Directory)
                 EditorPanel.Visibility = Visibility.Hidden;
             else
             {
-                string itemHeader = MacroFileUtils.GetFileNameWithNoMacroExtension(file.Title);
+                string itemHeader = MacroFileUtils.GetFileNameWithNoMacroExtension(readingFile.Title);
                 EditorPanel.Visibility = Visibility.Visible;
                 EditorTitleTextBox.Text = itemHeader;
-                EditorEnabledCheckbox.IsChecked = file.Enabled;
+                EditorDescriptionTextBox.Text = readingFile.Description;
+                EditorEnabledCheckbox.IsChecked = readingFile.Enabled;
             }
         }
 
@@ -144,7 +162,6 @@ namespace autopilot
             MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
             if (file == null) return;
             file.Enabled = true;
-            MacroFileUtils.WriteMacroFile(file, true);
         }
 
         private void EditorEnabledCheckbox_Unchecked(object sender, RoutedEventArgs e)
@@ -152,31 +169,11 @@ namespace autopilot
             MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
             if (file == null) return;
             file.Enabled = false;
-            MacroFileUtils.WriteMacroFile(file, true);
         }
 
-        private void EditorTitleTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void EditBindButton_Click(object sender, RoutedEventArgs e)
         {
-            MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
-            string editorTitleText = EditorTitleTextBox.Text;
-            string editorTitleTextNoExtension = MacroFileUtils.GetFileNameWithNoMacroExtension(editorTitleText);
-            if (file == null) return;
-            string treeItemHeaderNoExtension = MacroFileUtils.GetFileNameWithNoMacroExtension(file.Title);
-            if (editorTitleTextNoExtension != treeItemHeaderNoExtension)
-            {
-                file.Title = MacroFileUtils.GetFileNameWithMacroExtension(editorTitleText);
-                LoadMacroFolderTree();
-            }
-        }
-
-        private void EditorDescriptionTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //save description
-        }
-
-        private void EditMacroButton_Click(object sender, RoutedEventArgs e)
-        {
-            //open macro combination editor window
+            //open bind combination editor window
         }
 
         private void EditorCode_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
@@ -189,6 +186,11 @@ namespace autopilot
             }
             int currentLine = EditorCode.GetLineIndexFromCharacterIndex(EditorCode.CaretIndex);
             EditorLineNumbers.ScrollToLine(currentLine);
+        }
+
+        private void TestMacroButton_Click(object sender, RoutedEventArgs e)
+        {
+            //run the macro
         }
     }
 }
