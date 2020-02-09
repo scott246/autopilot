@@ -71,7 +71,8 @@ namespace autopilot
             {
                 CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Macro", "Name this macro.", textboxContent: "");
                 if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")
-                    MacroFileUtils.CreateMacro(selectedItem, selectedItem.Path + '\\' + MacroFileUtils.GetFileNameWithMacroExtension(response.TextboxResponse));
+                    if (!MacroFileUtils.CreateMacro(selectedItem, selectedItem.Path + '\\' + MacroFileUtils.GetFileNameWithMacroExtension(response.TextboxResponse)))
+                        CustomDialog.Display(CustomDialogType.OK, "Macro create error", "There is already a macro with this name in the folder.");
             }
         }
 
@@ -85,7 +86,8 @@ namespace autopilot
                 {
                     if (null == selectedItem)
                         selectedItem = (MacroFile)MacroFolderTreeView.Items.GetItemAt(0);
-                    MacroFileUtils.CreateFolder(selectedItem, selectedItem.Path + '\\' + response.TextboxResponse);
+                    if (!MacroFileUtils.CreateFolder(selectedItem, selectedItem.Path + '\\' + response.TextboxResponse))
+                        CustomDialog.Display(CustomDialogType.OK, "Folder create error", "This directory already exists.");
                 }
             }
         }

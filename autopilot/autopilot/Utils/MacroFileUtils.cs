@@ -17,7 +17,15 @@ namespace autopilot.Utils
             bool success = false;
             Console.WriteLine("Writing macro file {0}", macroFile);
             string macroFilePath = macroFile.Path;
-            if (macroFile.Directory == true) Directory.CreateDirectory(macroFilePath);
+            if (macroFile.Directory == true)
+            {
+                if (Directory.Exists(macroFilePath))
+                {
+                    Console.WriteLine("Folder {0} already exists", macroFilePath);
+                    return false;
+                }
+                Directory.CreateDirectory(macroFilePath);
+            }
             if (File.Exists(macroFilePath) && !canOverwrite)
             {
                 Console.WriteLine("Macro file {0} already exists", macroFilePath);
@@ -90,7 +98,7 @@ namespace autopilot.Utils
             File.Delete(path);
         }
 
-        public static void CreateMacro(MacroFile parent, string fullMacroPath)
+        public static bool CreateMacro(MacroFile parent, string fullMacroPath)
         {
             string fullMacroName = GetFileNameWithMacroExtensionFromPath(fullMacroPath);
             MacroFile file = new MacroFile
@@ -102,14 +110,17 @@ namespace autopilot.Utils
                 Children = new MacroFileCollection()
             };
 
-            parent.Children.Add(file);
-
-            WriteMacroFile(file, true);
-            //MainWindow.LoadMacroFolderTree();
+            if (WriteMacroFile(file, false))
+            {
+                parent.Children.Add(file);
+                return true;
+            }
+            return false;
         }
 
-        public static void CreateFolder(MacroFile parent, string fullFolderPath)
+        public static bool CreateFolder(MacroFile parent, string fullFolderPath)
         {
+            if (Directory.Exists(fullFolderPath)) return false;
             Directory.CreateDirectory(fullFolderPath);
             MacroFile folder = new MacroFile
             {
@@ -120,8 +131,7 @@ namespace autopilot.Utils
             };
 
             parent.Children.Add(folder);
-
-            //MainWindow.LoadMacroFolderTree();
+            return true;
         }
 
         public static string GetExtension(string fileName)
