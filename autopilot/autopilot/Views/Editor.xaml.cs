@@ -15,34 +15,13 @@ namespace autopilot
     public partial class Editor : Window
     {
         private static string filterText = "";
-        private static TreeView macroFolderTreeViewRef;
 
         public Editor()
         {
             InitializeComponent();
-            DataContext = MACRO_FILE_TREE;
+            MacroListView.ItemsSource = MACRO_LIST;
             EditorPanel.Visibility = Visibility.Hidden;
-            LoadMacroFolderTree();
-            macroFolderTreeViewRef = MacroFolderTreeView;
-        }
-
-        public static void LoadMacroFolderTree()
-        {
-            MACRO_FILE_TREE.Clear();
-            string macroDirectory = MACRO_DIRECTORY;
-            try
-            {
-                Directory.CreateDirectory(macroDirectory);
-            }
-            catch (Exception)
-            {
-                CustomDialog.Display(CustomDialogType.OK, "Fatal Error", "Error creating macro directory.");
-                Application.Current.Shutdown();
-            }
-            MacroFile file = MacroFileUtils.ReadMacroFile(MACRO_DIRECTORY);
-            MACRO_FILE_TREE_ROOT = file;
-            MACRO_FILE_TREE.Add(file);
-            EditorUtils.PopulateTreeView(file, macroDirectory, filterText);
+            EditorUtils.LoadMacros(filterText);
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -57,49 +36,28 @@ namespace autopilot
 
         private void AddMacroButton_Click(object sender, RoutedEventArgs e)
         {
-            MacroFile selectedItem = (MacroFile)MacroFolderTreeView.SelectedItem;
-            if (null == selectedItem)
-                selectedItem = (MacroFile)MacroFolderTreeView.Items.GetItemAt(0);
-            if (selectedItem.Directory)
-            {
-                CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Macro", "Name this macro.", textboxContent: "");
-                if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")
-                    if (!MacroFileUtils.CreateMacro(selectedItem, selectedItem.Path + '\\' + MacroFileUtils.GetFileNameWithMacroExtension(response.TextboxResponse)))
-                        CustomDialog.Display(CustomDialogType.OK, "Macro create error", "There is already a macro with this name in the folder.");
-            }
-        }
-
-        private void AddFolderButton_Click(object sender, RoutedEventArgs e)
-        {
-            MacroFile selectedItem = (MacroFile)MacroFolderTreeView.SelectedItem;
-            if (null == selectedItem)
-                selectedItem = (MacroFile)MacroFolderTreeView.Items.GetItemAt(0);
-            if (File.GetAttributes(selectedItem.Path).HasFlag(FileAttributes.Directory))
-            {
-                CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Folder", "Name this folder.", textboxContent: "");
-                if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")
-                {
-                    if (!MacroFileUtils.CreateFolder(selectedItem, selectedItem.Path + '\\' + response.TextboxResponse))
-                        CustomDialog.Display(CustomDialogType.OK, "Folder create error", "This directory already exists.");
-                }
-            }
+            CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Macro", "Name this macro.", textboxContent: "");
+            if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")
+                    if (!MacroFileUtils.CreateMacro(MacroFileUtils.GetFileNameWithMacroExtension(response.TextboxResponse)))
+                        CustomDialog.Display(CustomDialogType.OK, "Macro create error", "There is already a macro with this name.");
         }
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            MacroFile selectedItem = (MacroFile)MacroFolderTreeView.SelectedItem;
+            MacroFile selectedItem = (MacroFile)MacroListView.SelectedItem;
             selectedItem.Enabled = !selectedItem.Enabled;
             EditorEnabledCheckbox.IsChecked = selectedItem.Enabled;
         }
 
         private void DeleteMacroButton_Click(object sender, RoutedEventArgs e)
         {
-            MacroFile selectedItem = (MacroFile)MacroFolderTreeView.SelectedItem;
+            MacroFile selectedItem = (MacroFile)MacroListView.SelectedItem;
             if (null != selectedItem && EditorUtils.ConfirmDeleteMacro(selectedItem))
             {
                 try
                 {
-                    MacroFileUtils.DeleteMacroFile(selectedItem.Path);
+                    string title = selectedItem.Title;
+                    MacroFileUtils.DeleteMacroFile(title);
                 }
                 catch (UnauthorizedAccessException)
                 {
@@ -117,63 +75,41 @@ namespace autopilot
             filterText = FilterTextBox.Text;
         }
 
-        private void RefreshTreeButton_Click(object sender, RoutedEventArgs e)
+        private void MacroListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            macroFolderTreeViewRef.DataContext = null;
-            macroFolderTreeViewRef.DataContext = MACRO_FILE_TREE;
-        }
+            EditorPanel.Visibility = Visibility.Hidden;
+            if (null == MacroListView.SelectedItem)
+                return;
+               
+            string fileTitle = ((MacroFile)MacroListView.SelectedItem).Title;
+            MacroFile readingFile = MacroFileUtils.ReadMacroFile(fileTitle);
 
-        private void MacroFolderTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            
-            if (null != e.OldValue && !((MacroFile)e.OldValue).Directory)
-            {
-                MacroFile prevFile = (MacroFile)e.OldValue;
-                MacroFile writingFile = new MacroFile
-                {
-                    Enabled = (bool)EditorEnabledCheckbox.IsChecked,
-                    Path = prevFile.Path,
-                    Title = EditorTitleTextBox.Text,
-                    Description = EditorDescriptionTextBox.Text,
-                    Bind = EditorBindLabel.Content.ToString(),
-                    Code = EditorCode.Text,
-                    Children = prevFile.Children,
-                };
-                MacroFileUtils.WriteMacroFile(writingFile, true);
-            }
-
-            string filePath = ((MacroFile)MacroFolderTreeView.SelectedItem).Path;
-            MacroFile readingFile = MacroFileUtils.ReadMacroFile(filePath);
-
-            if (null == readingFile || readingFile.Directory)
-                EditorPanel.Visibility = Visibility.Hidden;
+            if (null == readingFile)
+                CustomDialog.Display(CustomDialogType.OK, "Read failure", "Failed to read macro file.");
             else
             {
                 string itemHeader = MacroFileUtils.GetFileNameWithNoMacroExtension(readingFile.Title);
-                EditorPanel.Visibility = Visibility.Visible;
                 EditorTitleTextBox.Text = itemHeader;
                 EditorDescriptionTextBox.Text = readingFile.Description;
                 EditorEnabledCheckbox.IsChecked = readingFile.Enabled;
+                EditorCode.Text = readingFile.Code;
+                EditorBindLabel.Text = readingFile.Bind;
+                EditorPanel.Visibility = Visibility.Visible;
             }
         }
 
         private void EditorEnabledCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
+            MacroFile file = (MacroFile)MacroListView.SelectedItem;
             if (file == null) return;
             file.Enabled = true;
         }
 
         private void EditorEnabledCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            MacroFile file = (MacroFile)MacroFolderTreeView.SelectedItem;
+            MacroFile file = (MacroFile)MacroListView.SelectedItem;
             if (file == null) return;
             file.Enabled = false;
-        }
-
-        private void EditBindButton_Click(object sender, RoutedEventArgs e)
-        {
-            //open bind combination editor window
         }
 
         private void EditorCode_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
@@ -188,9 +124,36 @@ namespace autopilot
             EditorLineNumbers.ScrollToLine(currentLine);
         }
 
+        private void SaveMacroButton_Click(object sender, RoutedEventArgs e)
+        {
+            MacroFile file = new MacroFile
+            {
+                Enabled = (bool)EditorEnabledCheckbox.IsChecked,
+                Title = EditorTitleTextBox.Text,
+                Description = EditorDescriptionTextBox.Text,
+                Bind = EditorBindLabel.Text,
+                Code = EditorCode.Text,
+            };
+            if (File.Exists(MacroFileUtils.GetFullPathOfMacroFile(file.Title)))
+            {
+                MacroListView.ItemsSource = null;
+                MacroListView.ItemsSource = MACRO_LIST;
+            }
+            else
+            {
+                MACRO_LIST.Add(file);
+            }
+            MacroFileUtils.WriteMacroFile(file, true);
+        }
+
         private void TestMacroButton_Click(object sender, RoutedEventArgs e)
         {
             //run the macro
+        }
+
+        private void EditBindButton_Click(object sender, RoutedEventArgs e)
+        {
+            //open bind combination editor window
         }
     }
 }

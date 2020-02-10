@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using static autopilot.AppVariables;
@@ -10,20 +12,12 @@ namespace autopilot.Utils
         public static bool WriteMacroFile(MacroFile macroFile, bool canOverwrite)
         {
             bool success = false;
-            Console.WriteLine("Writing macro file {0}", macroFile);
-            string macroFilePath = macroFile.Path;
-            if (macroFile.Directory == true)
-            {
-                if (Directory.Exists(macroFilePath))
-                {
-                    Console.WriteLine("Folder {0} already exists", macroFilePath);
-                    return false;
-                }
-                Directory.CreateDirectory(macroFilePath);
-            }
+            Console.WriteLine("Writing macro file {0}", macroFile.Title);
+            string macroFileTitle = macroFile.Title;
+            string macroFilePath = GetFullPathOfMacroFile(macroFileTitle);
             if (File.Exists(macroFilePath) && !canOverwrite)
             {
-                Console.WriteLine("Macro file {0} already exists", macroFilePath);
+                Console.WriteLine("Macro file {0} already exists", macroFileTitle);
                 return false;
             }
             try
@@ -35,11 +29,11 @@ namespace autopilot.Utils
                 stream.Flush();
                 stream.Dispose();
                 success = true;
-                Console.WriteLine("Successfully wrote macro file {0}", macroFile);
+                Console.WriteLine("Successfully wrote macro file {0}", macroFileTitle);
             }
             catch (Exception e)
             {
-                Console.WriteLine("Failed to write macro file {0}", macroFile);
+                Console.WriteLine("Failed to write macro file {0}", macroFileTitle);
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
             }
@@ -50,34 +44,22 @@ namespace autopilot.Utils
             return success;
         }
 
-        public static MacroFile ReadMacroFile(string path)
+        public static MacroFile ReadMacroFile(string title)
         {
             MacroFile macroFile;
-            if (Directory.Exists(path))
-            {
-                Console.WriteLine("Macro file at path {0} is a directory, writing new macrofile", path);
-                macroFile = new MacroFile
-                {
-                    Directory = true,
-                    Path = path,
-                    Title = GetParentFolderNameFromPath(path),
-                    Children = new MacroFileCollection()
-                };
-                return macroFile;
-            }
             try
             {
                 FILE_ACCESS_MUTEX.WaitOne();
                 BinaryFormatter formatter = new BinaryFormatter();
-                Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+                Stream stream = new FileStream(GetFullPathOfMacroFile(title), FileMode.Open, FileAccess.Read);
                 macroFile = (MacroFile)formatter.Deserialize(stream);
                 stream.Flush();
                 stream.Dispose();
-                Console.WriteLine("Successfully read macro file at {0}", path);
+                Console.WriteLine("Successfully read macro file {0}", title);
             }
             catch (Exception e)
             {
-                Console.WriteLine("Failed to read macro file at {0}", path);
+                Console.WriteLine("Failed to read macro file {0}", title);
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
                 return null;
@@ -89,49 +71,29 @@ namespace autopilot.Utils
             return macroFile;
         }
 
-        public static void DeleteMacroFile(string path)
+        public static void DeleteMacroFile(string title)
         {
-            MACRO_FILE_TREE.Remove(GetMacroFileFromPath(path));
-            File.Delete(path);
+            MACRO_LIST.Remove(GetFileByTitle(title));
+            File.Delete(GetFullPathOfMacroFile(title));
         }
 
-        public static bool CreateMacro(MacroFile parent, string fullMacroPath)
+        public static bool CreateMacro(string title)
         {
-            string fullMacroName = GetFileNameWithMacroExtensionFromPath(fullMacroPath);
             MacroFile file = new MacroFile
             {
-                Directory = false,
-                Title = fullMacroName,
-                Path = fullMacroPath,
+                Title = GetFileNameWithNoMacroExtension(title),
                 Enabled = true,
-                Children = new MacroFileCollection()
             };
 
             if (WriteMacroFile(file, false))
             {
-                parent.Children.Add(file);
+                MACRO_LIST.Add(file);
                 return true;
             }
             return false;
         }
 
-        public static bool CreateFolder(MacroFile parent, string fullFolderPath)
-        {
-            if (Directory.Exists(fullFolderPath)) return false;
-            Directory.CreateDirectory(fullFolderPath);
-            MacroFile folder = new MacroFile
-            {
-                Directory = true,
-                Title = GetFileNameWithNoMacroExtensionFromPath(fullFolderPath),
-                Path = fullFolderPath,
-                Children = new MacroFileCollection()
-            };
-
-            parent.Children.Add(folder);
-            return true;
-        }
-
-        public static string GetExtension(string fileName)
+        public static string GetExtensionFromFile(string fileName)
         {
             return "." + fileName.Split('.')[fileName.Split('.').Length - 1];
         }
@@ -150,72 +112,18 @@ namespace autopilot.Utils
             return fileName;
         }
 
-        public static string GetFileNameWithMacroExtensionFromPath(string path)
+        public static string GetFullPathOfMacroFile(string title)
         {
-            if (!path.EndsWith(MACRO_EXTENSION))
-                path += MACRO_EXTENSION;
-            return path.Substring(path.LastIndexOf('\\') + 1);
+            return Path.Combine(MACRO_DIRECTORY, GetFileNameWithMacroExtension(title));
         }
 
-        public static string GetFileNameWithNoMacroExtensionFromPath(string path)
+        public static MacroFile GetFileByTitle(string title)
         {
-            if (path.EndsWith(MACRO_EXTENSION))
-                path = path.Substring(0, (path.Length - MACRO_EXTENSION.Length));
-            return path.Substring(path.LastIndexOf('\\') + 1);
-        }
-
-        public static string GetParentFolderNameFromPath(string path)
-        {
-            string[] folders = path.Split('\\');
-            int folderDepth = folders.Length - 1;
-            while (folderDepth > 0)
-            {
-                if (folders[folderDepth].EndsWith(MACRO_EXTENSION) || folders[folderDepth] == "")
-                {
-                    folderDepth--;
-                    continue;
-                }
-                return folders[folderDepth];
-            }
-            if (path.Length - 1 == path.LastIndexOf('\\'))
-            {
-                path = path.Substring(0, path.LastIndexOf('\\'));
-                return path.Substring(path.LastIndexOf('\\') + 1);
-            }
-            return path.Substring(path.LastIndexOf('\\') + 1);
-        }
-
-        public static MacroFile GetMacroFileFromParentByTitle(MacroFile parent, string title)
-        {
-            foreach (MacroFile file in parent.Children)
+            foreach (MacroFile file in MACRO_LIST)
             {
                 if (file.Title == title) return file;
             }
             return null;
         }
-
-        public static MacroFile GetMacroFileFromPath(string path)
-        {
-            // trim trailing '\\' character(s)
-            while (path.ToCharArray()[path.Length - 1] == '\\')
-            {
-                path = path.Substring(0, path.Length - 2);
-            }
-
-            string[] pathElements = path.Split('\\');
-            MacroFile latestFile = null;
-            MacroFile parentOfLatestFile = MACRO_FILE_TREE_ROOT;
-            foreach (string pathElement in pathElements)
-            {
-                MacroFile fileElement = GetMacroFileFromParentByTitle(parentOfLatestFile, pathElement);
-                if (fileElement != null)
-                {
-                    latestFile = fileElement;
-                }
-            }
-            return latestFile;
-        }
-
-
     }
 }
