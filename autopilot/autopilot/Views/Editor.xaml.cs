@@ -24,7 +24,7 @@ namespace autopilot
             EditorUtils.LoadMacros(filterText);
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
         {
             new About().ShowDialog();
         }
@@ -38,13 +38,14 @@ namespace autopilot
         {
             CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Macro", "Name this macro.", textboxContent: "");
             if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")
-                    if (!MacroFileUtils.CreateMacro(MacroFileUtils.GetFileNameWithMacroExtension(response.TextboxResponse)))
-                        CustomDialog.Display(CustomDialogType.OK, "Macro create error", "There is already a macro with this name.");
+                if (!MacroFileUtils.CreateMacro(MacroFileUtils.GetFileNameWithMacroExtension(response.TextboxResponse)))
+                    CustomDialog.Display(CustomDialogType.OK, "Macro create error", "There is already a macro with this name.");
         }
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
             MacroFile selectedItem = (MacroFile)MacroListView.SelectedItem;
+            if (null == selectedItem) return;
             selectedItem.Enabled = !selectedItem.Enabled;
             EditorEnabledCheckbox.IsChecked = selectedItem.Enabled;
         }
@@ -68,6 +69,8 @@ namespace autopilot
                     CustomDialog.Display(CustomDialogType.OK, "Macro Delete Error", "Could not remove macro.");
                 }
             }
+            MacroListView.ItemsSource = null;
+            MacroListView.ItemsSource = MACRO_LIST;
         }
 
         private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -80,7 +83,7 @@ namespace autopilot
             EditorPanel.Visibility = Visibility.Hidden;
             if (null == MacroListView.SelectedItem)
                 return;
-               
+
             string fileTitle = ((MacroFile)MacroListView.SelectedItem).Title;
             MacroFile readingFile = MacroFileUtils.ReadMacroFile(fileTitle);
 
@@ -154,6 +157,21 @@ namespace autopilot
         private void EditBindButton_Click(object sender, RoutedEventArgs e)
         {
             //open bind combination editor window
+        }
+
+        private void FilterButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void HideDisabledCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void HideDisabledCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

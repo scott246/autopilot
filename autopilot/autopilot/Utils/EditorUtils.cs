@@ -1,7 +1,6 @@
 ﻿using autopilot.Utils;
 using autopilot.Views.Dialogs;
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using static autopilot.AppVariables;

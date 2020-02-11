@@ -14,8 +14,7 @@
 			<Menu DockPanel.Dock="Top">
 				<MenuItem Header="_File">
 					<MenuItem Header="_Save"/>
-					<MenuItem Header="_Preferences" 
-							  Click="Preferences_MenuItem_Click"/>
+					<MenuItem Header="_Preferences" Click="Preferences_MenuItem_Click"/>
 					<MenuItem Header="E_xit"/>
 				</MenuItem>
 				<MenuItem Header="_Actions">
@@ -31,23 +30,19 @@
 				</MenuItem>
 				<MenuItem Header="_Help">
 					<MenuItem Header="_Wiki"/>
-					<MenuItem Header="_About" 
-							  Click="MenuItem_Click"/>
+					<MenuItem Header="_About" Click="AboutMenuItem_Click"/>
 				</MenuItem>
 			</Menu>
 
-			<!-- Tree and Control Buttons -->
-			<Grid Margin="10" 
-				  Width="200" 
-				  HorizontalAlignment="Left" 
-				  DockPanel.Dock="Left">
+			<!-- List and Controls Panel -->
+			<Grid Width="200" HorizontalAlignment="Left" DockPanel.Dock="Left">
 				<Grid.RowDefinitions>
-					<RowDefinition Height="30"/>
-					<RowDefinition Height="30"/>
 					<RowDefinition Height="*"/>
+					<RowDefinition Height="3*"/>
 				</Grid.RowDefinitions>
-				<Grid Grid.Row="0"
-					  Margin="0,0,0,5">
+
+				<!-- List Controls -->
+				<Grid Grid.Row="0" Margin="10">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="5"/>
@@ -55,48 +50,33 @@
 						<ColumnDefinition Width="5"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<Button x:Name="DeleteMacroButton" 
-							Content="Delete" 
-							Grid.Column="0" 
-							Click="DeleteMacroButton_Click"/>
-					<Button x:Name="ToggleButton" 
-							Content="Toggle" 
-							Grid.Column="2" 
-							Click="ToggleButton_Click"/>
-					<Button x:Name="AddMacroButton" 
-							Content="Add" 
-							Grid.Column="4" 
-							Click="AddMacroButton_Click"/>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+					<TextBox x:Name="FilterTextBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="20" VerticalContentAlignment="Center" Background="{StaticResource BackgroundColorLight}" TextChanged="FilterTextBox_TextChanged"/>
+					<Button x:Name="FilterButton" Content="Filter" Grid.Row="1" Grid.Column="4" Height="20" BorderBrush="LightGray" Click="FilterButton_Click"/>
+					<Button x:Name="DeleteMacroButton" Content="Delete" Grid.Row="2" Grid.Column="0" BorderBrush="LightGray" Height="20" Click="DeleteMacroButton_Click"/>
+					<Button x:Name="ToggleButton" Content="Toggle" Grid.Row="2" Grid.Column="2" BorderBrush="LightGray" Height="20" Click="ToggleButton_Click"/>
+					<Button x:Name="AddMacroButton" Content="Add" Grid.Row="2" Grid.Column="4" BorderBrush="LightGray" Height="20" Click="AddMacroButton_Click"/>
 				</Grid>
-				<TextBox x:Name="FilterTextBox"
-						 Grid.Row="1"
-						 Grid.Column="0"
-						 Margin="0,0,0,5"
-						 TextChanged="FilterTextBox_TextChanged"/>
-				<ListBox x:Name="MacroListView" 
-						  Background="{StaticResource BackgroundColorLight}" 
-						  Foreground="{StaticResource TextColor}" 
-						  Grid.Row="2" 
-						  SelectionChanged="MacroListView_SelectionChanged">
+
+				<!-- Macro List -->
+				<ListBox x:Name="MacroListView" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Grid.Row="2" Padding="3" Margin="10,0,10,10" SelectionChanged="MacroListView_SelectionChanged">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<Grid>
-								<TextBlock Grid.Column="1"
-										   Text="{Binding Title}">
+								<TextBlock Grid.Column="1" Text="{Binding Title}">
 									<TextBlock.Style>
 										<Style TargetType="TextBlock">
-											<Setter Property="Foreground" 
-												Value="{StaticResource TextColor}"/>
+											<Setter Property="Foreground" Value="{StaticResource TextColor}"/>
 											<Style.Triggers>
-												<DataTrigger Binding="{Binding Enabled}" 
-														 Value="False">
-													<Setter Property="Foreground" 
-														Value="{StaticResource TextColorWarning}"/>
+												<DataTrigger Binding="{Binding Enabled}" Value="False">
+													<Setter Property="Foreground" Value="{StaticResource TextColorWarning}"/>
 												</DataTrigger>
-												<DataTrigger Binding="{Binding Enabled}" 
-														 Value="True">
-													<Setter Property="Foreground" 
-														Value="{StaticResource TextColor}"/>
+												<DataTrigger Binding="{Binding Enabled}" Value="True">
+													<Setter Property="Foreground" Value="{StaticResource TextColor}"/>
 												</DataTrigger>
 											</Style.Triggers>
 										</Style>
@@ -108,13 +88,14 @@
 				</ListBox>
 			</Grid>
 
-			<!-- Editor -->
-			<Grid x:Name="EditorPanel" 
-				  DockPanel.Dock="Right">
+			<!-- Editor Panel -->
+			<Grid x:Name="EditorPanel" DockPanel.Dock="Right">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="3*"/>
 				</Grid.RowDefinitions>
+
+				<!-- Info and Controls -->
 				<Grid Grid.Row="0">
 					<Grid Margin="10">
 						<Grid.RowDefinitions>
@@ -127,135 +108,33 @@
 							<ColumnDefinition Width="6*"/>
 							<ColumnDefinition Width="2*"/>
 						</Grid.ColumnDefinitions>
-						<Label Grid.Row="0" 
-							   Grid.Column="0" 
-							   Content="Name" 
-							   Foreground="{StaticResource TextColorDark}" 
-							   HorizontalAlignment="Right" 
-							   VerticalAlignment="Center"/>
-						<Label Grid.Row="1" 
-							   Grid.Column="0" 
-							   Content="About" 
-							   Foreground="{StaticResource TextColorDark}" 
-							   HorizontalAlignment="Right" 
-							   VerticalAlignment="Center"/>
-						<Label Grid.Row="2" 
-							   Grid.Column="0" 
-							   Content="Bind" 
-							   Foreground="{StaticResource TextColorDark}" 
-							   HorizontalAlignment="Right" 
-							   VerticalAlignment="Center"/>
-						<Grid Grid.Row="0" 
-							  Grid.Column="1">
+						<Label Grid.Row="0" Grid.Column="0" Content="Name" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+						<Label Grid.Row="1" Grid.Column="0" Content="About" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+						<Label Grid.Row="2" Grid.Column="0" Content="Bind" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+						<TextBox x:Name="EditorTitleTextBox" Grid.Row="0" Grid.Column="1" Text="" Height="20" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Margin="5,0,5,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" />
+						<TextBox x:Name="EditorDescriptionTextBox" Grid.Row="1" Grid.Column="1" Text="" Height="20" Background="{StaticResource BackgroundColorLight}" Foreground="{StaticResource TextColor}" Margin="5,0,5,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+						<Grid Grid.Row="2" Grid.Column="1" Margin="5,0,5,0">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="3*"/>
 								<ColumnDefinition Width="*"/>
 							</Grid.ColumnDefinitions>
-							<TextBox x:Name="EditorTitleTextBox" 
-									 Grid.Column="0" 
-									 Text="TITLE" 
-									 Background="{StaticResource BackgroundColorLight}" 
-									 Foreground="{StaticResource TextColor}" 
-									 Margin="5,0,0,0"
-									 HorizontalAlignment="Stretch" 
-									 HorizontalContentAlignment="Left" 
-									 VerticalAlignment="Center" 
-									 VerticalContentAlignment="Center" />
-							<Label Grid.Column="1" 
-								   Content=".apscr" 
-								   Foreground="{StaticResource TextColorDark}" 
-								   HorizontalAlignment="Left" 
-								   VerticalAlignment="Center"/>
+							<TextBlock x:Name="EditorBindLabel" Grid.Column="0" Text="[unbound]" Foreground="{StaticResource TextColorDark}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+							<CheckBox x:Name="EditorEnabledCheckbox" Grid.Column="1" Content="Enabled" Foreground="{StaticResource TextColorDark}" IsChecked="True" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Checked="EditorEnabledCheckbox_Checked" Unchecked="EditorEnabledCheckbox_Unchecked"/>
 						</Grid>
-						<TextBox x:Name="EditorDescriptionTextBox" 
-								 Grid.Row="1"
-								 Grid.Column="1" 
-								 Text="" 
-								 Background="{StaticResource BackgroundColorLight}"
-								 Foreground="{StaticResource TextColor}"
-								 Margin="5,0,5,0" 
-								 HorizontalAlignment="Stretch"
-								 HorizontalContentAlignment="Left"
-								 VerticalAlignment="Center" 
-								 VerticalContentAlignment="Center"/>
-						<Grid Grid.Row="2" 
-							  Grid.Column="1"
-							  Margin="5,0,5,0">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="3*"/>
-								<ColumnDefinition Width="*"/>
-							</Grid.ColumnDefinitions>
-							<TextBlock x:Name="EditorBindLabel" 
-							   Grid.Column="0" 
-							   Text="[unbound]" 
-							   Foreground="{StaticResource TextColorDark}" 
-							   HorizontalAlignment="Left"
-							   VerticalAlignment="Center"/>
-							<CheckBox x:Name="EditorEnabledCheckbox"
-								  Grid.Column="1"
-								  Content="Enabled" 
-								  Foreground="{StaticResource TextColorDark}" 
-								  IsChecked="True" 
-								  Margin="0,0,5,0"
-								  HorizontalAlignment="Right" 
-								  VerticalAlignment="Center" 
-								  Checked="EditorEnabledCheckbox_Checked" 
-								  Unchecked="EditorEnabledCheckbox_Unchecked"/>
-						</Grid>
-						<Button x:Name="SaveMacroButton"
-								Grid.Row="0"
-								Grid.Column="3"
-								Content="Save"
-								Background="{StaticResource AccentColor}"
-								HorizontalAlignment="Stretch"
-								VerticalAlignment="Center"
-								Click="SaveMacroButton_Click"/>
-						<Button x:Name="TestMacroButton"
-								Grid.Row="1"
-								Grid.Column="3"
-								Content="Test"
-								HorizontalAlignment="Stretch"
-								VerticalAlignment="Center"
-								Click="TestMacroButton_Click"/>
-						<Button x:Name="EditBindButton"
-								Grid.Row="2"
-								Grid.Column="3"
-								Content="Edit Bind" 
-								HorizontalAlignment="Stretch" 
-								VerticalAlignment="Center"
-								Click="EditBindButton_Click"/>
+						<Button x:Name="SaveMacroButton" Grid.Row="0" Grid.Column="3" Content="Save" Height="20" BorderBrush="LightGray" Background="{StaticResource AccentColor}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="SaveMacroButton_Click"/>
+						<Button x:Name="TestMacroButton" Grid.Row="1" Grid.Column="3" Content="Test" Height="20" BorderBrush="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="TestMacroButton_Click"/>
+						<Button x:Name="EditBindButton" Grid.Row="2" Grid.Column="3" Content="Edit Bind" Height="20" BorderBrush="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="EditBindButton_Click"/>
 					</Grid>
 				</Grid>
-				<Grid Grid.Row="1"
-					  Margin="10,0,10,10" 
-					  Background="{StaticResource BackgroundColor}">
+
+				<!-- Editor -->
+				<Grid Grid.Column="1" Grid.Row="1" Margin="10,0,10,10" Background="{StaticResource BackgroundColor}">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="50"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<TextBox x:Name="EditorLineNumbers" 
-							 Grid.Column="0"
-							 Text="1"
-							 IsReadOnly="True"
-							 BorderThickness="0" 
-							 Background="{StaticResource BackgroundColor}"
-							 Foreground="{StaticResource AccentColor}" 
-							 FontFamily="Courier New" 
-							 TextWrapping="NoWrap" 
-							 TextAlignment="Right" 
-							 Margin="5" />
-					<TextBox x:Name="EditorCode"
-							 TextWrapping="NoWrap" 
-							 AcceptsReturn="True"
-							 Grid.Column="1"
-							 Text="Code"
-							 HorizontalAlignment="Stretch" 
-							 VerticalAlignment="Stretch" 
-							 Foreground="{StaticResource TextColorDark}" 
-							 Background="{StaticResource BackgroundColorLight}" 
-							 FontFamily="Courier New" 
-							 Padding="5"
-							 PreviewKeyUp="EditorCode_PreviewKeyUp" Grid.RowSpan="3" />
+					<TextBox x:Name="EditorLineNumbers" Grid.Column="0" Text="1" IsReadOnly="True" BorderThickness="0" Background="{StaticResource BackgroundColor}" Foreground="{StaticResource AccentColor}" FontFamily="Courier New" TextWrapping="NoWrap" TextAlignment="Right" Margin="5" />
+					<TextBox x:Name="EditorCode" TextWrapping="NoWrap" AcceptsReturn="True" Grid.Column="1" Text="Code" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="{StaticResource TextColorDark}" Background="{StaticResource BackgroundColorLight}" FontFamily="Courier New" Padding="5" PreviewKeyUp="EditorCode_PreviewKeyUp"/>
 				</Grid>
 			</Grid>
 

@@ -35,6 +35,8 @@ namespace autopilot.Views.Dialogs
 				dialog.Title = "Error";
 				dialog.Message.Text = "An error occurred while initializing this dialog box.";
 			}
+			if (textboxContent != null)
+				dialog.Textbox.Focus();
 
 			dialog.ShowDialog();
 			return new CustomDialogResponse
