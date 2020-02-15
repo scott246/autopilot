@@ -115,14 +115,20 @@
 				</Grid>
 
 				<!-- Editor -->
-				<Grid Grid.Column="1" Grid.Row="1" Margin="10,0,10,10">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="50"/>
-						<ColumnDefinition Width="*"/>
-					</Grid.ColumnDefinitions>
-					<TextBox x:Name="EditorLineNumbers" Grid.Column="0" Text="1" IsReadOnly="True" FontFamily="Courier New" TextWrapping="NoWrap" TextAlignment="Right" Padding="5" Template="{DynamicResource TextBoxControlTemplate}"  Foreground="{StaticResource AccentColor}" Background="{StaticResource AppBackgroundColor}" />
-					<TextBox x:Name="EditorCode" TextWrapping="NoWrap" AcceptsReturn="True" Grid.Column="1" Text="Code" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Courier New" Padding="5" PreviewKeyUp="EditorCode_PreviewKeyUp" Template="{DynamicResource TextBoxControlTemplate}"/>
-				</Grid>
+				<TabControl Grid.Row="1" Grid.Column="1" Margin="10,0,10,10" TabStripPlacement="Bottom" Template="{DynamicResource TabControlControlTemplate}">
+					<TabItem Header="Code" Template="{DynamicResource TabItemControlTemplate}">
+						<Grid Grid.Column="1" Grid.Row="1" Margin="0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="50"/>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+							<TextBox x:Name="EditorLineNumbers" Grid.Column="0" Text="1" IsReadOnly="True" FontFamily="Courier New" TextWrapping="NoWrap" TextAlignment="Right" Padding="5" Template="{DynamicResource TextBoxControlTemplate}"  Foreground="{StaticResource AccentColor}" Background="{StaticResource AppBackgroundColor}" />
+							<TextBox x:Name="EditorCode" TextWrapping="NoWrap" AcceptsReturn="True" Grid.Column="1" Text="Code" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Courier New" Padding="5" PreviewKeyUp="EditorCode_PreviewKeyUp" Template="{DynamicResource TextBoxControlTemplate}"/>
+						</Grid>
+					</TabItem>
+					<TabItem Header="Designer" Template="{DynamicResource TabItemControlTemplate}">
+					</TabItem>
+				</TabControl>
 			</Grid>
 
 		</DockPanel>

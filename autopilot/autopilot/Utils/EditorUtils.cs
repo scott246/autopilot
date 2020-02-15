@@ -3,7 +3,7 @@ using autopilot.Views.Dialogs;
 using System;
 using System.IO;
 using System.Windows;
-using static autopilot.AppVariables;
+using static autopilot.Globals;
 
 namespace autopilot
 {

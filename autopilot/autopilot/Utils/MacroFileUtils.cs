@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using static autopilot.AppVariables;
+using static autopilot.Globals;
 
 namespace autopilot.Utils
 {

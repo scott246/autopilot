@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace autopilot
 {
-	class AppVariables
+	class Globals
 	{
 		//TODO: change to something more permanent
 		public static readonly string USER_DIRECTORY = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);

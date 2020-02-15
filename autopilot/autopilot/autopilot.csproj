@@ -97,7 +97,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Globals\AppVariables.cs" />
+    <Compile Include="Globals.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Views\Dialogs\CustomDialog.xaml.cs">
       <DependentUpon>CustomDialog.xaml</DependentUpon>
