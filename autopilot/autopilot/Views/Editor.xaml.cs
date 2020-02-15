@@ -164,12 +164,7 @@ namespace autopilot
 
         }
 
-        private void HideDisabledCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void HideDisabledCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

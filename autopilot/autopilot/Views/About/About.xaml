@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:autopilot"
         mc:Ignorable="d"
         Title="About" Height="200" Width="400">
-	<Grid Background="{StaticResource BackgroundColor}">
-		<Label x:Name="TitleLabel" Content="Autopilot" Foreground="{StaticResource TextColor}" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontSize="48"/>
-		<Label x:Name="DescriptionLabel" Content="A WPF Macro Tool" Foreground="{StaticResource TextColorDark}" HorizontalContentAlignment="Center" Margin="0,74,0,0" VerticalAlignment="Top" Width="392"/>
+	<Grid Background="{StaticResource AppBackgroundColor}">
+		<Label x:Name="TitleLabel" Content="Autopilot" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontSize="48"/>
+		<Label x:Name="DescriptionLabel" Content="A WPF Macro Tool" HorizontalContentAlignment="Center" Margin="0,74,0,0" VerticalAlignment="Top" Width="392"/>
 		<Label x:Name="HelpTextLabel" HorizontalContentAlignment="Center" Margin="0,126,0,0" VerticalAlignment="Top" Width="392">
-			<Hyperlink NavigateUri="https://github.com/scott246/autopilot" RequestNavigate="Hyperlink_RequestNavigate">
+			<Hyperlink NavigateUri="https://github.com/scott246/autopilot" RequestNavigate="Hyperlink_RequestNavigate" Foreground="{StaticResource AccentColor}">
 				Contributions, bug reports, help, and feedback on GitHub
 			</Hyperlink> 
 		</Label>

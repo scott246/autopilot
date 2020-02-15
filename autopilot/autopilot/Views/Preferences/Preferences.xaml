@@ -6,21 +6,20 @@
         xmlns:local="clr-namespace:autopilot.Views.Preferences"
         mc:Ignorable="d"
         Title="Settings" Height="200" Width="200">
-	<Grid Background="{StaticResource BackgroundColor}">
+	<Grid Background="{StaticResource AppBackgroundColor}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="40"/>
 		</Grid.RowDefinitions>
-		<StackPanel Grid.Row="0" Margin="10" Background="{StaticResource BackgroundColor}">
-			<CheckBox x:Name="WarnFileDeleteCheckbox" Foreground="{StaticResource TextColorDark}" Content="Warn on file delete" Checked="WarnFileDeleteCheckbox_Checked" Unchecked="WarnFileDeleteCheckbox_Unchecked"/>
-			<CheckBox x:Name="WarnFolderDeleteCheckbox" Foreground="{StaticResource TextColorDark}" Content="Warn on folder delete" Checked="WarnFolderDeleteCheckbox_Checked" Unchecked="WarnFolderDeleteCheckbox_Unchecked" />
+		<StackPanel Grid.Row="0" Margin="10">
+			<CheckBox x:Name="WarnFileDeleteCheckbox" Content="Warn on file delete" Checked="WarnFileDeleteCheckbox_Checked" Unchecked="WarnFileDeleteCheckbox_Unchecked" Template="{StaticResource CheckBoxControlTemplate}"/>
 		</StackPanel>
 		<Grid Grid.Row="1" Margin="10">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="60"/>
 			</Grid.ColumnDefinitions>
-			<Button Content="Apply" Grid.Column="1" Click="ApplyButton_Click"/>
+			<Button Content="Apply" Grid.Column="1" Click="ApplyButton_Click" Template="{StaticResource ButtonControlTemplate}"/>
 		</Grid>
 	</Grid>
 </Window>
