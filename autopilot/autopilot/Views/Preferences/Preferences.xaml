@@ -19,7 +19,7 @@
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="60"/>
 			</Grid.ColumnDefinitions>
-			<Button Content="Apply" Grid.Column="1" Click="ApplyButton_Click" Template="{StaticResource ButtonControlTemplate}"/>
+			<Button Content="Apply" Grid.Column="1" Click="ApplyButton_Click" IsCancel="True" Template="{StaticResource ButtonControlTemplate}"/>
 		</Grid>
 	</Grid>
 </Window>

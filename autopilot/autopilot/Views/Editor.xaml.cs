@@ -15,12 +15,15 @@ namespace autopilot
     public partial class Editor : Window
     {
         private static string filterText = "";
+        private static string[] sortOptions = { "A-Z", "Z-A", "Enabled/Disabled" };
 
         public Editor()
         {
             InitializeComponent();
             MacroListView.ItemsSource = MACRO_LIST;
             EditorPanel.Visibility = Visibility.Hidden;
+            SortComboBox.ItemsSource = sortOptions;
+            SortComboBox.SelectedItem = "A-Z";
             EditorUtils.LoadMacros(filterText);
         }
 

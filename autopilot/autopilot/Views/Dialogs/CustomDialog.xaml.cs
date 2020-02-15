@@ -21,13 +21,23 @@ namespace autopilot.Views.Dialogs
 			dialog.Title = title;
 			dialog.Message.Text = dialogContent;
 			if (cdt == CustomDialogType.OK)
+			{
 				InitControls(dialog, "OK", null, null, checkboxContent, textboxContent);
+			}
 			else if (cdt == CustomDialogType.OKCancel)
+			{
+				dialog.Button2.IsCancel = true;
 				InitControls(dialog, "OK", "Cancel", null, checkboxContent, textboxContent);
+			}
 			else if (cdt == CustomDialogType.YesNo)
+			{
 				InitControls(dialog, "Yes", "No", null, checkboxContent, textboxContent);
+			}
 			else if (cdt == CustomDialogType.YesNoCancel)
+			{
+				dialog.Button3.IsCancel = true;
 				InitControls(dialog, "Yes", "No", "Cancel", checkboxContent, textboxContent);
+			}
 			else
 			{
 				type = CustomDialogType.OK;
