@@ -9,9 +9,10 @@ namespace autopilot
 {
     static class EditorUtils
     {
-        public static void LoadMacros(string filterText)
+        public static void LoadMacros()
         {
             MACRO_LIST.Clear();
+            SORTED_FILTERED_MACRO_LIST.Clear();
             try
             {
                 Directory.CreateDirectory(MACRO_DIRECTORY);
@@ -23,11 +24,9 @@ namespace autopilot
             }
             foreach (string item in Directory.EnumerateFiles(MACRO_DIRECTORY))
             {
-                if (filterText == "" || MacroFileUtils.GetFileNameWithNoMacroExtension(item).Contains(filterText))
-                {
-                    MacroFile file = MacroFileUtils.ReadMacroFile(item);
-                    MACRO_LIST.Add(file);
-                }
+                MacroFile file = MacroFileUtils.ReadMacroFile(item);
+                MACRO_LIST.Add(file);
+                SORTED_FILTERED_MACRO_LIST.Add(file);
             }
         }
 

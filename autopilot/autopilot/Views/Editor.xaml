@@ -55,7 +55,7 @@
 					<Label Content="Filter" Grid.Row="0" Grid.Column="0"/>
 					<TextBox x:Name="FilterTextBox" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Height="20" VerticalContentAlignment="Center" TextChanged="FilterTextBox_TextChanged" Template="{DynamicResource TextBoxControlTemplate}"/>
 					<Label Content="Sort" Grid.Row="1" Grid.Column="0"/>
-					<ComboBox x:Name="SortComboBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Height="20" Template="{DynamicResource ComboBoxControlTemplate}"/>
+					<ComboBox x:Name="SortComboBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Height="20" SelectionChanged="SortComboBox_SelectionChanged" Template="{DynamicResource ComboBoxControlTemplate}"/>
 					<Grid Grid.Row="2" Grid.ColumnSpan="2">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="*"/>

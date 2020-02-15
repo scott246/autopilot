@@ -12,6 +12,7 @@ namespace autopilot
 		public static readonly string MACRO_DIRECTORY = USER_DIRECTORY + @"\autopilot\testmacros\";
 		public static readonly string MACRO_EXTENSION = ".apc";
 		public static ObservableCollection<MacroFile> MACRO_LIST = new ObservableCollection<MacroFile>();
+		public static ObservableCollection<MacroFile> SORTED_FILTERED_MACRO_LIST = new ObservableCollection<MacroFile>();
 
 		public static Mutex FILE_ACCESS_MUTEX = new Mutex();
 

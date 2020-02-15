@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="Utils\MacroFile.cs" />
     <Compile Include="Utils\MacroFileUtils.cs" />
+    <Compile Include="Utils\SortFilterUtils.cs" />
     <Compile Include="Views\Preferences\Preferences.xaml.cs">
       <DependentUpon>Preferences.xaml</DependentUpon>
     </Compile>

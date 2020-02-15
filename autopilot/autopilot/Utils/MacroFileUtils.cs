@@ -72,6 +72,7 @@ namespace autopilot.Utils
         public static void DeleteMacroFile(string title)
         {
             MACRO_LIST.Remove(GetFileByTitle(title));
+            SORTED_FILTERED_MACRO_LIST.Remove(GetFileByTitle(title));
             File.Delete(GetFullPathOfMacroFile(title));
         }
 
@@ -86,6 +87,7 @@ namespace autopilot.Utils
             if (WriteMacroFile(file, false))
             {
                 MACRO_LIST.Add(file);
+                SORTED_FILTERED_MACRO_LIST.Add(file);
                 return true;
             }
             return false;

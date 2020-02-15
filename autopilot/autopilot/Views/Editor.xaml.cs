@@ -14,17 +14,15 @@ namespace autopilot
     /// </summary>
     public partial class Editor : Window
     {
-        private static string filterText = "";
-        private static string[] sortOptions = { "A-Z", "Z-A", "Enabled/Disabled" };
-
         public Editor()
         {
             InitializeComponent();
-            MacroListView.ItemsSource = MACRO_LIST;
+            EditorUtils.LoadMacros();
+            MacroListView.ItemsSource = SORTED_FILTERED_MACRO_LIST;
             EditorPanel.Visibility = Visibility.Hidden;
-            SortComboBox.ItemsSource = sortOptions;
-            SortComboBox.SelectedItem = "A-Z";
-            EditorUtils.LoadMacros(filterText);
+            SortComboBox.ItemsSource = SortFilterUtils.sortOptions;
+            SortComboBox.SelectedItem = SortFilterUtils.sortOptions[0];
+            SortComboBox.SelectedIndex = 0;
         }
 
         private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
@@ -43,6 +41,9 @@ namespace autopilot
             if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")
                 if (!MacroFileUtils.CreateMacro(MacroFileUtils.GetFileNameWithMacroExtension(response.TextboxResponse)))
                     CustomDialog.Display(CustomDialogType.OK, "Macro create error", "There is already a macro with this name.");
+            SortFilterUtils.SortFilterMacroList(SortComboBox.SelectedIndex);
+            MacroListView.ItemsSource = null;
+            MacroListView.ItemsSource = SORTED_FILTERED_MACRO_LIST;
         }
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
@@ -73,12 +74,13 @@ namespace autopilot
                 }
             }
             MacroListView.ItemsSource = null;
-            MacroListView.ItemsSource = MACRO_LIST;
+            MacroListView.ItemsSource = SORTED_FILTERED_MACRO_LIST;
         }
 
         private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            filterText = FilterTextBox.Text;
+            SortFilterUtils.filterText = FilterTextBox.Text;
+            SortFilterUtils.SortFilterMacroList(SortComboBox.SelectedIndex);
         }
 
         private void MacroListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -143,11 +145,12 @@ namespace autopilot
             if (File.Exists(MacroFileUtils.GetFullPathOfMacroFile(file.Title)))
             {
                 MacroListView.ItemsSource = null;
-                MacroListView.ItemsSource = MACRO_LIST;
+                MacroListView.ItemsSource = SORTED_FILTERED_MACRO_LIST;
             }
             else
             {
                 MACRO_LIST.Add(file);
+                SORTED_FILTERED_MACRO_LIST.Add(file);
             }
             MacroFileUtils.WriteMacroFile(file, true);
         }
@@ -162,14 +165,11 @@ namespace autopilot
             //open bind combination editor window
         }
 
-        private void FilterButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            SortFilterUtils.SortFilterMacroList(SortComboBox.SelectedIndex);
+            MacroListView.ItemsSource = null;
+            MacroListView.ItemsSource = SORTED_FILTERED_MACRO_LIST;
         }
     }
 }
