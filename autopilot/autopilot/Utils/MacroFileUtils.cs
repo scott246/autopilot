@@ -13,6 +13,7 @@ namespace autopilot.Utils
             Console.WriteLine("Writing macro file {0}", macroFile.Title);
             string macroFileTitle = macroFile.Title;
             string macroFilePath = GetFullPathOfMacroFile(macroFileTitle);
+            macroFile.LastModifiedDateTime = DateTime.Now;
             if (File.Exists(macroFilePath) && !canOverwrite)
             {
                 Console.WriteLine("Macro file {0} already exists", macroFileTitle);
@@ -82,6 +83,8 @@ namespace autopilot.Utils
             {
                 Title = GetFileNameWithNoMacroExtension(title),
                 Enabled = true,
+                CreatedDateTime = DateTime.Now,
+                LastModifiedDateTime = DateTime.Now
             };
 
             if (WriteMacroFile(file, false))

@@ -10,19 +10,24 @@ namespace autopilot.Utils
 {
 	class SortFilterUtils
     {
-        public static string[] sortOptions = { "A-Z", "Enabled/Disabled", "Creation Time" };
-        public static string filterText = "";
+        public static string[] sortOptions = { "A-Z", "Enabled/Disabled", "Created Time", "Last Modified Time" };
 
-        public static void SortFilterMacroList(int sortFormula)
+        public static void SortFilterMacroList(int sortFormula, string filterText)
         {
-            FilterMacros();
+            FilterMacros(filterText);
             switch (sortFormula)
             {
                 case 0:
-                    BubbleSortMacros();
+                    BubbleSortMacros(0);
                     return;
                 case 1:
-                    BucketSortMacros();
+                    BucketSortMacros(1);
+                    return;
+                case 2:
+                    BubbleSortMacros(2);
+                    return;
+                case 3:
+                    BubbleSortMacros(3);
                     return;
                 default:
                     return;
@@ -36,18 +41,22 @@ namespace autopilot.Utils
                 case 0:
                     return a.Title.CompareTo(b.Title) < 0;
                 case 1:
-                    return false;
+                    return a.Title.CompareTo(b.Title) < 0;
+                case 2:
+                    return a.CreatedDateTime.CompareTo(b.CreatedDateTime) < 0;
+                case 3:
+                    return a.LastModifiedDateTime.CompareTo(b.LastModifiedDateTime) < 0;
                 default:
                     return false;
             }
         }
 
-        private static void BucketSortMacros()
+        private static void BucketSortMacros(int sortFormula)
         {
             List<MacroFile> enabledBucket = new List<MacroFile>();
             List<MacroFile> disabledBucket = new List<MacroFile>();
 
-            BubbleSortMacros();
+            BubbleSortMacros(sortFormula);
 
             for (int i = 0; i < SORTED_FILTERED_MACRO_LIST.Count; i++)
             {
@@ -68,13 +77,13 @@ namespace autopilot.Utils
             }
         }
 
-        private static void BubbleSortMacros()
+        private static void BubbleSortMacros(int sortFormula)
         {
             for (int i = 0; i < SORTED_FILTERED_MACRO_LIST.Count; i++)
             {
                 for (int j = 0; j < SORTED_FILTERED_MACRO_LIST.Count; j++)
                 {
-                    if (Comparison(0, SORTED_FILTERED_MACRO_LIST[i], SORTED_FILTERED_MACRO_LIST[j]))
+                    if (Comparison(sortFormula, SORTED_FILTERED_MACRO_LIST[i], SORTED_FILTERED_MACRO_LIST[j]))
                     {
                         MacroFile temp = SORTED_FILTERED_MACRO_LIST[i];
                         SORTED_FILTERED_MACRO_LIST[i] = SORTED_FILTERED_MACRO_LIST[j];
@@ -84,7 +93,7 @@ namespace autopilot.Utils
             }
         }
 
-        private static void FilterMacros()
+        private static void FilterMacros(string filterText)
         {
             SORTED_FILTERED_MACRO_LIST.Clear();
             foreach (MacroFile macro in MACRO_LIST)

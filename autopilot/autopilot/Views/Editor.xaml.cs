@@ -22,7 +22,6 @@ namespace autopilot
             EditorPanel.Visibility = Visibility.Hidden;
             SortComboBox.ItemsSource = SortFilterUtils.sortOptions;
             SortComboBox.SelectedItem = SortFilterUtils.sortOptions[0];
-            SortComboBox.SelectedIndex = 0;
         }
 
         private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
@@ -41,9 +40,7 @@ namespace autopilot
             if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")
                 if (!MacroFileUtils.CreateMacro(MacroFileUtils.GetFileNameWithMacroExtension(response.TextboxResponse)))
                     CustomDialog.Display(CustomDialogType.OK, "Macro create error", "There is already a macro with this name.");
-            SortFilterUtils.SortFilterMacroList(SortComboBox.SelectedIndex);
-            MacroListView.ItemsSource = null;
-            MacroListView.ItemsSource = SORTED_FILTERED_MACRO_LIST;
+            EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
         }
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
@@ -73,14 +70,12 @@ namespace autopilot
                     CustomDialog.Display(CustomDialogType.OK, "Macro Delete Error", "Could not remove macro.");
                 }
             }
-            MacroListView.ItemsSource = null;
-            MacroListView.ItemsSource = SORTED_FILTERED_MACRO_LIST;
+            EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
         }
 
         private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            SortFilterUtils.filterText = FilterTextBox.Text;
-            SortFilterUtils.SortFilterMacroList(SortComboBox.SelectedIndex);
+            EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
         }
 
         private void MacroListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -142,17 +137,13 @@ namespace autopilot
                 Bind = EditorBindLabel.Text,
                 Code = EditorCode.Text,
             };
-            if (File.Exists(MacroFileUtils.GetFullPathOfMacroFile(file.Title)))
-            {
-                MacroListView.ItemsSource = null;
-                MacroListView.ItemsSource = SORTED_FILTERED_MACRO_LIST;
-            }
-            else
+            MacroFileUtils.WriteMacroFile(file, true);
+            if (!File.Exists(MacroFileUtils.GetFullPathOfMacroFile(file.Title)))
             {
                 MACRO_LIST.Add(file);
                 SORTED_FILTERED_MACRO_LIST.Add(file);
             }
-            MacroFileUtils.WriteMacroFile(file, true);
+            EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
         }
 
         private void TestMacroButton_Click(object sender, RoutedEventArgs e)
@@ -167,9 +158,7 @@ namespace autopilot
 
         private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SortFilterUtils.SortFilterMacroList(SortComboBox.SelectedIndex);
-            MacroListView.ItemsSource = null;
-            MacroListView.ItemsSource = SORTED_FILTERED_MACRO_LIST;
+            EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
         }
     }
 }

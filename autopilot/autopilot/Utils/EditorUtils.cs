@@ -3,6 +3,7 @@ using autopilot.Views.Dialogs;
 using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using static autopilot.Globals;
 
 namespace autopilot
@@ -28,6 +29,21 @@ namespace autopilot
                 MACRO_LIST.Add(file);
                 SORTED_FILTERED_MACRO_LIST.Add(file);
             }
+        }
+
+        public static void RefreshMacroList(ListBox list, int sortAlgo, string filterText)
+        {
+            MACRO_LIST.Clear();
+            SORTED_FILTERED_MACRO_LIST.Clear();
+            foreach (string item in Directory.EnumerateFiles(MACRO_DIRECTORY))
+            {
+                MacroFile file = MacroFileUtils.ReadMacroFile(item);
+                MACRO_LIST.Add(file);
+                SORTED_FILTERED_MACRO_LIST.Add(file);
+            }
+            SortFilterUtils.SortFilterMacroList(sortAlgo, filterText);
+            list.InvalidateArrange();
+            list.UpdateLayout();
         }
 
         public static bool ConfirmDeleteMacro(MacroFile itemToDelete)
