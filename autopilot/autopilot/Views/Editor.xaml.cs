@@ -43,14 +43,6 @@ namespace autopilot
             EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
         }
 
-        private void ToggleButton_Click(object sender, RoutedEventArgs e)
-        {
-            MacroFile selectedItem = (MacroFile)MacroListView.SelectedItem;
-            if (null == selectedItem) return;
-            selectedItem.Enabled = !selectedItem.Enabled;
-            EditorEnabledCheckbox.IsChecked = selectedItem.Enabled;
-        }
-
         private void DeleteMacroButton_Click(object sender, RoutedEventArgs e)
         {
             MacroFile selectedItem = (MacroFile)MacroListView.SelectedItem;
@@ -146,14 +138,14 @@ namespace autopilot
             EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
         }
 
-        private void TestMacroButton_Click(object sender, RoutedEventArgs e)
+        private void RecordMacroButton_Click(object sender, RoutedEventArgs e)
         {
-            //run the macro
+            // open playback controls and record actions and list/write out after done recording
         }
 
         private void EditBindButton_Click(object sender, RoutedEventArgs e)
         {
-            //open bind combination editor window
+            // open bind combination editor window
         }
 
         private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

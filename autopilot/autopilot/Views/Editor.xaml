@@ -13,20 +13,8 @@
 			<!-- Menu bar -->
 			<Menu DockPanel.Dock="Top">
 				<MenuItem Header="_File">
-					<MenuItem Header="_Save"/>
 					<MenuItem Header="_Preferences" Click="Preferences_MenuItem_Click"/>
 					<MenuItem Header="E_xit"/>
-				</MenuItem>
-				<MenuItem Header="_Actions">
-					<MenuItem Header="_Macro">
-						<MenuItem Header="_New macro"/>
-						<MenuItem Header="_Toggle macro"/>
-						<MenuItem Header="_Delete macro"/>
-					</MenuItem>
-					<MenuItem Header="_Action">
-						<MenuItem Header="_Add action"/>
-						<MenuItem Header="_Remove action"/>
-					</MenuItem>
 				</MenuItem>
 				<MenuItem Header="_Help">
 					<MenuItem Header="_Wiki"/>
@@ -61,12 +49,9 @@
 							<ColumnDefinition Width="*"/>
 							<ColumnDefinition Width="5"/>
 							<ColumnDefinition Width="*"/>
-							<ColumnDefinition Width="5"/>
-							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
 						<Button x:Name="DeleteMacroButton" Content="Delete" Grid.Row="2" Grid.Column="0" Click="DeleteMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
-						<Button x:Name="ToggleButton" Content="Toggle" Grid.Row="2" Grid.Column="2" Click="ToggleButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
-						<Button x:Name="AddMacroButton" Content="Add" Grid.Row="2" Grid.Column="4" Click="AddMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+						<Button x:Name="AddMacroButton" Content="Add" Grid.Row="2" Grid.Column="2" Click="AddMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 					</Grid>
 
 				</Grid>
@@ -109,7 +94,7 @@
 							<CheckBox x:Name="EditorEnabledCheckbox" Grid.Column="1" Content="Enabled" IsChecked="True" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Checked="EditorEnabledCheckbox_Checked" Unchecked="EditorEnabledCheckbox_Unchecked" Template="{DynamicResource CheckBoxControlTemplate}"/>
 						</Grid>
 						<Button x:Name="SaveMacroButton" Grid.Row="0" Grid.Column="3" Content="Save" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="SaveMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
-						<Button x:Name="TestMacroButton" Grid.Row="1" Grid.Column="3" Content="Test" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="TestMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+						<Button x:Name="TestMacroButton" Grid.Row="1" Grid.Column="3" Content="Record" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="RecordMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 						<Button x:Name="EditBindButton" Grid.Row="2" Grid.Column="3" Content="Edit Bind" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="EditBindButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 					</Grid>
 				</Grid>
