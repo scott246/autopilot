@@ -521,15 +521,8 @@
 							<Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
 							<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type TabControl}}}" Value="Top"/>
 						</MultiDataTrigger.Conditions>
-						<Setter Property="Background" TargetName="mainBorder">
-							<Setter.Value>
-								<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-									<GradientStop Color="#FFECF4FC" Offset="0"/>
-									<GradientStop Color="#FFDCECFC" Offset="1"/>
-								</LinearGradientBrush>
-							</Setter.Value>
-						</Setter>
-						<Setter Property="BorderBrush" TargetName="mainBorder" Value="#FF7EB4EA"/>
+						<Setter Property="Background" TargetName="mainBorder" Value="{StaticResource AccentColor}"/>
+						<Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource AccentColor}"/>
 						<Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0"/>
 						<Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0"/>
 					</MultiDataTrigger>

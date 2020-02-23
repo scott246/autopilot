@@ -12,13 +12,10 @@
 
 			<!-- Menu bar -->
 			<Menu DockPanel.Dock="Top">
-				<MenuItem Header="_File">
-					<MenuItem Header="_Preferences" Click="Preferences_MenuItem_Click"/>
-					<MenuItem Header="E_xit"/>
-				</MenuItem>
-				<MenuItem Header="_Help">
-					<MenuItem Header="_Wiki"/>
+				<MenuItem Header="_Actions">
+					<MenuItem Header="_Preferences" Click="PreferencesMenuItem_Click"/>
 					<MenuItem Header="_About" Click="AboutMenuItem_Click"/>
+					<MenuItem Header="E_xit" Click="ExitMenuItem_Click"/>
 				</MenuItem>
 			</Menu>
 
@@ -69,7 +66,7 @@
 
 				<!-- Info and Controls -->
 				<Grid Grid.Row="0">
-					<Grid Margin="10">
+					<Grid Margin="0,10,10,10">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="*"/>
 							<RowDefinition Height="*"/>
@@ -94,26 +91,20 @@
 							<CheckBox x:Name="EditorEnabledCheckbox" Grid.Column="1" Content="Enabled" IsChecked="True" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Checked="EditorEnabledCheckbox_Checked" Unchecked="EditorEnabledCheckbox_Unchecked" Template="{DynamicResource CheckBoxControlTemplate}"/>
 						</Grid>
 						<Button x:Name="SaveMacroButton" Grid.Row="0" Grid.Column="3" Content="Save" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="SaveMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
-						<Button x:Name="TestMacroButton" Grid.Row="1" Grid.Column="3" Content="Record" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="RecordMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+						<Button x:Name="Commands" Grid.Row="1" Grid.Column="3" Content="Commands" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="CommandsHelpButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 						<Button x:Name="EditBindButton" Grid.Row="2" Grid.Column="3" Content="Edit Bind" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="EditBindButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 					</Grid>
 				</Grid>
 
 				<!-- Editor -->
-				<TabControl Grid.Row="1" Grid.Column="1" Margin="10,0,10,10" TabStripPlacement="Bottom" Template="{DynamicResource TabControlControlTemplate}">
-					<TabItem Header="Code" Template="{DynamicResource TabItemControlTemplate}">
-						<Grid Grid.Column="1" Grid.Row="1" Margin="0">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="50"/>
-								<ColumnDefinition Width="*"/>
-							</Grid.ColumnDefinitions>
-							<TextBox x:Name="EditorLineNumbers" Grid.Column="0" Text="1" IsReadOnly="True" FontFamily="Courier New" TextWrapping="NoWrap" TextAlignment="Right" Padding="5" Template="{DynamicResource TextBoxControlTemplate}"  Foreground="{StaticResource AccentColor}" Background="{StaticResource AppBackgroundColor}" />
-							<TextBox x:Name="EditorCode" TextWrapping="NoWrap" AcceptsReturn="True" Grid.Column="1" Text="Code" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Courier New" Padding="5" PreviewKeyUp="EditorCode_PreviewKeyUp" Template="{DynamicResource TextBoxControlTemplate}"/>
-						</Grid>
-					</TabItem>
-					<TabItem Header="Designer" Template="{DynamicResource TabItemControlTemplate}">
-					</TabItem>
-				</TabControl>
+				<Grid Grid.Column="1" Grid.Row="1" Margin="0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="50"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<TextBox x:Name="EditorLineNumbers" Grid.Column="0" Text="1" IsReadOnly="True" FontFamily="Courier New" TextWrapping="NoWrap" TextAlignment="Right" Padding="5" Margin="5,0,0,10" Template="{DynamicResource TextBoxControlTemplate}"  Foreground="{StaticResource AccentColor}" Background="{StaticResource AppBackgroundColor}" />
+					<TextBox x:Name="EditorCode" TextWrapping="NoWrap" AcceptsReturn="True" AcceptsTab="True" Grid.Column="1" Text="Code" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Courier New" Padding="5" Margin="0,0,10,10" PreviewKeyUp="EditorCode_PreviewKeyUp" Template="{DynamicResource TextBoxControlTemplate}"/>
+				</Grid>
 			</Grid>
 
 		</DockPanel>

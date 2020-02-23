@@ -29,7 +29,7 @@ namespace autopilot
             new About().ShowDialog();
         }
 
-        private void Preferences_MenuItem_Click(object sender, RoutedEventArgs e)
+        private void PreferencesMenuItem_Click(object sender, RoutedEventArgs e)
         {
             new Preferences().ShowDialog();
         }
@@ -138,9 +138,9 @@ namespace autopilot
             EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
         }
 
-        private void RecordMacroButton_Click(object sender, RoutedEventArgs e)
+        private void CommandsHelpButton_Click(object sender, RoutedEventArgs e)
         {
-            // open playback controls and record actions and list/write out after done recording
+            // open help panel for listing commands
         }
 
         private void EditBindButton_Click(object sender, RoutedEventArgs e)
@@ -151,6 +151,11 @@ namespace autopilot
         private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
+        }
+
+        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
