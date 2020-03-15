@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:autopilot.Views.Dialogs"
         mc:Ignorable="d"
+		WindowStartupLocation="CenterScreen"
         Title="Title" Height="160" Width="400" ResizeMode="NoResize">
 	<Grid Background="{StaticResource AppBackgroundColor}">
 		<Grid.RowDefinitions>

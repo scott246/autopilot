@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:autopilot"
         mc:Ignorable="d"
+		WindowStartupLocation="CenterScreen"
         Title="About" Height="200" Width="400">
 	<Grid Background="{StaticResource AppBackgroundColor}">
 		<Label x:Name="TitleLabel" Content="Autopilot" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontSize="48"/>

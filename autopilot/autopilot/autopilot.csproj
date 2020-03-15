@@ -79,14 +79,14 @@
     <Compile Include="Utils\MacroFile.cs" />
     <Compile Include="Utils\MacroFileUtils.cs" />
     <Compile Include="Utils\SortFilterUtils.cs" />
-    <Compile Include="Views\Preferences\Preferences.xaml.cs">
+    <Compile Include="Views\Preferences.xaml.cs">
       <DependentUpon>Preferences.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\Preferences\Preferences.xaml">
+    <Page Include="Views\Preferences.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Dialogs\CustomDialog.xaml">
+    <Page Include="Views\CustomDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -100,21 +100,21 @@
     </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Views\Dialogs\CustomDialog.xaml.cs">
+    <Compile Include="Views\CustomDialog.xaml.cs">
       <DependentUpon>CustomDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Editor.xaml.cs">
       <DependentUpon>Editor.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\About\About.xaml">
+    <Page Include="Views\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Utils\EditorUtils.cs" />
-    <Compile Include="Views\About\About.xaml.cs">
+    <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">

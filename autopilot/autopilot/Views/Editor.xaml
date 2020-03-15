@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:autopilot"
 		mc:Ignorable="d"
+		WindowStartupLocation="CenterScreen"
         Title="Autopilot" Height="450" Width="800">
 
 	<Grid Background="{StaticResource AppBackgroundColor}">
@@ -97,13 +98,8 @@
 				</Grid>
 
 				<!-- Editor -->
-				<Grid Grid.Column="1" Grid.Row="1" Margin="0">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="50"/>
-						<ColumnDefinition Width="*"/>
-					</Grid.ColumnDefinitions>
-					<TextBox x:Name="EditorLineNumbers" Grid.Column="0" Text="1" IsReadOnly="True" FontFamily="Courier New" TextWrapping="NoWrap" TextAlignment="Right" Padding="5" Margin="5,0,0,10" Template="{DynamicResource TextBoxControlTemplate}"  Foreground="{StaticResource AccentColor}" Background="{StaticResource AppBackgroundColor}" />
-					<TextBox x:Name="EditorCode" TextWrapping="NoWrap" AcceptsReturn="True" AcceptsTab="True" Grid.Column="1" Text="Code" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Courier New" Padding="5" Margin="0,0,10,10" PreviewKeyUp="EditorCode_PreviewKeyUp" Template="{DynamicResource TextBoxControlTemplate}"/>
+				<Grid Grid.Column="1" Grid.Row="1" Margin="0,0,10,10">
+					<ListBox Padding="3" Template="{DynamicResource ListBoxControlTemplate}" ItemTemplate="{DynamicResource ListBoxItemTemplate}" />
 				</Grid>
 			</Grid>
 
