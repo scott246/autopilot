@@ -58,7 +58,6 @@
 				<Setter Property="Foreground" Value="{StaticResource ControlForegroundColor}"/>
 				<Setter Property="Background" Value="{StaticResource ControlBackgroundColor}"/>
 				<Setter Property="BorderBrush" Value="{StaticResource ControlBorderColor}"/>
-				<Setter Property="Height" Value="20"/>
 			</Style>
 			<ControlTemplate x:Key="ButtonControlTemplate" TargetType="{x:Type Button}">
 				<Border x:Name="border" BorderBrush="{StaticResource ControlBorderColor}" BorderThickness="{TemplateBinding BorderThickness}" Background="{StaticResource ControlBackgroundColor}" SnapsToDevicePixels="True">

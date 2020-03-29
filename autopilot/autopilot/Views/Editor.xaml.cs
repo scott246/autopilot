@@ -2,6 +2,7 @@
 using autopilot.Views.Dialogs;
 using autopilot.Views.Preferences;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -87,7 +88,7 @@ namespace autopilot
                 EditorTitleTextBox.Text = itemHeader;
                 EditorDescriptionTextBox.Text = readingFile.Description;
                 EditorEnabledCheckbox.IsChecked = readingFile.Enabled;
-                EditorCode.Text = readingFile.Code;
+                EditorCommandList.ItemsSource = readingFile.Commands;
                 EditorBindLabel.Text = readingFile.Bind;
                 EditorPanel.Visibility = Visibility.Visible;
             }
@@ -107,18 +108,6 @@ namespace autopilot
             file.Enabled = false;
         }
 
-        private void EditorCode_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            EditorLineNumbers.Text = "";
-            int lines = EditorCode.Text.Split('\n').Length;
-            for (int i = 0; i < lines; i++)
-            {
-                EditorLineNumbers.Text += ((i + 1).ToString() + '\n');
-            }
-            int currentLine = EditorCode.GetLineIndexFromCharacterIndex(EditorCode.CaretIndex);
-            EditorLineNumbers.ScrollToLine(currentLine);
-        }
-
         private void SaveMacroButton_Click(object sender, RoutedEventArgs e)
         {
             MacroFile file = new MacroFile
@@ -127,7 +116,7 @@ namespace autopilot
                 Title = EditorTitleTextBox.Text,
                 Description = EditorDescriptionTextBox.Text,
                 Bind = EditorBindLabel.Text,
-                Code = EditorCode.Text,
+                Commands = EditorCommandList.Items
             };
             MacroFileUtils.WriteMacroFile(file, true);
             if (!File.Exists(MacroFileUtils.GetFullPathOfMacroFile(file.Title)))
@@ -156,6 +145,36 @@ namespace autopilot
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteStepButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddStepButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditorCommandList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
