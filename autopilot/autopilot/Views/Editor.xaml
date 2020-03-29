@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:autopilot"
 		mc:Ignorable="d"
+		ResizeMode="CanMinimize"
 		WindowStartupLocation="CenterScreen"
         Title="Autopilot" Height="450" Width="800">
 
@@ -58,12 +59,9 @@
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="5"/>
 						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="5"/>
-						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<Button x:Name="HelpButton" Content="Help" Grid.Column="0" Click="HelpButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
-					<Button x:Name="AboutButton" Content="About" Grid.Column="2" Click="AboutButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
-					<Button x:Name="SettingsButton" Content="Settings" Grid.Column="4" Click="SettingsButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+					<Button x:Name="AboutButton" Content="About" Grid.Column="0" Click="AboutButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+					<Button x:Name="SettingsButton" Content="Settings" Grid.Column="2" Click="SettingsButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 				</Grid>
 			</Grid>
 

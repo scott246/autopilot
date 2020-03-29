@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:autopilot"
         mc:Ignorable="d"
+		ResizeMode="NoResize"
 		WindowStartupLocation="CenterScreen"
         Title="About" Height="200" Width="400">
 	<Grid Background="{StaticResource AppBackgroundColor}">
 		<Label x:Name="TitleLabel" Content="Autopilot" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontSize="48"/>
-		<Label x:Name="DescriptionLabel" Content="A WPF Macro Tool" HorizontalContentAlignment="Center" Margin="0,74,0,0" VerticalAlignment="Top" Width="392"/>
+		<Label x:Name="DescriptionLabel" Content="A macro tool in C#/WPF" HorizontalContentAlignment="Center" Margin="0,74,0,0" VerticalAlignment="Top" Width="392"/>
 		<Label x:Name="HelpTextLabel" HorizontalContentAlignment="Center" Margin="0,126,0,0" VerticalAlignment="Top" Width="392">
 			<Hyperlink NavigateUri="https://github.com/scott246/autopilot" RequestNavigate="Hyperlink_RequestNavigate" Foreground="{StaticResource AccentColor}">
-				Contributions, bug reports, help, and feedback on GitHub
+				Help, feedback, contributions, and bug reports on GitHub
 			</Hyperlink> 
 		</Label>
 	</Grid>

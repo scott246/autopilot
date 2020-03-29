@@ -4,6 +4,7 @@ using autopilot.Views.Preferences;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using static autopilot.Globals;
@@ -23,16 +24,6 @@ namespace autopilot
             EditorPanel.Visibility = Visibility.Hidden;
             SortComboBox.ItemsSource = SortFilterUtils.sortOptions;
             SortComboBox.SelectedItem = SortFilterUtils.sortOptions[0];
-        }
-
-        private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            new About().ShowDialog();
-        }
-
-        private void PreferencesMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            new Preferences().ShowDialog();
         }
 
         private void AddMacroButton_Click(object sender, RoutedEventArgs e)
@@ -116,7 +107,7 @@ namespace autopilot
                 Title = EditorTitleTextBox.Text,
                 Description = EditorDescriptionTextBox.Text,
                 Bind = EditorBindLabel.Text,
-                Commands = EditorCommandList.Items
+                Commands = EditorCommandList.Items.Cast<string>().ToList()
             };
             MacroFileUtils.WriteMacroFile(file, true);
             if (!File.Exists(MacroFileUtils.GetFullPathOfMacroFile(file.Title)))
@@ -125,11 +116,6 @@ namespace autopilot
                 SORTED_FILTERED_MACRO_LIST.Add(file);
             }
             EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
-        }
-
-        private void CommandsHelpButton_Click(object sender, RoutedEventArgs e)
-        {
-            // open help panel for listing commands
         }
 
         private void EditBindButton_Click(object sender, RoutedEventArgs e)
@@ -142,24 +128,14 @@ namespace autopilot
             EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
         }
 
-        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
-        private void HelpButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
-
+            new About().ShowDialog();
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            new Preferences().ShowDialog();
         }
 
         private void DeleteStepButton_Click(object sender, RoutedEventArgs e)
