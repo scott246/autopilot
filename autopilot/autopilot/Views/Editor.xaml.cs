@@ -80,7 +80,7 @@ namespace autopilot
                 EditorDescriptionTextBox.Text = readingFile.Description;
                 EditorEnabledCheckbox.IsChecked = readingFile.Enabled;
                 EditorCommandList.ItemsSource = readingFile.Commands;
-                EditorBindLabel.Text = readingFile.Bind;
+                EditorBindLabel.Text = (readingFile.Bind != null && readingFile.Bind != "") ? readingFile.Bind : "[unbound]";
                 EditorPanel.Visibility = Visibility.Visible;
             }
         }
@@ -128,12 +128,12 @@ namespace autopilot
             EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
         }
 
-        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
         {
             new About().ShowDialog();
         }
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        private void PreferencesMenuItem_Click(object sender, RoutedEventArgs e)
         {
             new Preferences().ShowDialog();
         }

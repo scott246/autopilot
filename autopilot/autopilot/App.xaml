@@ -12,7 +12,7 @@
 			<Color x:Key="AppForegroundColorCode">#ffffffff</Color>
 			<Color x:Key="ControlForegroundColorCode">#ccffffff</Color>
 			<Color x:Key="WarningTextColorCode">#ffff0000</Color>
-			<Color x:Key="AccentColorCode">#ffffa500</Color>
+			<Color x:Key="AccentColorCode">#99ffa500</Color>
 
 			<SolidColorBrush x:Key="AppBackgroundColor" Color="{StaticResource AppBackgroundColorCode}"/>
             <SolidColorBrush x:Key="ControlBackgroundColor" Color="{StaticResource ControlBackgroundColorCode}"/>
@@ -60,7 +60,7 @@
 				<Setter Property="BorderBrush" Value="{StaticResource ControlBorderColor}"/>
 			</Style>
 			<ControlTemplate x:Key="ButtonControlTemplate" TargetType="{x:Type Button}">
-				<Border x:Name="border" BorderBrush="{StaticResource ControlBorderColor}" BorderThickness="{TemplateBinding BorderThickness}" Background="{StaticResource ControlBackgroundColor}" SnapsToDevicePixels="True">
+				<Border x:Name="border" BorderBrush="{StaticResource ControlBorderColor}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
 					<ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
 				</Border>
 				<ControlTemplate.Triggers>
