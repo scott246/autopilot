@@ -2,7 +2,6 @@
 using autopilot.Views.Dialogs;
 using autopilot.Views.Preferences;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -11,9 +10,6 @@ using static autopilot.Globals;
 
 namespace autopilot
 {
-    /// <summary>
-    /// Interaction logic for Editor.xaml
-    /// </summary>
     public partial class Editor : Window
     {
         public Editor()

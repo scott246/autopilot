@@ -4,9 +4,6 @@ using System.Windows.Input;
 
 namespace autopilot
 {
-	/// <summary>
-	/// Interaction logic for Window1.xaml
-	/// </summary>
 	public partial class About : Window
 	{
 		public About()

@@ -79,9 +79,16 @@
     <Compile Include="Utils\MacroFile.cs" />
     <Compile Include="Utils\MacroFileUtils.cs" />
     <Compile Include="Utils\SortFilterUtils.cs" />
+    <Compile Include="Views\AddAction.xaml.cs">
+      <DependentUpon>AddAction.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Preferences.xaml.cs">
       <DependentUpon>Preferences.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\AddAction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Preferences.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
