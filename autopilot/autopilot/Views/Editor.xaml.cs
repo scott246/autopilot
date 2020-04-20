@@ -1,4 +1,5 @@
 ﻿using autopilot.Utils;
+using autopilot.Views;
 using autopilot.Views.Dialogs;
 using autopilot.Views.Preferences;
 using System;
@@ -141,7 +142,7 @@ namespace autopilot
 
         private void AddStepButton_Click(object sender, RoutedEventArgs e)
         {
-
+            new AddAction().ShowDialog();
         }
 
         private void EditorCommandList_SelectionChanged(object sender, SelectionChangedEventArgs e)
