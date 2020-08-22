@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <action>
+    <name>Type Character</name>
+    <description>Type specified character when a specified key is pressed.</description>
+  </action>
+  <action>
+    <name>Type String</name>
+    <description>Types a specified string when a specified key is pressed.</description>
+  </action>
+</root>

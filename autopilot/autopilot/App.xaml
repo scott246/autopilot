@@ -340,6 +340,7 @@
 			<!-- ListBox Resources -->
 			<Style TargetType="{x:Type ListBox}">
 				<Setter Property="Background" Value="{StaticResource ControlBackgroundColor}"/>
+				<Setter Property="Foreground" Value="{StaticResource AppForegroundColor}"/>
 			</Style>
 			<ControlTemplate x:Key="ListBoxControlTemplate" TargetType="{x:Type ListBox}">
 				<Border x:Name="Bd" BorderBrush="{StaticResource ControlBorderColor}" BorderThickness="{TemplateBinding BorderThickness}" Background="{StaticResource ControlBackgroundColor}" Padding="1" SnapsToDevicePixels="True">
@@ -363,7 +364,7 @@
 			</ControlTemplate>
 			<DataTemplate x:Key="ListBoxItemTemplate">
 				<Grid>
-					<TextBlock Grid.Column="1" Text="{Binding Title}">
+					<TextBlock Grid.Column="0" Text="{Binding Title}">
 						<TextBlock.Style>
 							<Style TargetType="{x:Type TextBlock}">
 								<Setter Property="Foreground" Value="{StaticResource AppForegroundColor}"/>

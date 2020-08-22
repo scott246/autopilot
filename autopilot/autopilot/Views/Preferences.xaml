@@ -16,6 +16,6 @@
 		<StackPanel Grid.Row="0" Margin="10">
 			<CheckBox x:Name="WarnFileDeleteCheckbox" Content="Warn on file delete" Checked="WarnFileDeleteCheckbox_Checked" Unchecked="WarnFileDeleteCheckbox_Unchecked" Template="{StaticResource CheckBoxControlTemplate}"/>
 		</StackPanel>
-		<Button Content="Apply" Grid.Row="1" Click="ApplyButton_Click" IsCancel="True" Template="{StaticResource ButtonControlTemplate}"/>
+		<Button Content="Apply" HorizontalAlignment="Right" Margin="10" Grid.Row="1" Click="ApplyButton_Click" IsCancel="True" Template="{StaticResource ButtonControlTemplate}"/>
 	</Grid>
 </Window>

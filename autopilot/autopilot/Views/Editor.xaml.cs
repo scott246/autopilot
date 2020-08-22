@@ -5,6 +5,7 @@ using autopilot.Views.Preferences;
 using System;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Windows;
 using System.Windows.Controls;
 using static autopilot.Globals;
@@ -16,6 +17,7 @@ namespace autopilot
         public Editor()
         {
             InitializeComponent();
+            ACTION_LIST = ActionUtils.GetAllActions();
             EditorUtils.LoadMacros();
             MacroListView.ItemsSource = SORTED_FILTERED_MACRO_LIST;
             EditorPanel.Visibility = Visibility.Hidden;
