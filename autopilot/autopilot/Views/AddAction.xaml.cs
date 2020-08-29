@@ -20,16 +20,30 @@ namespace autopilot.Views
 	/// </summary>
 	public partial class AddAction : Window
 	{
+		private string filterText = "";
+		private string filterCategory = "All";
+
 		public AddAction()
 		{
 			InitializeComponent();
+			ActionCategoryFilterComboBox.ItemsSource = Globals.actionCategoryOptions;
+			DisplayFilteredItems();
+		}
+
+		private void DisplayFilteredItems()
+		{
+			ActionList.Items.Clear();
 			foreach (autopilot.Utils.Action action in Globals.ACTION_LIST)
 			{
-				ListBoxItem item = new ListBoxItem
+				if ((filterText.Equals("") || action.Name.Contains(filterText)) && 
+					(filterCategory.Equals("All") || filterCategory.Equals(action.Category)))
 				{
-					Content = action.Name
-				};
-				ActionList.Items.Add(item);
+					ActionList.Items.Add(new ListBoxItem
+					{
+						Content = action.Name,
+						Tag = action.Description
+					});
+				}
 			}
 			ActionDesc.Text = "";
 		}
@@ -47,8 +61,19 @@ namespace autopilot.Views
 		private void ActionList_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			ListBoxItem item = (ListBoxItem)ActionList.SelectedItem;
-			autopilot.Utils.Action selectedAction = Array.Find(Globals.ACTION_LIST.ToArray(), x => item.Content == x.Name);
-			ActionDesc.Text = selectedAction.Description;
+			ActionDesc.Text = (string)item.Tag;
+		}
+
+		private void ActionFilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			filterText = ActionFilterTextBox.Text;
+			DisplayFilteredItems();
+		}
+
+		private void ActionCategoryFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			filterCategory = (string)ActionCategoryFilterComboBox.SelectedItem;
+			DisplayFilteredItems();
 		}
 	}
 }

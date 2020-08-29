@@ -9,14 +9,29 @@
         Title="Add Action" Height="400" Width="400">
 	<Grid Margin="10">
 		<Grid.RowDefinitions>
+			<RowDefinition Height="30"/>
+			<RowDefinition Height="5"/>
 			<RowDefinition Height="2*"/>
 			<RowDefinition Height="5"/>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="5"/>
 			<RowDefinition Height="30"/>
 		</Grid.RowDefinitions>
-		<ListBox x:Name="ActionList" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{DynamicResource ListBoxControlTemplate}" ItemTemplate="{DynamicResource ListBoxItemTemplate}" SelectionChanged="ActionList_SelectionChanged"/>
-		<TextBlock x:Name="ActionDesc" Grid.Row="2" Text="A description of the highlighted item." TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<Grid Grid.Row="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="50"/>
+				<ColumnDefinition Width="2*"/>
+				<ColumnDefinition Width="5"/>
+				<ColumnDefinition Width="50"/>
+				<ColumnDefinition Width="100"/>
+			</Grid.ColumnDefinitions>
+			<Label Content="Filter" Grid.Column="0" VerticalAlignment="Center"/>
+			<TextBox x:Name="ActionFilterTextBox" Grid.Column="1" VerticalContentAlignment="Center" TextChanged="ActionFilterTextBox_TextChanged" Template="{DynamicResource TextBoxControlTemplate}"/>
+			<Label Content="Sort" Grid.Column="3" VerticalAlignment="Center"/>
+			<ComboBox x:Name="ActionCategoryFilterComboBox" Grid.Column="4" VerticalContentAlignment="Center" SelectionChanged="ActionCategoryFilterComboBox_SelectionChanged" Template="{DynamicResource ComboBoxControlTemplate}"/>
+		</Grid>
+		<ListBox x:Name="ActionList" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{DynamicResource ListBoxControlTemplate}" ItemTemplate="{DynamicResource ListBoxItemTemplate}" SelectionChanged="ActionList_SelectionChanged"/>
+		<TextBlock x:Name="ActionDesc" Grid.Row="4" Text="A description of the highlighted item." TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 		<Grid Grid.Row="6">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
