@@ -124,8 +124,8 @@
 					</Grid.ColumnDefinitions>
 					<Button x:Name="SaveMacroButton" Grid.Column="0" Content="Save" HorizontalAlignment="Stretch" Click="SaveMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}" Background="{StaticResource AccentColor}"/>
 					<CheckBox x:Name="EditorEnabledCheckbox" Grid.Column="2" Content="Enabled" IsChecked="True" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="EditorEnabledCheckbox_Checked" Unchecked="EditorEnabledCheckbox_Unchecked" Template="{DynamicResource CheckBoxControlTemplate}"/>
-					<Button x:Name="DeleteStepButton" Grid.Column="4" Content="Delete Step" HorizontalAlignment="Stretch" Click="DeleteStepButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
-					<Button x:Name="AddStepButton" Grid.Column="6" Content="Add Step" HorizontalAlignment="Stretch" Click="AddStepButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+					<Button x:Name="DeleteCommandButton" Grid.Column="4" Content="Delete Command" HorizontalAlignment="Stretch" Click="DeleteCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+					<Button x:Name="AddCommandButton" Grid.Column="6" Content="Add Command" HorizontalAlignment="Stretch" Click="AddCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 				</Grid>
 				
 			</Grid>

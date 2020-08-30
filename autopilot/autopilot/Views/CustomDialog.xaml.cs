@@ -46,7 +46,9 @@ namespace autopilot.Views.Dialogs
 				dialog.Message.Text = "An error occurred while initializing this dialog box.";
 			}
 			if (textboxContent != null)
+			{
 				dialog.Textbox.Focus();
+			}
 
 			dialog.ShowDialog();
 			return new CustomDialogResponse
@@ -61,21 +63,40 @@ namespace autopilot.Views.Dialogs
 		{
 			dialog.Button1.Content = button1Content;
 			if (button2Content == null)
+			{
 				dialog.Button2.Visibility = Visibility.Hidden;
+			}
 			else
+			{
 				dialog.Button2.Content = button2Content;
+			}
+
 			if (button3Content == null)
+			{
 				dialog.Button3.Visibility = Visibility.Hidden;
+			}
 			else
+			{
 				dialog.Button3.Content = button3Content;
+			}
+
 			if (checkboxContent == null)
+			{
 				dialog.Checkbox.Visibility = Visibility.Hidden;
+			}
 			else
+			{
 				dialog.Checkbox.Content = checkboxContent;
+			}
+
 			if (textboxContent == null)
+			{
 				dialog.Textbox.Visibility = Visibility.Hidden;
+			}
 			else
+			{
 				dialog.Textbox.Text = textboxContent;
+			}
 		}
 
 		private void Textbox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -96,25 +117,38 @@ namespace autopilot.Views.Dialogs
 		private void Button3_Click(object sender, RoutedEventArgs e)
 		{
 			if (type == CustomDialogType.YesNoCancel)
+			{
 				buttonResponse = CustomDialogButtonResponse.Cancel;
+			}
+
 			Close();
 		}
 
 		private void Button2_Click(object sender, RoutedEventArgs e)
 		{
 			if (type == CustomDialogType.OKCancel)
+			{
 				buttonResponse = CustomDialogButtonResponse.Cancel;
+			}
 			else if (type == CustomDialogType.YesNo || type == CustomDialogType.YesNoCancel)
+			{
 				buttonResponse = CustomDialogButtonResponse.No;
+			}
+
 			Close();
 		}
 
 		private void Button1_Click(object sender, RoutedEventArgs e)
 		{
 			if (type == CustomDialogType.OK || type == CustomDialogType.OKCancel)
+			{
 				buttonResponse = CustomDialogButtonResponse.OK;
+			}
 			else if (type == CustomDialogType.YesNo || type == CustomDialogType.YesNoCancel)
+			{
 				buttonResponse = CustomDialogButtonResponse.Yes;
+			}
+
 			Close();
 		}
 	}

@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
-  <action>
+  <command>
     <name>Type Character</name>
     <description>Type a specified character when a specified key is pressed.</description>
     <category>Text</category>
-  </action>
-  <action>
+  </command>
+  <command>
     <name>Type String</name>
     <description>Type a specified string when a specified key is pressed.</description>
     <category>Text</category>
-  </action>
-  <action>
+  </command>
+  <command>
     <name>Show Popup</name>
     <description>Show a popup with specified information.</description>
     <category>IO</category>
-  </action>
+  </command>
 </root>

@@ -77,17 +77,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Utils\Action.cs" />
-    <Compile Include="Utils\MacroFile.cs" />
+    <Compile Include="Objects\Command.cs" />
+    <Compile Include="Objects\MacroFile.cs" />
     <Compile Include="Utils\MacroFileUtils.cs" />
     <Compile Include="Utils\SortFilterUtils.cs" />
-    <Compile Include="Views\AddAction.xaml.cs">
-      <DependentUpon>AddAction.xaml</DependentUpon>
+    <Compile Include="Views\AddCommand.xaml.cs">
+      <DependentUpon>AddCommand.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Preferences.xaml.cs">
       <DependentUpon>Preferences.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\AddAction.xaml">
+    <Page Include="Views\AddCommand.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -107,8 +107,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Globals.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="Shared\Globals.cs" />
+    <Compile Include="Shared\Settings.cs" />
     <Compile Include="Views\CustomDialog.xaml.cs">
       <DependentUpon>CustomDialog.xaml</DependentUpon>
     </Compile>
@@ -161,7 +161,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\ActionsLibrary.xml" />
+    <Resource Include="Resources\CommandsLibrary.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -21,7 +21,9 @@ namespace autopilot
 		private void HandleEsc(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Escape)
+			{
 				Close();
+			}
 		}
 	}
 }

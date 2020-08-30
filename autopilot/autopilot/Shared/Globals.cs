@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
-using System.Windows.Documents;
 
 namespace autopilot
 {
@@ -16,8 +15,8 @@ namespace autopilot
 		public static ObservableCollection<MacroFile> MACRO_LIST = new ObservableCollection<MacroFile>();
 		public static ObservableCollection<MacroFile> SORTED_FILTERED_MACRO_LIST = new ObservableCollection<MacroFile>();
 
-		public static List<autopilot.Utils.Action> ACTION_LIST = new List<autopilot.Utils.Action>();
-		public static string[] actionCategoryOptions = { "All", "Files", "Programs", "System", "IO", "Networking", "Text", "Math", "Logic" };
+		public static List<Command> COMMAND_LIST = new List<Command>();
+		public static string[] commandCategoryOptions = { "All", "Files", "Programs", "System", "IO", "Networking", "Text", "Math", "Logic" };
 
 		public static Mutex FILE_ACCESS_MUTEX = new Mutex();
 
