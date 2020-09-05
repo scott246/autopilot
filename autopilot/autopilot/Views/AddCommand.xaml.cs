@@ -12,7 +12,7 @@ namespace autopilot.Views
 		private string filterText = "";
 		private string filterCategory = "All";
 
-		private static ListBoxItem selectedItem = null;
+		private ListBoxItem selectedItem = null;
 
 		public AddCommand()
 		{
@@ -25,7 +25,7 @@ namespace autopilot.Views
 		{
 			AddCommand a = new AddCommand();
 			a.ShowDialog();
-			return selectedItem.Tag == null ? null : (Command)selectedItem.Tag;
+			return a.selectedItem.Tag == null ? null : (Command)a.selectedItem.Tag;
 		}
 
 		private void DisplayFilteredItems()
@@ -48,6 +48,7 @@ namespace autopilot.Views
 
 		private void Cancel_Click(object sender, RoutedEventArgs e)
 		{
+			selectedItem = null;
 			Close();
 		}
 

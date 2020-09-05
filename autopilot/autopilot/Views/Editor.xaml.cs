@@ -156,8 +156,7 @@ namespace autopilot
 
 		private void DeleteCommandButton_Click(object sender, RoutedEventArgs e)
 		{
-			Command command = (Command)EditorCommandList.SelectedItem;
-			EditorCommandList.Items.Remove(command);
+			EditorCommandList.Items.Remove(EditorCommandList.SelectedItem);
 		}
 
 		private void AddCommandButton_Click(object sender, RoutedEventArgs e)
@@ -165,7 +164,11 @@ namespace autopilot
 			Command command;
 			if ((command = AddCommand.Display()) != null)
 			{
-				EditorCommandList.Items.Add(command.Name);
+				ListBoxItem item = new ListBoxItem
+				{
+					Content = command.Name
+				};
+				EditorCommandList.Items.Add(item);
 			}
 		}
 
