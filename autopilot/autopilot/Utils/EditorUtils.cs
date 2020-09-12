@@ -54,7 +54,7 @@ namespace autopilot
 				return true;
 			}
 
-			confirmResult = CustomDialog.Display(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete the '" + itemToDelete.Title + "' file? This cannot be undone.", "Do not show again");
+			confirmResult = CustomDialog.Display(CustomDialogType.YesNo, "Warning", "Are you sure you want to delete '" + itemToDelete.Title + "'? This can't be undone.", "Do not show again");
 			if (confirmResult.CheckboxResponse == true)
 			{
 				Properties.Settings.Default.WarnOnFileDelete = false;

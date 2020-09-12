@@ -2,16 +2,20 @@
 <root>
   <command>
     <name>Type Character</name>
+    <argument>character</argument>
     <description>Type a specified character when a specified key is pressed.</description>
     <category>Text</category>
   </command>
   <command>
     <name>Type String</name>
+    <argument>string</argument>
     <description>Type a specified string when a specified key is pressed.</description>
     <category>Text</category>
   </command>
   <command>
     <name>Show Popup</name>
+    <argument>content</argument>
+    <argument>title</argument>
     <description>Show a popup with specified information.</description>
     <category>IO</category>
   </command>

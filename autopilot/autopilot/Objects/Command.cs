@@ -8,15 +8,17 @@ namespace autopilot.Utils
 	[Serializable]
 	public class Command
 	{
-		public Command(string name, string description, string category)
+		public Command(string name, List<string> arguments, string description, string category)
 		{
 			Name = name;
+			Arguments = arguments;
 			Description = description;
 			Category = category;
 		}
-		public string Name { get; set; }                    // title of action
-		public string Description { get; set; }             // action description
-		public string Category { get; set; }                // type of action
+		public string Name { get; set; }
+		public List<string> Arguments { get; set; }
+		public string Description { get; set; }
+		public string Category { get; set; }
 	}
 
 	public class CommandUtils
@@ -24,10 +26,15 @@ namespace autopilot.Utils
 		public static List<Command> GetAllActions()
 		{
 			List<Command> retrievedCommands = new List<Command>();
+			List<string> arguments = new List<string>();
 			string xmlCommandsPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\Resources\\CommandsLibrary.xml";
 			foreach (XElement command in XElement.Load(xmlCommandsPath).Elements("command"))
 			{
-				retrievedCommands.Add(new Command((string)command.Element("name"), (string)command.Element("description"), (string)command.Element("category")));
+				foreach (string argument in command.Elements("argument"))
+				{
+					arguments.Add(argument);
+				}
+				retrievedCommands.Add(new Command((string)command.Element("name"), arguments, (string)command.Element("description"), (string)command.Element("category")));
 			}
 			return retrievedCommands;
 		}

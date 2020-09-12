@@ -121,13 +121,16 @@
 						<ColumnDefinition Width="100"/>
 						<ColumnDefinition Width="5"/>
 						<ColumnDefinition Width="100"/>
+						<ColumnDefinition Width="5"/>
+						<ColumnDefinition Width="100"/>
 					</Grid.ColumnDefinitions>
 					<Button x:Name="SaveMacroButton" Grid.Column="0" Content="Save" HorizontalAlignment="Stretch" Click="SaveMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}" Background="{StaticResource AccentColor}"/>
 					<CheckBox x:Name="EditorEnabledCheckbox" Grid.Column="2" Content="Enabled" IsChecked="True" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="EditorEnabledCheckbox_Checked" Unchecked="EditorEnabledCheckbox_Unchecked" Template="{DynamicResource CheckBoxControlTemplate}"/>
-					<Button x:Name="DeleteCommandButton" Grid.Column="4" Content="Delete Command" HorizontalAlignment="Stretch" Click="DeleteCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
-					<Button x:Name="AddCommandButton" Grid.Column="6" Content="Add Command" HorizontalAlignment="Stretch" Click="AddCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+					<Button x:Name="EditCommandButton" Grid.Column="4" Content="Edit Command" HorizontalAlignment="Stretch" Click="EditCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+					<Button x:Name="DeleteCommandButton" Grid.Column="6" Content="Delete Command" HorizontalAlignment="Stretch" Click="DeleteCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+					<Button x:Name="AddCommandButton" Grid.Column="8" Content="Add Command" HorizontalAlignment="Stretch" Click="AddCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 				</Grid>
-				
+
 			</Grid>
 
 		</DockPanel>
