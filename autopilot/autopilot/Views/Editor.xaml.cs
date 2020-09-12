@@ -164,15 +164,10 @@ namespace autopilot
 			Command command;
 			if ((command = AddCommand.Display()) != null)
 			{
-				if (command.Name == null)
+				EditorCommandList.Items.Add(new ListBoxItem
 				{
-					command.Name = "no name";
-				}
-				if (command.Arguments == null)
-				{
-					command.Arguments = new List<string>();
-				}
-				EditorCommandList.Items.Add(command);
+					Content = command.Name
+				});
 			}
 		}
 

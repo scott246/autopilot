@@ -109,7 +109,7 @@
 				</Grid>
 
 				<!-- Editor -->
-				<ListBox x:Name="EditorCommandList" Grid.Row="2" Padding="3" SelectionChanged="EditorCommandList_SelectionChanged" Template="{DynamicResource ListBoxControlTemplate}" ItemTemplate="{DynamicResource ListBoxItemTemplate}" />
+				<ListBox x:Name="EditorCommandList" Grid.Row="2" Padding="3" SelectionChanged="EditorCommandList_SelectionChanged" Template="{DynamicResource ListBoxControlTemplate}" ItemTemplate="{DynamicResource ListBoxItemTemplate}"/>
 
 				<!-- Add/Remove/Save Actions Controls -->
 				<Grid Grid.Row="4">

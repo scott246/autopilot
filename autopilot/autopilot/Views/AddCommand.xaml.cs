@@ -25,11 +25,7 @@ namespace autopilot.Views
 		{
 			AddCommand a = new AddCommand();
 			a.ShowDialog();
-			if (null == a.selectedItem)
-			{
-				return null;
-			}
-			return null == a.selectedItem.Tag ? null : (Command)a.selectedItem.Tag;
+			return (null == a.selectedItem || null == a.selectedItem.Tag) ? null : (Command)a.selectedItem.Tag;
 		}
 
 		private void DisplayFilteredItems()
