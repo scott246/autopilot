@@ -1,5 +1,5 @@
 ﻿using autopilot.Utils;
-using autopilot.Views.Dialogs;
+using autopilot.Views;
 using System;
 using System.IO;
 using System.Windows;

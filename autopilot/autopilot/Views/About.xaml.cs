@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace autopilot
+namespace autopilot.Views
 {
 	public partial class About : Window
 	{

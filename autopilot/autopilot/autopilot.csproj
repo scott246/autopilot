@@ -85,10 +85,17 @@
     <Compile Include="Views\AddCommand.xaml.cs">
       <DependentUpon>AddCommand.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MacroView.xaml.cs">
+      <DependentUpon>MacroView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Preferences.xaml.cs">
       <DependentUpon>Preferences.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\AddCommand.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MacroView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

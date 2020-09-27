@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace autopilot.Views.Dialogs
+namespace autopilot.Views
 {
 	public partial class CustomDialog : Window
 	{

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace autopilot.Views.Preferences
+namespace autopilot.Views
 {
 	public partial class Preferences : Window
 	{
