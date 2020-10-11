@@ -14,16 +14,10 @@ namespace autopilot.Views
 		public MacroView()
 		{
 			InitializeComponent();
-			EditorUtils.LoadMacros();
+			MacroViewUtils.LoadMacros();
 			MacroListView.ItemsSource = SORTED_FILTERED_MACRO_LIST;
 			SortComboBox.ItemsSource = SortFilterUtils.sortOptions;
 			SortComboBox.SelectedItem = SortFilterUtils.sortOptions[0];
-			//EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
-		}
-
-		private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 		}
 
 		private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
@@ -34,6 +28,16 @@ namespace autopilot.Views
 		private void PreferencesMenuItem_Click(object sender, RoutedEventArgs e)
 		{
 			new Preferences().ShowDialog();
+		}
+
+		private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			MacroViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
+		}
+
+		private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			MacroViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 		}
 
 		private void AddMacroButton_Click(object sender, RoutedEventArgs e)
@@ -47,13 +51,13 @@ namespace autopilot.Views
 				}
 			}
 
-			EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
+			MacroViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 		}
 
 		private void DeleteMacroButton_Click(object sender, RoutedEventArgs e)
 		{
 			MacroFile selectedItem = (MacroFile)MacroListView.SelectedItem;
-			if (null != selectedItem && EditorUtils.ConfirmDeleteMacro(selectedItem))
+			if (null != selectedItem && MacroViewUtils.ConfirmDeleteMacro(selectedItem))
 			{
 				try
 				{
@@ -69,44 +73,18 @@ namespace autopilot.Views
 					CustomDialog.Display(CustomDialogType.OK, "Macro Delete Error", "Could not remove macro.");
 				}
 			}
-			EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
-		}
-
-		private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			EditorUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
-		}
-
-		private void MacroListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			
+			MacroViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 		}
 
 		private void EditMacroButton_Click(object sender, RoutedEventArgs e)
 		{
-			/*EditorPanel.Visibility = Visibility.Hidden;
-			if (null == MacroListView.SelectedItem)
-			{
-				return;
-			}
+			string selectionTitle = ((MacroFile)MacroListView.SelectedItem).Title;
+			new Editor(selectionTitle).Show();
+		}
 
-			string fileTitle = ((MacroFile)MacroListView.SelectedItem).Title;
-			MacroFile readingFile = MacroFileUtils.ReadMacroFile(fileTitle);
+		private void MacroListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
 
-			if (null == readingFile)
-			{
-				CustomDialog.Display(CustomDialogType.OK, "Read failure", "Failed to read macro file.");
-			}
-			else
-			{
-				string itemHeader = MacroFileUtils.GetFileNameWithNoMacroExtension(readingFile.Title);
-				EditorTitleTextBox.Text = itemHeader;
-				EditorDescriptionTextBox.Text = readingFile.Description;
-				EditorEnabledCheckbox.IsChecked = readingFile.Enabled;
-				EditorCommandList.ItemsSource = readingFile.Commands;
-				EditorBindLabel.Text = (readingFile.Bind != null && readingFile.Bind != "") ? readingFile.Bind : "[unbound]";
-				EditorPanel.Visibility = Visibility.Visible;
-			}*/
 		}
 	}
 }

@@ -80,7 +80,8 @@
     </Compile>
     <Compile Include="Objects\Command.cs" />
     <Compile Include="Objects\MacroFile.cs" />
-    <Compile Include="Utils\MacroFileUtils.cs" />
+    <Compile Include="Utils\EditorUtils.cs" />
+    <Compile Include="Utils\MacroViewUtils.cs" />
     <Compile Include="Utils\SortFilterUtils.cs" />
     <Compile Include="Views\AddCommand.xaml.cs">
       <DependentUpon>AddCommand.xaml</DependentUpon>
@@ -130,7 +131,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Utils\EditorUtils.cs" />
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>

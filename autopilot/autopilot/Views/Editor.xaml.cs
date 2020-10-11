@@ -9,10 +9,25 @@ namespace autopilot.Views
 {
 	public partial class Editor : Window
 	{
-		public Editor()
+		public Editor(string title)
 		{
 			InitializeComponent();
 			COMMAND_LIST = CommandUtils.GetAllActions();
+
+			MacroFile readingFile = MacroFileUtils.ReadMacroFile(title);
+
+			if (null == readingFile)
+			{
+				CustomDialog.Display(CustomDialogType.OK, "Read failure", "Failed to read macro file.");
+				Close();
+			}
+			else
+			{
+				string itemHeader = MacroFileUtils.GetFileNameWithNoMacroExtension(readingFile.Title);
+				EditorTitleTextBox.Text = itemHeader;
+				EditorCommandList.ItemsSource = readingFile.Commands;
+				EditorBindLabel.Text = (readingFile.Bind != null && readingFile.Bind != "") ? readingFile.Bind : "[unbound]";
+			}
 		}
 
 		private void SaveMacroButton_Click(object sender, RoutedEventArgs e)

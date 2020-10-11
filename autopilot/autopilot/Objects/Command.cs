@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Controls;
 using System.Xml.Linq;
 
 namespace autopilot.Utils
@@ -37,6 +38,12 @@ namespace autopilot.Utils
 				retrievedCommands.Add(new Command((string)command.Element("name"), arguments, (string)command.Element("description"), (string)command.Element("category")));
 			}
 			return retrievedCommands;
+		}
+
+		public static void RefreshCommandList(ListBox list)
+		{
+			list.InvalidateArrange();
+			list.UpdateLayout();
 		}
 	}
 }
