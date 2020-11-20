@@ -4,9 +4,9 @@ using System.Windows.Input;
 
 namespace autopilot.Views
 {
-	public partial class About : Window
+	public partial class AboutView : Window
 	{
-		public About()
+		public AboutView()
 		{
 			InitializeComponent();
 			PreviewKeyDown += new KeyEventHandler(HandleEsc);

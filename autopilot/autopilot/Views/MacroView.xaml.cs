@@ -22,12 +22,12 @@ namespace autopilot.Views
 
 		private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			new About().ShowDialog();
+			new AboutView().ShowDialog();
 		}
 
 		private void PreferencesMenuItem_Click(object sender, RoutedEventArgs e)
 		{
-			new Preferences().ShowDialog();
+			new PreferencesView().ShowDialog();
 		}
 
 		private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -79,7 +79,7 @@ namespace autopilot.Views
 		private void EditMacroButton_Click(object sender, RoutedEventArgs e)
 		{
 			string selectionTitle = ((MacroFile)MacroListView.SelectedItem).Title;
-			new Editor(selectionTitle).Show();
+			new EditorView(selectionTitle).Show();
 		}
 
 		private void MacroListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace autopilot.Utils
 {
-	class EditorUtils
+	class EditorViewUtils
 	{
 	}
 }

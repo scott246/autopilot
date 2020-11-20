@@ -2,11 +2,11 @@
 
 namespace autopilot.Views
 {
-	public partial class Preferences : Window
+	public partial class PreferencesView : Window
 	{
 		private static readonly Properties.Settings settingsRef = Properties.Settings.Default;
 
-		public Preferences()
+		public PreferencesView()
 		{
 			InitializeComponent();
 			WarnFileDeleteCheckbox.IsChecked = settingsRef.WarnOnFileDelete;

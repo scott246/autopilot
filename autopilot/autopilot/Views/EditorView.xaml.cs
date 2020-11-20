@@ -7,9 +7,9 @@ using static autopilot.Globals;
 
 namespace autopilot.Views
 {
-	public partial class Editor : Window
+	public partial class EditorView : Window
 	{
-		public Editor(string title)
+		public EditorView(string title)
 		{
 			InitializeComponent();
 			COMMAND_LIST = CommandUtils.GetAllActions();

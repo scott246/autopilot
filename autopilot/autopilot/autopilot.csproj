@@ -80,7 +80,7 @@
     </Compile>
     <Compile Include="Objects\Command.cs" />
     <Compile Include="Objects\MacroFile.cs" />
-    <Compile Include="Utils\EditorUtils.cs" />
+    <Compile Include="Utils\EditorViewUtils.cs" />
     <Compile Include="Utils\MacroViewUtils.cs" />
     <Compile Include="Utils\SortFilterUtils.cs" />
     <Compile Include="Views\AddCommand.xaml.cs">
@@ -89,8 +89,8 @@
     <Compile Include="Views\MacroView.xaml.cs">
       <DependentUpon>MacroView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Preferences.xaml.cs">
-      <DependentUpon>Preferences.xaml</DependentUpon>
+    <Compile Include="Views\PreferencesView.xaml.cs">
+      <DependentUpon>PreferencesView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\AddCommand.xaml">
       <SubType>Designer</SubType>
@@ -100,7 +100,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Preferences.xaml">
+    <Page Include="Views\PreferencesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -108,7 +108,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editor.xaml">
+    <Page Include="Views\EditorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -121,18 +121,18 @@
     <Compile Include="Views\CustomDialog.xaml.cs">
       <DependentUpon>CustomDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editor.xaml.cs">
-      <DependentUpon>Editor.xaml</DependentUpon>
+    <Compile Include="Views\EditorView.xaml.cs">
+      <DependentUpon>EditorView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\About.xaml">
+    <Page Include="Views\AboutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\About.xaml.cs">
-      <DependentUpon>About.xaml</DependentUpon>
+    <Compile Include="Views\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
