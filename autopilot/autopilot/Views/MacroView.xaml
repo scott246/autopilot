@@ -43,7 +43,7 @@
 				</Grid>
 				
 				<!-- Macro List -->
-				<ListBox x:Name="MacroListView" Grid.Row="2" Padding="3" SelectionChanged="MacroListView_SelectionChanged" Template="{DynamicResource ListBoxControlTemplate}" ItemTemplate="{DynamicResource ListBoxItemTemplate}"/>
+				<ListBox x:Name="MacroListView" Grid.Row="2" Padding="3" SelectionChanged="MacroListView_SelectionChanged" Template="{DynamicResource ListBoxControlTemplate}" ItemTemplate="{DynamicResource ListBoxItemTemplate}" MouseDoubleClick="MacroListView_MouseDoubleClick"/>
 
 				<!-- Delete/Add/Edit Macro Buttons -->
 				<Grid Grid.Row="4">

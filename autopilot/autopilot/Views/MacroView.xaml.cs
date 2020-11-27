@@ -86,5 +86,12 @@ namespace autopilot.Views
 		{
 
 		}
+
+		private void MacroListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			string selectionTitle = ((MacroFile)MacroListView.SelectedItem).Title;
+			new EditorView(selectionTitle).Show();
+		}
+
 	}
 }
