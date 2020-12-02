@@ -7,7 +7,7 @@
 		mc:Ignorable="d"
 		ResizeMode="CanMinimize"
 		WindowStartupLocation="CenterScreen"
-        Title="Autopilot" Height="600" Width="400">
+        Title="Autopilot" Height="400" Width="400">
 
 	<Grid Background="{StaticResource AppBackgroundColor}">
 		<Grid>
@@ -39,7 +39,7 @@
 						</Grid.ColumnDefinitions>
 						<Label Content="Name" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
 						<TextBox x:Name="EditorTitleTextBox" Grid.Row="0" Grid.Column="2" Text="" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Template="{DynamicResource TextBoxControlTemplate}" />
-						<Button x:Name="SaveMacroButton" Grid.Row="0" Grid.Column="4" Content="Save" HorizontalAlignment="Stretch" Click="SaveMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}" Background="{StaticResource AccentColor}"/>
+						<Button x:Name="SaveMacroButton" Grid.Row="0" Grid.Column="4" Content="Save" HorizontalAlignment="Stretch" Click="SaveMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 						<Label Content="Bind" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
 						<TextBox x:Name="EditorBindLabel" Grid.Row="2" Grid.Column="2" IsReadOnly="True" Text="[unbound]" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Template="{DynamicResource TextBoxControlTemplate}"/>
 						<Button x:Name="EditBindButton" Grid.Row="2" Grid.Column="4" Content="Edit Bind" HorizontalAlignment="Right" Click="EditBindButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>

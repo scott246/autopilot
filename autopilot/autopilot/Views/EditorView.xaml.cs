@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using static autopilot.Globals;
 
 namespace autopilot.Views
@@ -45,17 +46,23 @@ namespace autopilot.Views
 				MACRO_LIST.Add(file);
 				SORTED_FILTERED_MACRO_LIST.Add(file);
 			}
-			
+			SaveMacroButton.Background = (SolidColorBrush)Application.Current.FindResource("ButtonBackgroundColor");
 		}
 
 		private void EditBindButton_Click(object sender, RoutedEventArgs e)
 		{
 			// open bind combination editor window
+			HighlightSaveButton();
 		}
 
 		private void DeleteCommandButton_Click(object sender, RoutedEventArgs e)
 		{
-			EditorCommandList.Items.Remove(EditorCommandList.SelectedItem);
+			ListBoxItem selectedItem = (ListBoxItem)EditorCommandList.SelectedItem;
+			if (selectedItem != null)
+			{
+				EditorCommandList.Items.Remove(selectedItem);
+			}
+			HighlightSaveButton();
 		}
 
 		private void AddCommandButton_Click(object sender, RoutedEventArgs e)
@@ -67,6 +74,7 @@ namespace autopilot.Views
 				{
 					Content = command.Name
 				});
+				HighlightSaveButton();
 			}
 		}
 
@@ -77,7 +85,12 @@ namespace autopilot.Views
 
 		private void EditCommandButton_Click(object sender, RoutedEventArgs e)
 		{
+			HighlightSaveButton();
+		}
 
+		private void HighlightSaveButton()
+		{
+			SaveMacroButton.Background = (SolidColorBrush)Application.Current.FindResource("AccentColor");
 		}
 	}
 }
