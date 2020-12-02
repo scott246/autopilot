@@ -11,7 +11,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="65"/>
 			<RowDefinition Height="5"/>
-			<RowDefinition Height="*"/>
+			<RowDefinition Height="2*"/>
 			<RowDefinition Height="5"/>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="5"/>
@@ -39,13 +39,29 @@
 
 		<!-- Command List -->
 		<ListBox x:Name="CommandList" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{DynamicResource ListBoxControlTemplate}" ItemTemplate="{DynamicResource ListBoxItemTemplate}" SelectionChanged="CommandList_SelectionChanged"/>
-		
-		<!-- Arguments List -->
-		<Grid Grid.Row="4"></Grid>
 
 		<!-- Selected Command Description -->
-		<TextBlock x:Name="CommandDescription" Grid.Row="6" Text="A description of the highlighted item." TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-		
+		<TextBlock x:Name="CommandDescription" Grid.Row="4" Text="A description of the highlighted item." TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+		<!-- Arguments List -->
+		<Grid Grid.Row="6">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="50"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Label x:Name="Argument1Label" Grid.Column="0" Grid.Row="0" Visibility="Hidden"/>
+			<TextBox x:Name="Argument1Input" Grid.Column="1" Grid.Row="0" Height="30" Visibility="Hidden"/>
+			<Label x:Name="Argument2Label" Grid.Column="0" Grid.Row="1" Visibility="Hidden"/>
+			<TextBox x:Name="Argument2Input" Grid.Column="1" Grid.Row="1" Height="30" Visibility="Hidden"/>
+			<Label x:Name="Argument3Label" Grid.Column="0" Grid.Row="2" Visibility="Hidden"/>
+			<TextBox x:Name="Argument3Input" Grid.Column="1" Grid.Row="2" Height="30" Visibility="Hidden"/>
+		</Grid>
+
 		<!-- Cancel/Add Buttons -->
 		<Grid Grid.Row="8">
 			<Grid.ColumnDefinitions>
