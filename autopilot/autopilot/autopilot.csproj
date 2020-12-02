@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Objects\Command.cs" />
     <Compile Include="Objects\MacroFile.cs" />
+    <Compile Include="Resources\Inputs.cs" />
     <Compile Include="Utils\EditorViewUtils.cs" />
     <Compile Include="Utils\MacroViewUtils.cs" />
     <Compile Include="Utils\SortFilterUtils.cs" />
@@ -124,7 +125,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Shared\Globals.cs" />
-    <Compile Include="Shared\Settings.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Views\CustomDialog.xaml.cs">
       <DependentUpon>CustomDialog.xaml</DependentUpon>
     </Compile>
