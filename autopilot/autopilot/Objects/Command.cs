@@ -9,17 +9,15 @@ namespace autopilot.Utils
 	[Serializable]
 	public class Command
 	{
-		public Command(string name, List<string> arguments, string description, string category)
+		public Command(string name, List<string> arguments, string description)
 		{
 			Name = name;
 			Arguments = arguments;
 			Description = description;
-			Category = category;
 		}
 		public string Name { get; set; }
 		public List<string> Arguments { get; set; }
 		public string Description { get; set; }
-		public string Category { get; set; }
 	}
 
 	public class CommandUtils
@@ -35,7 +33,7 @@ namespace autopilot.Utils
 				{
 					arguments.Add(argument);
 				}
-				retrievedCommands.Add(new Command((string)command.Element("name"), arguments, (string)command.Element("description"), (string)command.Element("category")));
+				retrievedCommands.Add(new Command((string)command.Element("name"), arguments, (string)command.Element("description")));
 			}
 			return retrievedCommands;
 		}

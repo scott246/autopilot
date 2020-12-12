@@ -1,4 +1,5 @@
-﻿using autopilot.Utils;
+﻿using autopilot.Objects;
+using autopilot.Utils;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -27,7 +28,7 @@ namespace autopilot.Views
 				string itemHeader = MacroFileUtils.GetFileNameWithNoMacroExtension(readingFile.Title);
 				EditorTitleTextBox.Text = itemHeader;
 				EditorCommandList.ItemsSource = readingFile.Commands;
-				EditorBindLabel.Text = (readingFile.Bind != null && readingFile.Bind != "") ? readingFile.Bind : "[unbound]";
+				BindInputTextBox.Text = (readingFile.Bind != null && readingFile.Bind != "") ? readingFile.Bind : "[unbound]";
 			}
 		}
 
@@ -37,7 +38,7 @@ namespace autopilot.Views
 			{
 				Enabled = true,
 				Title = EditorTitleTextBox.Text,
-				Bind = EditorBindLabel.Text,
+				Bind = BindInputTextBox.Text,
 				Commands = EditorCommandList.Items.Cast<Command>().ToList()
 			};
 			MacroFileUtils.WriteMacroFile(file, true);
@@ -51,7 +52,8 @@ namespace autopilot.Views
 
 		private void EditBindButton_Click(object sender, RoutedEventArgs e)
 		{
-			// open bind combination editor window
+			Bind bind = BindEditor.Display();
+			BindInputTextBox.Text = BindUtils.ConvertBindToString(bind);
 			HighlightSaveButton();
 		}
 

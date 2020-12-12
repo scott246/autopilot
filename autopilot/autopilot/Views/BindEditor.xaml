@@ -5,16 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:autopilot.Views"
         mc:Ignorable="d"
-        Title="Bind Editor" Height="200" Width="300">
+		WindowStartupLocation="CenterScreen"
+        Title="Bind Recorder" Height="125" Width="346" KeyDown="Window_KeyDown">
 	<Grid Background="{StaticResource AppBackgroundColor}">
-		<TextBox HorizontalAlignment="Left" VerticalContentAlignment="Center" Height="30" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="193" TextChanged="TextBox_TextChanged" Template="{DynamicResource TextBoxControlTemplate}"/>
-		<Button Content="Record" HorizontalAlignment="Left" Margin="208,10,0,0" VerticalAlignment="Top" Width="75" Template="{DynamicResource ButtonControlTemplate}" Click="Button_Click"/>
-		<CheckBox Content="Shift" HorizontalAlignment="Left" Margin="208,103,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked"/>
-		<CheckBox Content="Alt" HorizontalAlignment="Left" Margin="208,124,0,0" VerticalAlignment="Top"/>
-		<CheckBox Content="Windows" HorizontalAlignment="Left" Margin="208,145,0,0" VerticalAlignment="Top"/>
-		<ListBox HorizontalAlignment="Left" Height="116" VerticalAlignment="Top" Width="193" Margin="10,45,0,0"/>
-		<Button Content="Add" HorizontalAlignment="Left" Margin="208,45,0,0" VerticalAlignment="Top" Width="75" Template="{DynamicResource ButtonControlTemplate}" Click="Button_Click"/>
-		<CheckBox Content="Ctrl" HorizontalAlignment="Left" Margin="208,82,0,0" VerticalAlignment="Top" Checked="CheckBox_Checked"/>
+		<Grid Margin="10">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="30"/>
+				<RowDefinition Height="5"/>
+				<RowDefinition Height="30"/>
+			</Grid.RowDefinitions>
+			<Grid Grid.Row="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="100"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<!-- Record/Stop/Re-Record Bind Button -->
+				<Button x:Name="RecordButton" Grid.Column="0" Content="Record" Background="{StaticResource AccentColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Template="{DynamicResource ButtonControlTemplate}" Click="RecordButton_Click"/>
+
+				<!-- Bind Input Text Box -->
+				<TextBox x:Name="BindInputTextBox" Grid.Column="2" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" TextWrapping="NoWrap" VerticalAlignment="Stretch" Template="{DynamicResource TextBoxControlTemplate}"/>
+				
+			</Grid>
+
+			<!-- OK/Cancel Buttons -->
+			<Grid Grid.Row="2">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="100"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="100"/>
+				</Grid.ColumnDefinitions>
+				<Button x:Name="CancelButton" Grid.Column="2" Content="Cancel" HorizontalAlignment="Stretch" Template="{DynamicResource ButtonControlTemplate}" Click="CancelButton_Click"/>
+				<Button x:Name="OKButton" Grid.Column="4" Content="OK" HorizontalAlignment="Stretch" Template="{DynamicResource ButtonControlTemplate}" Click="OKButton_Click"/>
+			</Grid>
+		</Grid>
+		
 
 	</Grid>
 </Window>

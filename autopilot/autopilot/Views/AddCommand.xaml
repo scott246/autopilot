@@ -6,64 +6,82 @@
         xmlns:local="clr-namespace:autopilot.Views"
         mc:Ignorable="d"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="{StaticResource AppBackgroundColor}"
-        Title="Add Command" Height="600" Width="400">
+        Title="Add Command" Height="400" Width="600">
 	<Grid Margin="10">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="65"/>
-			<RowDefinition Height="5"/>
-			<RowDefinition Height="2*"/>
-			<RowDefinition Height="5"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="5"/>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="5"/>
 			<RowDefinition Height="30"/>
 		</Grid.RowDefinitions>
 
-		<!-- Filter/Sort -->
 		<Grid Grid.Row="0">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="50"/>
+				<ColumnDefinition Width="250"/>
+				<ColumnDefinition Width="5"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="30"/>
-				<RowDefinition Height="5"/>
-				<RowDefinition Height="30"/>
-			</Grid.RowDefinitions>
-			<Label Content="Filter" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
-			<TextBox x:Name="CommandFilterTextBox" Grid.Column="1" Grid.Row="0" VerticalContentAlignment="Center" TextChanged="CommandFilterTextBox_TextChanged" Template="{DynamicResource TextBoxControlTemplate}"/>
-			<Label Content="Sort" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"/>
-			<ComboBox x:Name="CommandCategoryFilterComboBox" Grid.Column="1" Grid.Row="2" VerticalContentAlignment="Center" SelectionChanged="CommandCategoryFilterComboBox_SelectionChanged" Template="{DynamicResource ComboBoxControlTemplate}"/>
+
+			<Grid Grid.Column="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="50"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="30"/>
+					<RowDefinition Height="5"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+
+				<!-- Filter Box -->
+				<Label Content="Filter" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
+				<TextBox x:Name="CommandFilterTextBox" Grid.Column="1" Grid.Row="0" VerticalContentAlignment="Center" TextChanged="CommandFilterTextBox_TextChanged" Template="{DynamicResource TextBoxControlTemplate}"/>
+
+				<!-- Command List -->
+				<ListBox x:Name="CommandList" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{DynamicResource ListBoxControlTemplate}" ItemTemplate="{DynamicResource ListBoxItemTemplate}" SelectionChanged="CommandList_SelectionChanged"/>
+
+			</Grid>
+
+			<Grid Grid.Column="2">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="2*"/>
+				</Grid.RowDefinitions>
+
+				<!-- Selected Command Description -->
+				<TextBlock x:Name="CommandDescription" Grid.Row="0" Text="A description of the highlighted item." TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+				<!-- Arguments List -->
+				<Grid Grid.Row="1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="50"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+					<Label x:Name="Argument1Label" Grid.Column="0" Grid.Row="0" Height="30" Visibility="Hidden"/>
+					<TextBox x:Name="Argument1Input" Grid.Column="1" Grid.Row="0" Height="30" Visibility="Hidden"/>
+					<Label x:Name="Argument2Label" Grid.Column="0" Grid.Row="1" Height="30" Visibility="Hidden"/>
+					<TextBox x:Name="Argument2Input" Grid.Column="1" Grid.Row="1" Height="30" Visibility="Hidden"/>
+					<Label x:Name="Argument3Label" Grid.Column="0" Grid.Row="2" Height="30" Visibility="Hidden"/>
+					<TextBox x:Name="Argument3Input" Grid.Column="1" Grid.Row="2" Height="30" Visibility="Hidden"/>
+					<Label x:Name="Argument4Label" Grid.Column="0" Grid.Row="3" Height="30" Visibility="Hidden"/>
+					<TextBox x:Name="Argument4Input" Grid.Column="1" Grid.Row="3" Height="30" Visibility="Hidden"/>
+					<Label x:Name="Argument5Label" Grid.Column="0" Grid.Row="4" Height="30" Visibility="Hidden"/>
+					<TextBox x:Name="Argument5Input" Grid.Column="1" Grid.Row="4" Height="30" Visibility="Hidden"/>
+				</Grid>
+			</Grid>
+			
 		</Grid>
 
-		<!-- Command List -->
-		<ListBox x:Name="CommandList" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Template="{DynamicResource ListBoxControlTemplate}" ItemTemplate="{DynamicResource ListBoxItemTemplate}" SelectionChanged="CommandList_SelectionChanged"/>
 
-		<!-- Selected Command Description -->
-		<TextBlock x:Name="CommandDescription" Grid.Row="4" Text="A description of the highlighted item." TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-		<!-- Arguments List -->
-		<Grid Grid.Row="6">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="50"/>
-				<ColumnDefinition Width="*"/>
-			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="*"/>
-			</Grid.RowDefinitions>
-			<Label x:Name="Argument1Label" Grid.Column="0" Grid.Row="0" Visibility="Hidden"/>
-			<TextBox x:Name="Argument1Input" Grid.Column="1" Grid.Row="0" Height="30" Visibility="Hidden"/>
-			<Label x:Name="Argument2Label" Grid.Column="0" Grid.Row="1" Visibility="Hidden"/>
-			<TextBox x:Name="Argument2Input" Grid.Column="1" Grid.Row="1" Height="30" Visibility="Hidden"/>
-			<Label x:Name="Argument3Label" Grid.Column="0" Grid.Row="2" Visibility="Hidden"/>
-			<TextBox x:Name="Argument3Input" Grid.Column="1" Grid.Row="2" Height="30" Visibility="Hidden"/>
-		</Grid>
 
 		<!-- Cancel/Add Buttons -->
-		<Grid Grid.Row="8">
+		<Grid Grid.Row="2">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="100"/>

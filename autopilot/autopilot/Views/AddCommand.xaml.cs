@@ -10,14 +10,12 @@ namespace autopilot.Views
 	public partial class AddCommand : Window
 	{
 		private string filterText = "";
-		private string filterCategory = "All";
 
 		private ListBoxItem selectedItem = null;
 
 		public AddCommand()
 		{
 			InitializeComponent();
-			CommandCategoryFilterComboBox.ItemsSource = Globals.commandCategoryOptions;
 			DisplayFilteredItems();
 		}
 
@@ -33,8 +31,7 @@ namespace autopilot.Views
 			CommandList.Items.Clear();
 			foreach (Command command in Globals.COMMAND_LIST)
 			{
-				if ((filterText.Equals("") || command.Name.Contains(filterText)) &&
-					(filterCategory.Equals("All") || filterCategory.Equals(command.Category)))
+				if (filterText.Equals("") || command.Name.Contains(filterText))
 				{
 					CommandList.Items.Add(new ListBoxItem
 					{
@@ -66,12 +63,6 @@ namespace autopilot.Views
 		private void CommandFilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			filterText = CommandFilterTextBox.Text;
-			DisplayFilteredItems();
-		}
-
-		private void CommandCategoryFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			filterCategory = (string)CommandCategoryFilterComboBox.SelectedItem;
 			DisplayFilteredItems();
 		}
 	}
