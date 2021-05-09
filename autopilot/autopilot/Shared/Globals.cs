@@ -17,6 +17,7 @@ namespace autopilot
 
 		public static List<Command> COMMAND_LIST = new List<Command>();
 		public static string[] commandCategoryOptions = { "All", "Files", "Programs", "System", "IO", "Networking", "Text", "Math", "Logic" };
+		public static readonly string UNBOUND = "[unbound]";
 
 		public static Mutex FILE_ACCESS_MUTEX = new Mutex();
 

@@ -1,5 +1,6 @@
 ﻿using autopilot.Objects;
 using autopilot.Utils;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -11,6 +12,7 @@ namespace autopilot.Views
 {
 	public partial class EditorView : Window
 	{
+		readonly ObservableCollection<Command> editorCommandListItems;
 		public EditorView(string title)
 		{
 			InitializeComponent();
@@ -27,8 +29,9 @@ namespace autopilot.Views
 			{
 				string itemHeader = MacroFileUtils.GetFileNameWithNoMacroExtension(readingFile.Title);
 				EditorTitleTextBox.Text = itemHeader;
-				EditorCommandList.ItemsSource = readingFile.Commands;
-				BindInputTextBox.Text = (readingFile.Bind != null && readingFile.Bind != "") ? readingFile.Bind : "[unbound]";
+				editorCommandListItems = new ObservableCollection<Command>(readingFile.Commands);
+				EditorCommandList.ItemsSource = editorCommandListItems;
+				BindInputTextBox.Text = (readingFile.Bind != null && readingFile.Bind != "") ? readingFile.Bind : UNBOUND;
 			}
 		}
 
@@ -72,10 +75,8 @@ namespace autopilot.Views
 			Command command;
 			if ((command = AddCommand.Display()) != null)
 			{
-				EditorCommandList.Items.Add(new ListBoxItem
-				{
-					Content = command.Name
-				});
+				editorCommandListItems.Add(command);
+				EditorCommandList.ItemsSource = editorCommandListItems;
 				HighlightSaveButton();
 			}
 		}

@@ -41,7 +41,7 @@
 						<TextBox x:Name="EditorTitleTextBox" Grid.Row="0" Grid.Column="2" Text="" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Template="{DynamicResource TextBoxControlTemplate}" />
 						<Button x:Name="SaveMacroButton" Grid.Row="0" Grid.Column="4" Content="Save" HorizontalAlignment="Stretch" Click="SaveMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 						<Label Content="Bind" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
-						<TextBox x:Name="BindInputTextBox" Grid.Row="2" Grid.Column="2" IsReadOnly="True" Text="[unbound]" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Template="{DynamicResource TextBoxControlTemplate}"/>
+						<TextBox x:Name="BindInputTextBox" Grid.Row="2" Grid.Column="2" IsReadOnly="True" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Template="{DynamicResource TextBoxControlTemplate}"/>
 						<Button x:Name="EditBindButton" Grid.Row="2" Grid.Column="4" Content="Edit Bind" HorizontalAlignment="Right" Click="EditBindButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 					</Grid>
 				</Grid>

@@ -25,7 +25,7 @@
 				<Button x:Name="RecordButton" Grid.Column="0" Content="Record" Background="{StaticResource AccentColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Template="{DynamicResource ButtonControlTemplate}" Click="RecordButton_Click"/>
 
 				<!-- Bind Input Text Box -->
-				<TextBox x:Name="BindInputTextBox" Grid.Column="2" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" TextWrapping="NoWrap" VerticalAlignment="Stretch" Template="{DynamicResource TextBoxControlTemplate}"/>
+				<TextBox x:Name="BindInputTextBox" Grid.Column="2" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" TextWrapping="NoWrap" IsEnabled="False" VerticalAlignment="Stretch" Template="{DynamicResource TextBoxControlTemplate}"/>
 				
 			</Grid>
 
