@@ -1,6 +1,7 @@
 ﻿using autopilot.Objects;
 using autopilot.Utils;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace autopilot.Views
 {
 	public partial class EditorView : Window
 	{
-		private ObservableCollection<Command> editorCommandListItems;
+		private ObservableCollection<ListBoxItem> editorCommandListItems;
 
 		public EditorView()
 		{
@@ -21,7 +22,7 @@ namespace autopilot.Views
 
 			EditorPanel.Visibility = Visibility.Collapsed;
 
-			EditorViewUtils.LoadMacros();
+			MacroPanelUtils.LoadMacros();
 			MacroListView.ItemsSource = SORTED_FILTERED_MACRO_LIST;
 			SortComboBox.ItemsSource = SortFilterUtils.sortOptions;
 			SortComboBox.SelectedItem = SortFilterUtils.sortOptions[0];
@@ -41,12 +42,12 @@ namespace autopilot.Views
 
 		private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			EditorViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
+			MacroPanelUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 		}
 
 		private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			EditorViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
+			MacroPanelUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 		}
 
 		private void AddMacroButton_Click(object sender, RoutedEventArgs e)
@@ -60,13 +61,13 @@ namespace autopilot.Views
 				}
 			}
 
-			EditorViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
+			MacroPanelUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 		}
 
 		private void DeleteMacroButton_Click(object sender, RoutedEventArgs e)
 		{
 			MacroFile selectedItem = (MacroFile)MacroListView.SelectedItem;
-			if (null != selectedItem && EditorViewUtils.ConfirmDeleteMacro(selectedItem))
+			if (null != selectedItem && MacroPanelUtils.ConfirmDeleteMacro(selectedItem))
 			{
 				try
 				{
@@ -82,7 +83,7 @@ namespace autopilot.Views
 					CustomDialog.Display(CustomDialogType.OK, "Macro Delete Error", "Could not remove macro.");
 				}
 			}
-			EditorViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
+			MacroPanelUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 		}
 
 		private void MacroListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -98,13 +99,16 @@ namespace autopilot.Views
 			else
 			{
 				EditorTitleTextBox.Text = selectionTitle;
-				if (null == readingFile.Commands)
+				editorCommandListItems = new ObservableCollection<ListBoxItem>();
+				if (null != readingFile.Commands)
 				{
-					editorCommandListItems = new ObservableCollection<Command>();
-				}
-				else
-				{
-					editorCommandListItems = new ObservableCollection<Command>(readingFile.Commands);
+					foreach (Command c in readingFile.Commands)
+					{
+						editorCommandListItems.Add(new ListBoxItem
+						{
+							Content = c.Title
+						});
+					}
 				}
 				EditorCommandList.ItemsSource = editorCommandListItems;
 				BindInputTextBox.Text = (readingFile.Bind != null && readingFile.Bind != "") ? readingFile.Bind : UNBOUND;
@@ -115,12 +119,18 @@ namespace autopilot.Views
 
 		private void SaveMacroButton_Click(object sender, RoutedEventArgs e)
 		{
+			List<Command> commandList = new List<Command>();
+			foreach (ListBoxItem item in editorCommandListItems)
+			{
+				//TODO: convert listboxitem to command with appropriate arguments and description
+				commandList.Add(new Command(item.Content.ToString(), null, null));
+			}
 			MacroFile file = new MacroFile
 			{
 				Enabled = true,
 				Title = EditorTitleTextBox.Text,
 				Bind = BindInputTextBox.Text,
-				Commands = EditorCommandList.Items.Cast<Command>().ToList()
+				Commands = commandList
 			};
 			MacroFileUtils.WriteMacroFile(file, true);
 			if (!File.Exists(MacroFileUtils.GetFullPathOfMacroFile(file.Title)))
@@ -143,7 +153,8 @@ namespace autopilot.Views
 			ListBoxItem selectedItem = (ListBoxItem)EditorCommandList.SelectedItem;
 			if (selectedItem != null)
 			{
-				EditorCommandList.Items.Remove(selectedItem);
+				editorCommandListItems.Remove(selectedItem);
+				EditorCommandList.ItemsSource = editorCommandListItems;
 			}
 			HighlightSaveButton();
 		}
@@ -153,7 +164,10 @@ namespace autopilot.Views
 			Command command;
 			if ((command = AddCommand.Display()) != null)
 			{
-				editorCommandListItems.Add(command);
+				editorCommandListItems.Add(new ListBoxItem
+				{
+					Content = command.Title
+				});
 				EditorCommandList.ItemsSource = editorCommandListItems;
 				HighlightSaveButton();
 			}

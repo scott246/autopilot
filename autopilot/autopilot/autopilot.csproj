@@ -82,7 +82,8 @@
     <Compile Include="Objects\Command.cs" />
     <Compile Include="Objects\MacroFile.cs" />
     <Compile Include="Resources\Inputs.cs" />
-    <Compile Include="Utils\EditorViewUtils.cs" />
+    <Compile Include="Utils\EditorPanelUtils.cs" />
+    <Compile Include="Utils\MacroPanelUtils.cs" />
     <Compile Include="Utils\SortFilterUtils.cs" />
     <Compile Include="Views\AddCommand.xaml.cs">
       <DependentUpon>AddCommand.xaml</DependentUpon>

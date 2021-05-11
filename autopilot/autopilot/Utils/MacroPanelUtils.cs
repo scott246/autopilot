@@ -11,7 +11,7 @@ using static autopilot.Globals;
 
 namespace autopilot.Utils
 {
-	class EditorViewUtils
+	class MacroPanelUtils
 	{
 		public static void LoadMacros()
 		{
