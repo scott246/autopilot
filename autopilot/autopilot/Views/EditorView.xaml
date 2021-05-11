@@ -7,13 +7,68 @@
 		mc:Ignorable="d"
 		ResizeMode="CanMinimize"
 		WindowStartupLocation="CenterScreen"
-        Title="Autopilot" Height="400" Width="400">
+        Title="Autopilot" Height="400" Width="600">
 
 	<Grid Background="{StaticResource AppBackgroundColor}">
-		<Grid>
+		<DockPanel>
+			<!-- Menu Bar -->
+			<Menu DockPanel.Dock="Top">
+				<MenuItem Header="_Preferences" Click="PreferencesMenuItem_Click"/>
+				<MenuItem Header="_About" Click="AboutMenuItem_Click"/>
+			</Menu>
+			
+
+			<!-- Macro List Panel -->
+			<Grid x:Name="MacroListPanel" Grid.Column="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="200"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<Grid HorizontalAlignment="Stretch" Margin="10, 10, 0, 10">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="65"/>
+						<RowDefinition Height="5"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="5"/>
+						<RowDefinition Height="30"/>
+					</Grid.RowDefinitions>
+
+					<!-- List Ordering Controls -->
+					<Grid Grid.Row="0">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="50"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="30"/>
+							<RowDefinition Height="5"/>
+							<RowDefinition Height="30"/>
+						</Grid.RowDefinitions>
+						<Label Content="Filter" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+						<TextBox x:Name="FilterTextBox" Grid.Row="0" Grid.Column="2" Tag="Filter" VerticalContentAlignment="Center" TextChanged="FilterTextBox_TextChanged" Template="{DynamicResource TextBoxControlTemplate}"/>
+						<Label Content="Sort" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+						<ComboBox x:Name="SortComboBox" Grid.Row="2" Grid.Column="2" VerticalContentAlignment="Center" SelectionChanged="SortComboBox_SelectionChanged" Template="{DynamicResource ComboBoxControlTemplate}"/>
+					</Grid>
+
+					<!-- Macro List -->
+					<ListBox x:Name="MacroListView" Grid.Row="2" Padding="3" SelectionChanged="MacroListView_SelectionChanged" Template="{DynamicResource ListBoxControlTemplate}" ItemTemplate="{DynamicResource ListBoxItemTemplate}"/>
+
+					<!-- Macro Controls -->
+					<Grid Grid.Row="4">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="5"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+						<Button x:Name="DeleteMacroButton" Content="Delete" Grid.Column="0" HorizontalAlignment="Stretch" Click="DeleteMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+						<Button x:Name="AddMacroButton" Content="Add" Grid.Column="2" HorizontalAlignment="Stretch" Click="AddMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+					</Grid>
+				</Grid>
+			</Grid>
 
 			<!-- Editor Panel -->
-			<Grid x:Name="EditorPanel" Margin="10">
+			<Grid x:Name="EditorPanel" Grid.Column="1" Margin="10">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="65"/>
 					<RowDefinition Height="5"/>
@@ -54,19 +109,19 @@
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="5"/>
-						<ColumnDefinition Width="100"/>
+						<ColumnDefinition Width="90"/>
 						<ColumnDefinition Width="5"/>
-						<ColumnDefinition Width="100"/>
+						<ColumnDefinition Width="90"/>
 						<ColumnDefinition Width="5"/>
-						<ColumnDefinition Width="100"/>
+						<ColumnDefinition Width="90"/>
 					</Grid.ColumnDefinitions>
-					<Button x:Name="DeleteCommandButton" Grid.Column="2" Content="Delete" HorizontalAlignment="Stretch" Click="DeleteCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
-					<Button x:Name="AddCommandButton" Grid.Column="4" Content="Add" HorizontalAlignment="Stretch" Click="AddCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
-					<Button x:Name="EditCommandButton" Grid.Column="6" Content="Edit" HorizontalAlignment="Stretch" Click="EditCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+					<Button x:Name="DeleteCommandButton" Grid.Column="2" Content="Delete" HorizontalAlignment="Center" Click="DeleteCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+					<Button x:Name="AddCommandButton" Grid.Column="4" Content="Add" HorizontalAlignment="Center" Click="AddCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+					<Button x:Name="EditCommandButton" Grid.Column="6" Content="Edit" HorizontalAlignment="Center" Click="EditCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 				</Grid>
 
 			</Grid>
 
-		</Grid>
+		</DockPanel>
 	</Grid>
 </Window>

@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:autopilot"
              xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
              x:Class="autopilot.App"
-             StartupUri="Views/MacroView.xaml">
+             StartupUri="Views/EditorView.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <Color x:Key="AppBackgroundColorCode">#ff333333</Color>

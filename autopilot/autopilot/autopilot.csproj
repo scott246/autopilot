@@ -91,9 +91,6 @@
     <Compile Include="Views\BindEditor.xaml.cs">
       <DependentUpon>BindEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MacroView.xaml.cs">
-      <DependentUpon>MacroView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\PreferencesView.xaml.cs">
       <DependentUpon>PreferencesView.xaml</DependentUpon>
     </Compile>
@@ -102,10 +99,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BindEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MacroView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
