@@ -8,6 +8,8 @@ namespace autopilot
 {
 	class Globals
 	{
+		public static readonly string VERSION_NUMBER = "v0.0.1";
+
 		public static readonly string USER_DIRECTORY = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 		public static readonly string MACRO_DIRECTORY = USER_DIRECTORY + @"\autopilot\testmacros\";
 		public static readonly string MACRO_EXTENSION = ".apc";

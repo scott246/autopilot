@@ -9,6 +9,7 @@ namespace autopilot.Views
 		public AboutView()
 		{
 			InitializeComponent();
+			VersionLabel.Content = Globals.VERSION_NUMBER;
 			PreviewKeyDown += new KeyEventHandler(HandleEsc);
 		}
 

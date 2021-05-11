@@ -9,9 +9,16 @@
 		WindowStartupLocation="CenterScreen"
         Title="About" Height="200" Width="400">
 	<Grid Background="{StaticResource AppBackgroundColor}">
-		<Label x:Name="TitleLabel" Content="Autopilot" HorizontalContentAlignment="Center" VerticalAlignment="Top" FontSize="48"/>
-		<Label x:Name="DescriptionLabel" Content="A macro tool in C#/WPF" HorizontalContentAlignment="Center" Margin="0,74,0,0" VerticalAlignment="Top" Width="392"/>
-		<Label x:Name="HelpTextLabel" HorizontalContentAlignment="Center" Margin="0,126,0,0" VerticalAlignment="Top" Width="392">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="30"/>
+			<RowDefinition Height="30"/>
+			<RowDefinition Height="30"/>
+		</Grid.RowDefinitions>
+		<Label x:Name="TitleLabel" Content="Autopilot" HorizontalContentAlignment="Center" Grid.Row="0" FontSize="48"/>
+		<Label x:Name="VersionLabel" Content="[version]" HorizontalContentAlignment="Center" Grid.Row="1"/>
+		<Label x:Name="DescriptionLabel" Content="A macro tool in C#/WPF" HorizontalContentAlignment="Center" Grid.Row="2"/>
+		<Label x:Name="HelpTextLabel" HorizontalContentAlignment="Center" Grid.Row="3">
 			<Hyperlink NavigateUri="https://github.com/scott246/autopilot" RequestNavigate="Hyperlink_RequestNavigate" Foreground="{StaticResource AccentColor}">
 				Help, feedback, contributions, and bug reports on GitHub
 			</Hyperlink> 
