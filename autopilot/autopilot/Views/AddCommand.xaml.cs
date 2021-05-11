@@ -31,11 +31,11 @@ namespace autopilot.Views
 			CommandList.Items.Clear();
 			foreach (Command command in Globals.COMMAND_LIST)
 			{
-				if (filterText.Equals("") || command.Name.Contains(filterText))
+				if (filterText.Equals("") || command.Title.Contains(filterText))
 				{
 					CommandList.Items.Add(new ListBoxItem
 					{
-						Content = command.Name,
+						Content = command.Title,
 						Tag = command
 					});
 				}

@@ -83,7 +83,6 @@
     <Compile Include="Objects\MacroFile.cs" />
     <Compile Include="Resources\Inputs.cs" />
     <Compile Include="Utils\EditorViewUtils.cs" />
-    <Compile Include="Utils\MacroViewUtils.cs" />
     <Compile Include="Utils\SortFilterUtils.cs" />
     <Compile Include="Views\AddCommand.xaml.cs">
       <DependentUpon>AddCommand.xaml</DependentUpon>

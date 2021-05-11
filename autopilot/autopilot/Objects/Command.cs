@@ -9,13 +9,13 @@ namespace autopilot.Utils
 	[Serializable]
 	public class Command
 	{
-		public Command(string name, List<string> arguments, string description)
+		public Command(string title, List<string> arguments, string description)
 		{
-			Name = name;
+			Title = title;
 			Arguments = arguments;
 			Description = description;
 		}
-		public string Name { get; set; }
+		public string Title { get; set; }
 		public List<string> Arguments { get; set; }
 		public string Description { get; set; }
 	}

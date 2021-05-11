@@ -14,13 +14,14 @@ namespace autopilot.Views
 	public partial class EditorView : Window
 	{
 		private ObservableCollection<Command> editorCommandListItems;
+
 		public EditorView()
 		{
 			InitializeComponent();
 
 			EditorPanel.Visibility = Visibility.Collapsed;
 
-			MacroViewUtils.LoadMacros();
+			EditorViewUtils.LoadMacros();
 			MacroListView.ItemsSource = SORTED_FILTERED_MACRO_LIST;
 			SortComboBox.ItemsSource = SortFilterUtils.sortOptions;
 			SortComboBox.SelectedItem = SortFilterUtils.sortOptions[0];
@@ -40,12 +41,12 @@ namespace autopilot.Views
 
 		private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			MacroViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
+			EditorViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 		}
 
 		private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			MacroViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
+			EditorViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 		}
 
 		private void AddMacroButton_Click(object sender, RoutedEventArgs e)
@@ -59,13 +60,13 @@ namespace autopilot.Views
 				}
 			}
 
-			MacroViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
+			EditorViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 		}
 
 		private void DeleteMacroButton_Click(object sender, RoutedEventArgs e)
 		{
 			MacroFile selectedItem = (MacroFile)MacroListView.SelectedItem;
-			if (null != selectedItem && MacroViewUtils.ConfirmDeleteMacro(selectedItem))
+			if (null != selectedItem && EditorViewUtils.ConfirmDeleteMacro(selectedItem))
 			{
 				try
 				{
@@ -81,7 +82,7 @@ namespace autopilot.Views
 					CustomDialog.Display(CustomDialogType.OK, "Macro Delete Error", "Could not remove macro.");
 				}
 			}
-			MacroViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
+			EditorViewUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 		}
 
 		private void MacroListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
