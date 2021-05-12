@@ -26,10 +26,10 @@ namespace autopilot.Utils
 		public static List<Command> GetAllActions()
 		{
 			List<Command> retrievedCommands = new List<Command>();
-			List<string> arguments = new List<string>();
 			string xmlCommandsPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\Resources\\CommandsLibrary.xml";
 			foreach (XElement command in XElement.Load(xmlCommandsPath).Elements("command"))
 			{
+				List<string> arguments = new List<string>();
 				foreach (string argument in command.Elements("argument"))
 				{
 					arguments.Add(argument);
