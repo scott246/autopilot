@@ -15,7 +15,6 @@ namespace autopilot.Views
 	public partial class EditorView : Window
 	{
 		//TODO: break this functionality into manageable (<100 sloc) bits
-		private ObservableCollection<ListBoxItem> macroListItems;
 		private ObservableCollection<ListBoxItem> editorCommandListItems;
 
 		public EditorView()
@@ -25,16 +24,7 @@ namespace autopilot.Views
 			EditorPanel.Visibility = Visibility.Collapsed;
 
 			MacroPanelUtils.LoadMacros();
-			macroListItems = new ObservableCollection<ListBoxItem>();
-			foreach (MacroFile macroFile in SORTED_FILTERED_MACRO_LIST)
-			{
-				string bind = (macroFile.Bind != null && macroFile.Bind != "") ? macroFile.Bind : UNBOUND;
-				macroListItems.Add(new ListBoxItem
-				{
-					Content = macroFile.Title + " (" + bind + ")"
-				});
-			}
-			MacroListView.ItemsSource = macroListItems;
+			MacroListView.ItemsSource = SORTED_FILTERED_MACRO_LIST;
 			SortComboBox.ItemsSource = SortFilterUtils.sortOptions;
 			SortComboBox.SelectedItem = SortFilterUtils.sortOptions[0];
 
@@ -108,8 +98,7 @@ namespace autopilot.Views
 			}
 			else
 			{
-				string displayedListBoxTitle = ((ListBoxItem)MacroListView.SelectedItem).Content.ToString();
-				string selectionTitle = displayedListBoxTitle.Substring(0, displayedListBoxTitle.LastIndexOf(" ")); // ((MacroFile)MacroListView.SelectedItem).Title;
+				string selectionTitle = ((MacroFile)MacroListView.SelectedItem).Title;
 
 				MacroFile readingFile = MacroFileUtils.ReadMacroFile(selectionTitle);
 
@@ -128,7 +117,7 @@ namespace autopilot.Views
 						{
 							editorCommandListItems.Add(new ListBoxItem
 							{
-								Content = c.Title + " (" + c.Arguments + ")"
+								Content = c.Title // + " (" + c.Arguments + ")"
 							});
 						}
 					}

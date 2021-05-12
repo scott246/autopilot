@@ -12,8 +12,9 @@
             <Color x:Key="ButtonBackgroundColorCode">#55ffffff</Color>
             <Color x:Key="ControlBorderColorCode">#66ffffff</Color>
             <Color x:Key="AppForegroundColorCode">#ffffffff</Color>
-            <Color x:Key="ControlForegroundColorCode">#ccffffff</Color>
-            <Color x:Key="WarningTextColorCode">#ffff0000</Color>
+			<Color x:Key="ControlForegroundColorCode">#ccffffff</Color>
+			<Color x:Key="DisabledTextColorCode">#ccaaaaaa</Color>
+			<Color x:Key="WarningTextColorCode">#ffff0000</Color>
             <Color x:Key="AccentColorCode">#99ffa500</Color>
 
             <SolidColorBrush x:Key="AppBackgroundColor" Color="{StaticResource AppBackgroundColorCode}"/>
@@ -22,7 +23,8 @@
             <SolidColorBrush x:Key="ControlBorderColor" Color="{StaticResource ControlBorderColorCode}"/>
             <SolidColorBrush x:Key="AppForegroundColor" Color="{StaticResource AppForegroundColorCode}"/>
             <SolidColorBrush x:Key="ControlForegroundColor" Color="{StaticResource ControlForegroundColorCode}"/>
-            <SolidColorBrush x:Key="WarningTextColor" Color="{StaticResource WarningTextColorCode}"/>
+			<SolidColorBrush x:Key="DisabledTextColor" Color="{StaticResource DisabledTextColorCode}"/>
+			<SolidColorBrush x:Key="WarningTextColor" Color="{StaticResource WarningTextColorCode}"/>
             <SolidColorBrush x:Key="AccentColor" Color="{StaticResource AccentColorCode}"/>
 
             <!-- Label and TextBlock Resources -->
@@ -365,13 +367,17 @@
             </ControlTemplate>
             <DataTemplate x:Key="ListBoxItemTemplate">
                 <Grid>
-                    <TextBlock Grid.Column="0" Text="{Binding Title}">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding Title}">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Foreground" Value="{StaticResource AppForegroundColor}"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Enabled}" Value="False">
-                                        <Setter Property="Foreground" Value="{StaticResource WarningTextColor}"/>
+                                        <Setter Property="Foreground" Value="{StaticResource DisabledTextColor}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Enabled}" Value="True">
                                         <Setter Property="Foreground" Value="{StaticResource AppForegroundColor}"/>
@@ -380,7 +386,22 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                </Grid>
+					<TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="{Binding Bind}">
+						<TextBlock.Style>
+							<Style TargetType="{x:Type TextBlock}">
+								<Setter Property="Foreground" Value="{StaticResource AppForegroundColor}"/>
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding Enabled}" Value="False">
+										<Setter Property="Foreground" Value="{StaticResource DisabledTextColor}"/>
+									</DataTrigger>
+									<DataTrigger Binding="{Binding Enabled}" Value="True">
+										<Setter Property="Foreground" Value="{StaticResource AppForegroundColor}"/>
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</TextBlock.Style>
+					</TextBlock>
+				</Grid>
             </DataTemplate>
             <Style x:Key="{x:Type ListBoxItem}" TargetType="{x:Type ListBoxItem}">
                 <Setter Property="SnapsToDevicePixels" Value="true" />
