@@ -61,8 +61,8 @@
 							<ColumnDefinition Width="5"/>
 							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
-						<Button x:Name="DeleteMacroButton" Content="Delete" Grid.Column="0" HorizontalAlignment="Stretch" Click="DeleteMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
-						<Button x:Name="AddMacroButton" Content="Add" Grid.Column="2" HorizontalAlignment="Stretch" Click="AddMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+						<Button x:Name="DeleteMacroButton" Content="Delete" Grid.Column="0" HorizontalAlignment="Center" Click="DeleteMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
+						<Button x:Name="AddMacroButton" Content="Add" Grid.Column="2" HorizontalAlignment="Center" Click="AddMacroButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 					</Grid>
 				</Grid>
 			</Grid>

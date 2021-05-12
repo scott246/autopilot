@@ -41,6 +41,7 @@ namespace autopilot.Utils
 				stream.Dispose();
 				success = true;
 				Console.WriteLine("Successfully wrote macro file {0}", macroFileTitle);
+				DebugOutput.DumpMacroInfo(macroFile);
 			}
 			catch (Exception e)
 			{
@@ -67,6 +68,7 @@ namespace autopilot.Utils
 				stream.Flush();
 				stream.Dispose();
 				Console.WriteLine("Successfully read macro file {0}", title);
+				DebugOutput.DumpMacroInfo(macroFile);
 			}
 			catch (Exception e)
 			{
