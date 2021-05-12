@@ -66,24 +66,27 @@ namespace autopilot.Views
 
 		private void DeleteMacroButton_Click(object sender, RoutedEventArgs e)
 		{
-			MacroFile selectedItem = (MacroFile)MacroListView.SelectedItem;
-			if (null != selectedItem && MacroPanelUtils.ConfirmDeleteMacro(selectedItem))
+			if (null != MacroListView.SelectedItem)
 			{
-				try
+				MacroFile selectedItem = (MacroFile)MacroListView.SelectedItem;
+				if (null != selectedItem && MacroPanelUtils.ConfirmDeleteMacro(selectedItem))
 				{
-					string title = selectedItem.Title;
-					MacroFileUtils.DeleteMacroFile(title);
+					try
+					{
+						string title = selectedItem.Title;
+						MacroFileUtils.DeleteMacroFile(title);
+					}
+					catch (UnauthorizedAccessException)
+					{
+						CustomDialog.Display(CustomDialogType.OK, "Insufficient Access", "Could not remove macro. Try running Autopilot as administrator.");
+					}
+					catch (Exception)
+					{
+						CustomDialog.Display(CustomDialogType.OK, "Macro Delete Error", "Could not remove macro.");
+					}
 				}
-				catch (UnauthorizedAccessException)
-				{
-					CustomDialog.Display(CustomDialogType.OK, "Insufficient Access", "Could not remove macro. Try running Autopilot as administrator.");
-				}
-				catch (Exception)
-				{
-					CustomDialog.Display(CustomDialogType.OK, "Macro Delete Error", "Could not remove macro.");
-				}
+				MacroPanelUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 			}
-			MacroPanelUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 		}
 
 		private void MacroListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -91,35 +94,37 @@ namespace autopilot.Views
 			if (null == MacroListView.SelectedItem)
 			{
 				EditorPanel.Visibility = Visibility.Collapsed;
-				return;
-			}
-			string selectionTitle = ((MacroFile)MacroListView.SelectedItem).Title;
-
-			MacroFile readingFile = MacroFileUtils.ReadMacroFile(selectionTitle);
-
-			if (null == readingFile)
-			{
-				CustomDialog.Display(CustomDialogType.OK, "Read failure", "Failed to read macro file.");
 			}
 			else
 			{
-				EditorTitleTextBox.Text = selectionTitle;
-				editorCommandListItems = new ObservableCollection<ListBoxItem>();
-				if (null != readingFile.Commands)
-				{
-					foreach (Command c in readingFile.Commands)
-					{
-						editorCommandListItems.Add(new ListBoxItem
-						{
-							Content = c.Title
-						});
-					}
-				}
-				EditorCommandList.ItemsSource = editorCommandListItems;
-				BindInputTextBox.Text = (readingFile.Bind != null && readingFile.Bind != "") ? readingFile.Bind : UNBOUND;
-			}
+				string selectionTitle = ((MacroFile)MacroListView.SelectedItem).Title;
 
-			EditorPanel.Visibility = Visibility.Visible;
+				MacroFile readingFile = MacroFileUtils.ReadMacroFile(selectionTitle);
+
+				if (null == readingFile)
+				{
+					CustomDialog.Display(CustomDialogType.OK, "Read failure", "Failed to read macro file.");
+				}
+				else
+				{
+					EditorTitleTextBox.Text = selectionTitle;
+					editorCommandListItems = new ObservableCollection<ListBoxItem>();
+					if (null != readingFile.Commands)
+					{
+						foreach (Command c in readingFile.Commands)
+						{
+							editorCommandListItems.Add(new ListBoxItem
+							{
+								Content = c.Title
+							});
+						}
+					}
+					EditorCommandList.ItemsSource = editorCommandListItems;
+					BindInputTextBox.Text = (readingFile.Bind != null && readingFile.Bind != "") ? readingFile.Bind : UNBOUND;
+				}
+
+				EditorPanel.Visibility = Visibility.Visible;
+			}
 		}
 
 		private void SaveMacroButton_Click(object sender, RoutedEventArgs e)
@@ -132,7 +137,7 @@ namespace autopilot.Views
 			}
 			MacroFile file = new MacroFile
 			{
-				Enabled = true,
+				Enabled = (bool)EnabledCheckbox.IsChecked,
 				Title = EditorTitleTextBox.Text,
 				Bind = BindInputTextBox.Text,
 				Commands = commandList
@@ -167,7 +172,7 @@ namespace autopilot.Views
 		private void AddCommandButton_Click(object sender, RoutedEventArgs e)
 		{
 			Command command;
-			if ((command = AddCommand.Display()) != null)
+			if ((command = CommandItemEditor.Display()) != null)
 			{
 				editorCommandListItems.Add(new ListBoxItem
 				{
@@ -178,13 +183,16 @@ namespace autopilot.Views
 			}
 		}
 
-		private void EditorCommandList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-
-		}
-
 		private void EditCommandButton_Click(object sender, RoutedEventArgs e)
 		{
+			//TODO: add edit command functionality (AddCommand (now CommandItemEditor) but with current settings set?)
+			HighlightSaveButton();
+		}
+
+		private void EnabledCheckbox_Click(object sender, RoutedEventArgs e)
+		{
+			//TODO: make enabled checkbox autosave enabled status
+			//TODO: make enabled checkbox instantly turn text red in macro panel if disabled, otherwise turn white
 			HighlightSaveButton();
 		}
 

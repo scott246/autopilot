@@ -102,7 +102,7 @@
 				</Grid>
 
 				<!-- Editor -->
-				<ListBox x:Name="EditorCommandList" Grid.Row="2" Padding="3" SelectionChanged="EditorCommandList_SelectionChanged" Template="{DynamicResource ListBoxControlTemplate}" ItemTemplate="{DynamicResource ListBoxItemTemplate}"/>
+				<ListBox x:Name="EditorCommandList" Grid.Row="2" Padding="3" Template="{DynamicResource ListBoxControlTemplate}" ItemTemplate="{DynamicResource ListBoxItemTemplate}"/>
 
 				<!-- Delete/Add/Edit Commands Controls -->
 				<Grid Grid.Row="4">
@@ -115,6 +115,7 @@
 						<ColumnDefinition Width="5"/>
 						<ColumnDefinition Width="90"/>
 					</Grid.ColumnDefinitions>
+					<CheckBox x:Name="EnabledCheckbox" Grid.Column="0" Content="Enabled" VerticalAlignment="Center" IsChecked="True" Click="EnabledCheckbox_Click" Template="{DynamicResource CheckBoxControlTemplate}"/>
 					<Button x:Name="DeleteCommandButton" Grid.Column="2" Content="Delete" HorizontalAlignment="Center" Click="DeleteCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 					<Button x:Name="AddCommandButton" Grid.Column="4" Content="Add" HorizontalAlignment="Center" Click="AddCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>
 					<Button x:Name="EditCommandButton" Grid.Column="6" Content="Edit" HorizontalAlignment="Center" Click="EditCommandButton_Click" Template="{DynamicResource ButtonControlTemplate}"/>

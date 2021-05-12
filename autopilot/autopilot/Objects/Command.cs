@@ -9,6 +9,7 @@ namespace autopilot.Utils
 	[Serializable]
 	public class Command
 	{
+		//TODO: make commands actually do stuff
 		public Command(string title, List<string> arguments, string description)
 		{
 			Title = title;

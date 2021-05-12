@@ -7,13 +7,13 @@ namespace autopilot.Views
 	/// <summary>
 	/// Interaction logic for AddStep.xaml
 	/// </summary>
-	public partial class AddCommand : Window
+	public partial class CommandItemEditor : Window
 	{
 		private string filterText = "";
 
 		private ListBoxItem selectedItem = null;
 
-		public AddCommand()
+		public CommandItemEditor()
 		{
 			InitializeComponent();
 			DisplayFilteredItems();
@@ -21,7 +21,7 @@ namespace autopilot.Views
 
 		public static Command Display()
 		{
-			AddCommand a = new AddCommand();
+			CommandItemEditor a = new CommandItemEditor();
 			a.ShowDialog();
 			return (null == a.selectedItem || null == a.selectedItem.Tag) ? null : (Command)a.selectedItem.Tag;
 		}

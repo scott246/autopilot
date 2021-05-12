@@ -86,8 +86,8 @@
     <Compile Include="Utils\EditorPanelUtils.cs" />
     <Compile Include="Utils\MacroPanelUtils.cs" />
     <Compile Include="Utils\SortFilterUtils.cs" />
-    <Compile Include="Views\AddCommand.xaml.cs">
-      <DependentUpon>AddCommand.xaml</DependentUpon>
+    <Compile Include="Views\CommandItemEditor.xaml.cs">
+      <DependentUpon>CommandItemEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BindEditor.xaml.cs">
       <DependentUpon>BindEditor.xaml</DependentUpon>
@@ -95,7 +95,7 @@
     <Compile Include="Views\PreferencesView.xaml.cs">
       <DependentUpon>PreferencesView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\AddCommand.xaml">
+    <Page Include="Views\CommandItemEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
