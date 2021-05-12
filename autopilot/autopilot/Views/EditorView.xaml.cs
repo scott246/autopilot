@@ -88,6 +88,11 @@ namespace autopilot.Views
 
 		private void MacroListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
+			if (null == MacroListView.SelectedItem)
+			{
+				EditorPanel.Visibility = Visibility.Collapsed;
+				return;
+			}
 			string selectionTitle = ((MacroFile)MacroListView.SelectedItem).Title;
 
 			MacroFile readingFile = MacroFileUtils.ReadMacroFile(selectionTitle);
