@@ -65,68 +65,46 @@ namespace autopilot.Views
 			PopulateArgumentPanel(((Command)selectedItem.Tag).Arguments);
 		}
 
-		private void PopulateArgumentPanel(List<string> arguments)
+		private void PopulateArgumentPanel(List<KeyValuePair<string, string>> arguments)
 		{
 			HideAllArgumentFields();
-			switch (arguments.Count)
+			for (int i = 0; i < arguments.Count; i++)
 			{
-				case 1:
-					Argument1Label.Visibility = Visibility.Visible;
-					Argument1Label.Content = arguments[0];
-					Argument1Input.Visibility = Visibility.Visible;
-					break;
-				case 2:
-					Argument1Label.Visibility = Visibility.Visible;
-					Argument1Label.Content = arguments[0];
-					Argument1Input.Visibility = Visibility.Visible;
-					Argument2Label.Visibility = Visibility.Visible;
-					Argument2Label.Content = arguments[1];
-					Argument2Input.Visibility = Visibility.Visible;
-					break;
-				case 3:
-					Argument1Label.Visibility = Visibility.Visible;
-					Argument1Label.Content = arguments[0];
-					Argument1Input.Visibility = Visibility.Visible;
-					Argument2Label.Visibility = Visibility.Visible;
-					Argument1Label.Content = arguments[1];
-					Argument2Input.Visibility = Visibility.Visible;
-					Argument3Label.Visibility = Visibility.Visible;
-					Argument1Label.Content = arguments[2];
-					Argument3Input.Visibility = Visibility.Visible;
-					break;
-				case 4:
-					Argument1Label.Visibility = Visibility.Visible;
-					Argument1Label.Content = arguments[0];
-					Argument1Input.Visibility = Visibility.Visible;
-					Argument2Label.Visibility = Visibility.Visible;
-					Argument1Label.Content = arguments[1];
-					Argument2Input.Visibility = Visibility.Visible;
-					Argument3Label.Visibility = Visibility.Visible;
-					Argument1Label.Content = arguments[2];
-					Argument3Input.Visibility = Visibility.Visible;
-					Argument4Label.Visibility = Visibility.Visible;
-					Argument1Label.Content = arguments[3];
-					Argument4Input.Visibility = Visibility.Visible;
-					break;
-				case 5:
-					Argument1Label.Visibility = Visibility.Visible;
-					Argument1Label.Content = arguments[0];
-					Argument1Input.Visibility = Visibility.Visible;
-					Argument2Label.Visibility = Visibility.Visible;
-					Argument1Label.Content = arguments[1];
-					Argument2Input.Visibility = Visibility.Visible;
-					Argument3Label.Visibility = Visibility.Visible;
-					Argument1Label.Content = arguments[2];
-					Argument3Input.Visibility = Visibility.Visible;
-					Argument4Label.Visibility = Visibility.Visible;
-					Argument1Label.Content = arguments[3];
-					Argument4Input.Visibility = Visibility.Visible;
-					Argument5Label.Visibility = Visibility.Visible;
-					Argument1Label.Content = arguments[4];
-					Argument5Input.Visibility = Visibility.Visible;
-					break;
-				default:
-					break;
+				switch (i)
+				{
+					case 0:
+						Argument1Label.Visibility = Visibility.Visible;
+						Argument1Label.Content = arguments[0].Key;
+						Argument1Input.Visibility = Visibility.Visible;
+						Argument1Input.Text = arguments[0].Value;
+						break;
+					case 1:
+						Argument2Label.Visibility = Visibility.Visible;
+						Argument2Label.Content = arguments[1].Key;
+						Argument2Input.Visibility = Visibility.Visible;
+						Argument2Input.Text = arguments[1].Value;
+						break;
+					case 2:
+						Argument3Label.Visibility = Visibility.Visible;
+						Argument3Label.Content = arguments[2].Key;
+						Argument3Input.Visibility = Visibility.Visible;
+						Argument3Input.Text = arguments[2].Value;
+						break;
+					case 3:
+						Argument4Label.Visibility = Visibility.Visible;
+						Argument4Label.Content = arguments[3].Key;
+						Argument4Input.Visibility = Visibility.Visible;
+						Argument4Input.Text = arguments[3].Value;
+						break;
+					case 4:
+						Argument5Label.Visibility = Visibility.Visible;
+						Argument5Label.Content = arguments[4].Key;
+						Argument5Input.Visibility = Visibility.Visible;
+						Argument5Input.Text = arguments[4].Value;
+						break;
+					default:
+						break;
+				}
 			}
 		}
 

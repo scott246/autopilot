@@ -35,9 +35,9 @@ namespace autopilot.Utils
 					}
 					else
 					{
-						foreach (string arg in c.Arguments)
+						foreach (KeyValuePair<string, string> arg in c.Arguments)
 						{
-							commandArguments += arg + ",";
+							commandArguments += "Key: " + arg.Key + ", Value: " + NullableOutputFormatter(arg.Value) + "; ";
 						}
 					}
 					commandListString += "\n" + i + ": " +  c.Title + " | " + commandArguments;
