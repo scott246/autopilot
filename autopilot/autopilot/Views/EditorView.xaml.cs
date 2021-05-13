@@ -144,7 +144,6 @@ namespace autopilot.Views
 			List<Command> commandList = new List<Command>();
 			foreach (ListBoxItem item in editorCommandListItems)
 			{
-				//TODO: convert listboxitem to command with appropriate arguments and description
 				commandList.Add((Command)item.Tag);
 			}
 			MacroFile file = new MacroFile
@@ -173,11 +172,14 @@ namespace autopilot.Views
 		private void DeleteCommandButton_Click(object sender, RoutedEventArgs e)
 		{
 			//TODO: warn on step delete with checkbox to opt out
-			ListBoxItem selectedItem = (ListBoxItem)EditorCommandList.SelectedItem;
-			if (selectedItem != null)
+			if (null != EditorCommandList.SelectedItem)
 			{
-				editorCommandListItems.Remove(selectedItem);
-				EditorCommandList.ItemsSource = editorCommandListItems;
+				ListBoxItem selectedItem = (ListBoxItem)EditorCommandList.SelectedItem;
+				if (null != selectedItem && EditorPanelUtils.ConfirmDeleteCommand(selectedItem))
+				{
+					editorCommandListItems.Remove(selectedItem);
+					EditorCommandList.ItemsSource = editorCommandListItems;
+				}
 			}
 			HighlightSaveButton();
 		}

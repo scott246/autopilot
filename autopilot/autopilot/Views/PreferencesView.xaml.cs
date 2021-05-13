@@ -26,5 +26,15 @@ namespace autopilot.Views
 		{
 			Close();
 		}
+
+		private void WarnCommandDelete_Checked(object sender, RoutedEventArgs e)
+		{
+			settingsRef.WarnOnCommandDelete = true;
+		}
+
+		private void WarnCommandDelete_Unchecked(object sender, RoutedEventArgs e)
+		{
+			settingsRef.WarnOnCommandDelete = false;
+		}
 	}
 }
