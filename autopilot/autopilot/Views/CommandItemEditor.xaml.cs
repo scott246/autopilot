@@ -22,11 +22,61 @@ namespace autopilot.Views
 			DisplayFilteredItems();
 		}
 
+		public CommandItemEditor(Command command)
+		{
+			InitializeComponent();
+			DisplayFilteredItems();
+			for (int i = 0; i < CommandList.Items.Count; i++)
+			{
+				if ((string)((ListBoxItem)CommandList.Items.GetItemAt(i)).Content == command.Title)
+				{
+					CommandList.SelectedIndex = i;
+					selectedItem = (ListBoxItem)CommandList.SelectedItem;
+					selectedItem.Tag = command;
+				}
+			}
+			for (int i = 0; i < command.Arguments.Count; i++)
+			{
+				switch (i)
+				{
+					case 0:
+						Argument1Label.Content = command.Arguments[0].Key;
+						Argument1Input.Text = command.Arguments[0].Value;
+						break;
+					case 1:
+						Argument2Label.Content = command.Arguments[1].Key;
+						Argument2Input.Text = command.Arguments[1].Value;
+						break;
+					case 2:
+						Argument3Label.Content = command.Arguments[2].Key;
+						Argument3Input.Text = command.Arguments[2].Value;
+						break;
+					case 3:
+						Argument4Label.Content = command.Arguments[3].Key;
+						Argument4Input.Text = command.Arguments[3].Value;
+						break;
+					case 4:
+						Argument5Label.Content = command.Arguments[4].Key;
+						Argument5Input.Text = command.Arguments[4].Value;
+						break;
+					default:
+						break;
+				}
+			}
+		}
+
 		public static Command Display()
 		{
 			CommandItemEditor a = new CommandItemEditor();
 			a.ShowDialog();
 			return (null == a.returnedItem || null == a.returnedItem.Tag) ? null : (Command)a.returnedItem.Tag;
+		}
+
+		public static Command Display(Command command)
+		{
+			CommandItemEditor editor = new CommandItemEditor(command);
+			editor.ShowDialog();
+			return (null == editor.returnedItem || null == editor.returnedItem.Tag) ? null : (Command)editor.returnedItem.Tag;
 		}
 
 		private void DisplayFilteredItems()
@@ -52,7 +102,7 @@ namespace autopilot.Views
 			Close();
 		}
 
-		private void Add_Click(object sender, RoutedEventArgs e)
+		private void Done_Click(object sender, RoutedEventArgs e)
 		{
 			for (int i = 0; i < ((Command)selectedItem.Tag).Arguments.Count; i++)
 			{

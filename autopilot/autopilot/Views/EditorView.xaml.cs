@@ -171,7 +171,6 @@ namespace autopilot.Views
 
 		private void DeleteCommandButton_Click(object sender, RoutedEventArgs e)
 		{
-			//TODO: warn on step delete with checkbox to opt out
 			if (null != EditorCommandList.SelectedItem)
 			{
 				ListBoxItem selectedItem = (ListBoxItem)EditorCommandList.SelectedItem;
@@ -209,7 +208,18 @@ namespace autopilot.Views
 
 		private void EditCommandButton_Click(object sender, RoutedEventArgs e)
 		{
-			//TODO: add edit command functionality (AddCommand (now CommandItemEditor) but with current settings set?)
+			Command newCommand = CommandItemEditor.Display((Command)((ListBoxItem)EditorCommandList.SelectedItem).Tag);
+			string argumentString = "  ";
+			if (null != newCommand && null != newCommand.Arguments)
+			{
+				foreach (KeyValuePair<string, string> kvArg in newCommand.Arguments)
+				{
+					argumentString += kvArg.Key + ": " + kvArg.Value + "; ";
+				}
+
+				((ListBoxItem)EditorCommandList.SelectedItem).Tag = newCommand;
+				((ListBoxItem)EditorCommandList.SelectedItem).Content = newCommand.Title + argumentString;
+			}
 			HighlightSaveButton();
 		}
 
