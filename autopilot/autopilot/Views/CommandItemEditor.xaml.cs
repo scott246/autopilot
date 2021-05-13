@@ -54,15 +54,50 @@ namespace autopilot.Views
 
 		private void Add_Click(object sender, RoutedEventArgs e)
 		{
+			for (int i = 0; i < ((Command)selectedItem.Tag).Arguments.Count; i++)
+			{
+				switch (i)
+				{
+					case 0:
+						((Command)selectedItem.Tag).Arguments[0] = 
+							new KeyValuePair<string, string>(Argument1Label.Content.ToString(), Argument1Input.Text);
+						break;
+					case 1:
+						((Command)selectedItem.Tag).Arguments[1] = 
+							new KeyValuePair<string, string>(Argument2Label.Content.ToString(), Argument2Input.Text);
+						break;
+					case 2:
+						((Command)selectedItem.Tag).Arguments[2] =
+							new KeyValuePair<string, string>(Argument3Label.Content.ToString(), Argument3Input.Text);
+						break;
+					case 3:
+						((Command)selectedItem.Tag).Arguments[3] =
+							new KeyValuePair<string, string>(Argument4Label.Content.ToString(), Argument4Input.Text);
+						break;
+					case 4:
+						((Command)selectedItem.Tag).Arguments[4] =
+							new KeyValuePair<string, string>(Argument5Label.Content.ToString(), Argument5Input.Text);
+						break;
+					default:
+						break;
+				}
+			}
 			returnedItem = selectedItem;
 			Close();
 		}
 
 		private void CommandList_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			selectedItem = (ListBoxItem)CommandList.SelectedItem;
-			CommandDescription.Text = ((Command)selectedItem.Tag).Description;
-			PopulateArgumentPanel(((Command)selectedItem.Tag).Arguments);
+			if (CommandList.SelectedItem != null)
+			{
+				selectedItem = (ListBoxItem)CommandList.SelectedItem;
+				CommandDescription.Text = ((Command)selectedItem.Tag).Description;
+				PopulateArgumentPanel(((Command)selectedItem.Tag).Arguments);
+			}
+			else
+			{
+				HideAllArgumentFields();
+			}
 		}
 
 		private void PopulateArgumentPanel(List<KeyValuePair<string, string>> arguments)

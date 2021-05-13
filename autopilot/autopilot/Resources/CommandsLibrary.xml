@@ -1,21 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
   <command>
-    <name>Type Character</name>
-    <argument>character</argument>
-    <description>Type a specified character when a specified key is pressed.</description>
+    <name>Type String</name>
+    <argument>String</argument>
+    <description>Type a specified string.</description>
     <category>Text</category>
   </command>
   <command>
-    <name>Type String</name>
-    <argument>string</argument>
-    <description>Type a specified string when a specified key is pressed.</description>
-    <category>Text</category>
+    <name>Run Program</name>
+    <argument>Path</argument>
+    <description>Opens the executable file.</description>
+    <category>Program</category>
+  </command>
+  <command>
+    <name>Open</name>
+    <argument>Path</argument>
+    <description>Opens the given file with the default program associated with that extension.</description>
+    <category>Program</category>
+  </command>
+  <command>
+    <name>Open With</name>
+    <argument>Path</argument>
+    <argument>Executable Path</argument>
+    <description>Attempts to open the file given in Path with the program given in Executable Path.</description>
+    <category>Program</category>
   </command>
   <command>
     <name>Show Popup</name>
-    <argument>content</argument>
-    <argument>title</argument>
+    <argument>Title</argument>
+    <argument>Content</argument>
     <description>Show a popup with specified information.</description>
     <category>IO</category>
   </command>

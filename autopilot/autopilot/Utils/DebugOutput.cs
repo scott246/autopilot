@@ -48,7 +48,7 @@ namespace autopilot.Utils
 
 		public static void DumpMacroInfo(MacroFile macroFile)
 		{
-			Console.WriteLine("Macro {0} info: \n" +
+			Console.WriteLine("MacroFile {0} info: \n" +
 				"MacroFile bind: {1} \n" +
 				"MacroFile commands: {2} \n" +
 				"MacroFile enabled: {3} \n" +

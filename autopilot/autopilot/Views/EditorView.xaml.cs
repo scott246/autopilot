@@ -115,9 +115,18 @@ namespace autopilot.Views
 					{
 						foreach (Command c in readingFile.Commands)
 						{
+							string argumentString = "  ";
+							if (c.Arguments != null)
+							{
+								foreach (KeyValuePair<string, string> kvArg in c.Arguments)
+								{
+									argumentString += kvArg.Key + ": " + kvArg.Value + "; ";
+								}
+							}
 							editorCommandListItems.Add(new ListBoxItem
 							{
-								Content = c.Title // + " (" + c.Arguments + ")"
+								Content = c.Title + argumentString,
+								Tag = c
 							});
 						}
 					}
@@ -136,7 +145,7 @@ namespace autopilot.Views
 			foreach (ListBoxItem item in editorCommandListItems)
 			{
 				//TODO: convert listboxitem to command with appropriate arguments and description
-				commandList.Add(new Command(item.Content.ToString(), null, null));
+				commandList.Add((Command)item.Tag);
 			}
 			MacroFile file = new MacroFile
 			{
@@ -178,9 +187,18 @@ namespace autopilot.Views
 			Command command;
 			if ((command = CommandItemEditor.Display()) != null)
 			{
+				string argumentString = "  ";
+				if (command.Arguments != null)
+				{
+					foreach (KeyValuePair<string, string> kvArg in command.Arguments)
+					{
+						argumentString += kvArg.Key + ": " + kvArg.Value + "; ";
+					}
+				}
 				editorCommandListItems.Add(new ListBoxItem
 				{
-					Content = command.Title
+					Content = command.Title + argumentString,
+					Tag = command
 				});
 				EditorCommandList.ItemsSource = editorCommandListItems;
 				HighlightSaveButton();
