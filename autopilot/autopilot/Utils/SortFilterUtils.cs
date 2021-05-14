@@ -96,7 +96,7 @@ namespace autopilot.Utils
 			SORTED_FILTERED_MACRO_LIST.Clear();
 			foreach (MacroFile macro in MACRO_LIST)
 			{
-				if (filterText == "" || MacroFileUtils.GetFileNameWithNoMacroExtension(macro.Title).Contains(filterText))
+				if (filterText == "" || MacroFileUtils.GetFileName(macro.Title, false).Contains(filterText))
 				{
 					SORTED_FILTERED_MACRO_LIST.Add(macro);
 				}

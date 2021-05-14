@@ -1,5 +1,4 @@
 ﻿using autopilot.Utils;
-using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -67,9 +66,9 @@ namespace autopilot.Views
 
 		public static Command Display()
 		{
-			CommandItemEditor a = new CommandItemEditor();
-			a.ShowDialog();
-			return (null == a.returnedItem || null == a.returnedItem.Tag) ? null : (Command)a.returnedItem.Tag;
+			CommandItemEditor editor = new CommandItemEditor();
+			editor.ShowDialog();
+			return (null == editor.returnedItem || null == editor.returnedItem.Tag) ? null : (Command)editor.returnedItem.Tag;
 		}
 
 		public static Command Display(Command command)
@@ -86,11 +85,7 @@ namespace autopilot.Views
 			{
 				if (filterText.Equals("") || command.Title.Contains(filterText))
 				{
-					CommandList.Items.Add(new ListBoxItem
-					{
-						Content = command.Title,
-						Tag = command
-					});
+					CommandList.Items.Add(EditorPanelUtils.ConvertCommandToListBoxItem(command, false));
 				}
 			}
 			CommandDescription.Text = "";

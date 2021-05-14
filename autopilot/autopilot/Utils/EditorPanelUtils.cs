@@ -1,9 +1,5 @@
 ﻿using autopilot.Views;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace autopilot.Utils
@@ -29,6 +25,38 @@ namespace autopilot.Utils
 				return true;
 			}
 			return false;
+		}
+
+		public static string ConvertCommandArgumentsToString(Command c)
+		{
+			string argumentString = "";
+			if (c.Arguments != null)
+			{
+				foreach (KeyValuePair<string, string> kvArg in c.Arguments)
+				{
+					argumentString += " | " +  kvArg.Key + ": " + kvArg.Value;
+				}
+			}
+			return argumentString;
+		}
+
+		public static ListBoxItem ConvertCommandToListBoxItem(Command c, bool showArgumentsInContent = true)
+		{
+			string content = c.Title;
+			if (showArgumentsInContent)
+			{
+				content += ConvertCommandArgumentsToString(c);
+			}
+			return new ListBoxItem
+			{
+				Content = content,
+				Tag = c
+			};
+		}
+
+		public static Command ConvertListBoxItemToCommand(ListBoxItem l)
+		{
+			return (Command)l.Tag;
 		}
 	}
 }

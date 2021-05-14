@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,7 +13,6 @@ namespace autopilot.Views
 {
 	public partial class EditorView : Window
 	{
-		//TODO: break this functionality into manageable (<100 sloc) bits
 		private ObservableCollection<ListBoxItem> editorCommandListItems;
 
 		public EditorView()
@@ -56,7 +54,7 @@ namespace autopilot.Views
 			CustomDialogResponse response = CustomDialog.Display(CustomDialogType.OKCancel, "New Macro", "Name this macro.", textboxContent: "");
 			if (response.ButtonResponse != CustomDialogButtonResponse.Cancel && response.TextboxResponse.Trim() != "")
 			{
-				if (!MacroFileUtils.CreateMacro(MacroFileUtils.GetFileNameWithMacroExtension(response.TextboxResponse)))
+				if (!MacroFileUtils.CreateMacro(MacroFileUtils.GetFileName(response.TextboxResponse, true)))
 				{
 					CustomDialog.Display(CustomDialogType.OK, "Macro create error", "There is already a macro with this name.");
 				}
@@ -99,7 +97,6 @@ namespace autopilot.Views
 			else
 			{
 				string selectionTitle = ((MacroFile)MacroListView.SelectedItem).Title;
-
 				MacroFile readingFile = MacroFileUtils.ReadMacroFile(selectionTitle);
 
 				if (null == readingFile)
@@ -115,19 +112,7 @@ namespace autopilot.Views
 					{
 						foreach (Command c in readingFile.Commands)
 						{
-							string argumentString = "  ";
-							if (c.Arguments != null)
-							{
-								foreach (KeyValuePair<string, string> kvArg in c.Arguments)
-								{
-									argumentString += kvArg.Key + ": " + kvArg.Value + "; ";
-								}
-							}
-							editorCommandListItems.Add(new ListBoxItem
-							{
-								Content = c.Title + argumentString,
-								Tag = c
-							});
+							editorCommandListItems.Add(EditorPanelUtils.ConvertCommandToListBoxItem(c));
 						}
 					}
 					EditorCommandList.ItemsSource = editorCommandListItems;
@@ -188,20 +173,9 @@ namespace autopilot.Views
 			Command command;
 			if ((command = CommandItemEditor.Display()) != null)
 			{
-				string argumentString = "  ";
-				if (command.Arguments != null)
-				{
-					foreach (KeyValuePair<string, string> kvArg in command.Arguments)
-					{
-						argumentString += kvArg.Key + ": " + kvArg.Value + "; ";
-					}
-				}
-				editorCommandListItems.Add(new ListBoxItem
-				{
-					Content = command.Title + argumentString,
-					Tag = command
-				});
+				editorCommandListItems.Add(EditorPanelUtils.ConvertCommandToListBoxItem(command));
 				EditorCommandList.ItemsSource = editorCommandListItems;
+
 				HighlightSaveButton();
 			}
 		}
@@ -209,16 +183,12 @@ namespace autopilot.Views
 		private void EditCommandButton_Click(object sender, RoutedEventArgs e)
 		{
 			Command newCommand = CommandItemEditor.Display((Command)((ListBoxItem)EditorCommandList.SelectedItem).Tag);
-			string argumentString = "  ";
 			if (null != newCommand && null != newCommand.Arguments)
 			{
-				foreach (KeyValuePair<string, string> kvArg in newCommand.Arguments)
-				{
-					argumentString += kvArg.Key + ": " + kvArg.Value + "; ";
-				}
+				ListBoxItem item = EditorPanelUtils.ConvertCommandToListBoxItem(newCommand);
 
-				((ListBoxItem)EditorCommandList.SelectedItem).Tag = newCommand;
-				((ListBoxItem)EditorCommandList.SelectedItem).Content = newCommand.Title + argumentString;
+				((ListBoxItem)EditorCommandList.SelectedItem).Tag = item.Tag;
+				((ListBoxItem)EditorCommandList.SelectedItem).Content = item.Content;
 			}
 			HighlightSaveButton();
 		}
