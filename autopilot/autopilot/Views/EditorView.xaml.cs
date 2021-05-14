@@ -145,6 +145,7 @@ namespace autopilot.Views
 				SORTED_FILTERED_MACRO_LIST.Add(file);
 			}
 			SaveMacroButton.Background = (SolidColorBrush)Application.Current.FindResource("ButtonBackgroundColor");
+			MacroPanelUtils.RefreshMacroList(MacroListView, SortComboBox.SelectedIndex, FilterTextBox.Text);
 		}
 
 		private void EditBindButton_Click(object sender, RoutedEventArgs e)
